@@ -5,6 +5,22 @@ from normalise import normalise
 
 secrets=boto3.client('secretsmanager')
 
+def parse_pdf(content,password):
+    """Handle CAMS statements whose branded header omits CAMSCASWS."""
+    import casparser.parsers as dispatch
+    from casparser.enums import FileType
+    from casparser.parsers.detect import _read_text_sample
+    detect=dispatch.detect_file_type
+    def detect_with_cams_header(filename,password,*,_doc=None):
+        issuer=detect(filename,password,_doc=_doc)
+        if issuer!=FileType.UNKNOWN:return issuer
+        text=_read_text_sample(filename,password,_doc=_doc).casefold()
+        if 'cams' in text and 'consolidated account statement' in text:return FileType.CAMS
+        return issuer
+    dispatch.detect_file_type=detect_with_cams_header
+    try:return json.loads(casparser.read_cas_pdf(io.BytesIO(content),password,output='json'))
+    finally:dispatch.detect_file_type=detect
+
 def secret(name):return json.loads(secrets.get_secret_value(SecretId=name)['SecretString'])
 
 def sf_session():
@@ -39,7 +55,7 @@ def handler(event,context):
         content=sf(base,token,'/services/data/v68.0/sobjects/ContentVersion/'+version+'/VersionData',binary=True)
         if len(content)>15000000:raise ValueError('StatementTooLarge')
         file_hash=hashlib.sha256(content).hexdigest()
-        parsed=json.loads(casparser.read_cas_pdf(io.BytesIO(content),password,output='json'))
+        parsed=parse_pdf(content,password)
         payload=normalise(parsed,file_hash)
         sf(base,token,'/services/apexrest/investments/imports/stage',{'operation':'stage','runId':run,'payload':payload})
         finished=True
