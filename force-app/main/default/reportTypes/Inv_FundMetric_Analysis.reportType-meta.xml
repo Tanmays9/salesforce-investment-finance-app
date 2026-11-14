@@ -93,6 +93,11 @@
     </columns>
     <columns>
       <checkedByDefault>false</checkedByDefault>
+      <field>Fund__c.DisplayName__c</field>
+      <table>Inv_FundMetric__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>false</checkedByDefault>
       <field>Run__c.Id</field>
       <table>Inv_FundMetric__c</table>
     </columns>
@@ -104,6 +109,11 @@
     <columns>
       <checkedByDefault>false</checkedByDefault>
       <field>CounterpartyFund__c.Id</field>
+      <table>Inv_FundMetric__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>false</checkedByDefault>
+      <field>CounterpartyFund__c.DisplayName__c</field>
       <table>Inv_FundMetric__c</table>
     </columns>
     <columns>
