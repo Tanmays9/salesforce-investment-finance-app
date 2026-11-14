@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>BERPercent__c</fullName>
+  <formula>IF(ISBLANK(LatestBER__c), NULL, LatestBER__c)</formula>
+  <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+  <label>Latest disclosed BER</label>
+  <precision>18</precision>
+  <scale>2</scale>
+  <type>Percent</type>
+</CustomField>

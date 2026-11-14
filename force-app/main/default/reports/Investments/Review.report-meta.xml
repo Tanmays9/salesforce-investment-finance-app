@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+  <columns>
+    <field>Inv_Holding__c$Name</field>
+  </columns>
+  <columns>
+    <field>Inv_Holding__c$Coverage__c</field>
+  </columns>
+  <columns>
+    <field>Inv_Holding__c$NAVDate__c</field>
+  </columns>
+  <columns>
+    <field>Inv_Holding__c$ReconciledThrough__c</field>
+  </columns>
+  <columns>
+    <field>Inv_Holding__c$Portfolio__c.Id</field>
+  </columns>
+  <columns>
+    <field>Inv_Holding__c$Fund__c.Id</field>
+  </columns>
+  <filter>
+    <criteriaItems>
+      <column>Inv_Holding__c$Coverage__c</column>
+      <operator>notEqual</operator>
+      <value>complete</value>
+    </criteriaItems>
+  </filter>
+  <format>Tabular</format>
+  <name>Holdings requiring review</name>
+  <reportType>Inv_Holding_Analysis__c</reportType>
+  <scope>organization</scope>
+  <showDetails>true</showDetails>
+  <showGrandTotal>true</showGrandTotal>
+  <showSubTotals>true</showSubTotals>
+  <timeFrameFilter>
+    <dateColumn>Inv_Holding__c$CreatedDate</dateColumn>
+    <interval>INTERVAL_CUSTOM</interval>
+  </timeFrameFilter>
+</Report>

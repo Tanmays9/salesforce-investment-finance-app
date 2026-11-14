@@ -1,0 +1,3043 @@
+{
+  "analytics.results": {
+    "object": "Inv_AnalyticsResults__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "run_id": {
+        "field": "RunId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "RunIdNumber__c",
+        "numberScale": 0
+      },
+      "metric_name": {
+        "field": "MetricName__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "instrument_id": {
+        "field": "InstrumentId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "InstrumentIdNumber__c",
+        "numberScale": 0
+      },
+      "account_id": {
+        "field": "AccountId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "AccountIdNumber__c",
+        "numberScale": 0
+      },
+      "period_start": {
+        "field": "PeriodStart__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      },
+      "period_end": {
+        "field": "PeriodEnd__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      },
+      "value_numeric": {
+        "field": "ValueNumeric__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "ValueNumericNumber__c",
+        "numberScale": 10
+      },
+      "value_jsonb": {
+        "field": "ValueJsonb__c",
+        "sourceType": "jsonb",
+        "nullable": true,
+        "exactText": false
+      },
+      "unit": {
+        "field": "Unit__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "coverage_status": {
+        "field": "CoverageStatus__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "reason": {
+        "field": "Reason__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "RunRef__c",
+        "column": "run_id",
+        "target": "analytics.runs",
+        "targetColumn": "id"
+      },
+      {
+        "field": "InstrumentRef__c",
+        "column": "instrument_id",
+        "target": "market.instruments",
+        "targetColumn": "id"
+      },
+      {
+        "field": "AccountRef__c",
+        "column": "account_id",
+        "target": "portfolio.accounts",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "analytics.runs": {
+    "object": "Inv_AnalyticsRuns__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "kind": {
+        "field": "Kind__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "portfolio_id": {
+        "field": "PortfolioId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "PortfolioIdNumber__c",
+        "numberScale": 0
+      },
+      "plan_version_id": {
+        "field": "PlanVersionId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "PlanVersionIdNumber__c",
+        "numberScale": 0
+      },
+      "valuation_as_of": {
+        "field": "ValuationAsOf__c",
+        "sourceType": "date",
+        "nullable": false,
+        "exactText": false
+      },
+      "knowledge_cutoff": {
+        "field": "KnowledgeCutoff__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": false,
+        "exactText": false
+      },
+      "ledger_cutoff": {
+        "field": "LedgerCutoff__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": false,
+        "exactText": false
+      },
+      "algorithm_version": {
+        "field": "AlgorithmVersion__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "assumptions": {
+        "field": "Assumptions__c",
+        "sourceType": "jsonb",
+        "nullable": false,
+        "exactText": false
+      },
+      "input_manifest": {
+        "field": "InputManifest__c",
+        "sourceType": "jsonb",
+        "nullable": false,
+        "exactText": false
+      },
+      "input_fingerprint": {
+        "field": "InputFingerprint__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "started_at": {
+        "field": "StartedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": false,
+        "exactText": false
+      },
+      "completed_at": {
+        "field": "CompletedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": true,
+        "exactText": false
+      },
+      "status": {
+        "field": "Status__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "stale_since": {
+        "field": "StaleSince__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": true,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "PortfolioRef__c",
+        "column": "portfolio_id",
+        "target": "portfolio.portfolios",
+        "targetColumn": "id"
+      },
+      {
+        "field": "PlanVersionRef__c",
+        "column": "plan_version_id",
+        "target": "planning.plan_versions",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "market.amcs": {
+    "object": "Inv_MarketAmcs__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "name": {
+        "field": "Name__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "external_code": {
+        "field": "ExternalCode__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      }
+    },
+    "relationships": []
+  },
+  "market.benchmark_assignments": {
+    "object": "Inv_MarketBenchmarkAssignments__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "scheme_id": {
+        "field": "SchemeId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "SchemeIdNumber__c",
+        "numberScale": 0
+      },
+      "benchmark_id": {
+        "field": "BenchmarkId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "BenchmarkIdNumber__c",
+        "numberScale": 0
+      },
+      "role": {
+        "field": "Role__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "effective_from": {
+        "field": "EffectiveFrom__c",
+        "sourceType": "date",
+        "nullable": false,
+        "exactText": false
+      },
+      "effective_to": {
+        "field": "EffectiveTo__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      },
+      "document_id": {
+        "field": "DocumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "DocumentIdNumber__c",
+        "numberScale": 0
+      }
+    },
+    "relationships": [
+      {
+        "field": "SchemeRef__c",
+        "column": "scheme_id",
+        "target": "market.schemes",
+        "targetColumn": "id"
+      },
+      {
+        "field": "BenchmarkRef__c",
+        "column": "benchmark_id",
+        "target": "market.instruments",
+        "targetColumn": "id"
+      },
+      {
+        "field": "DocumentRef__c",
+        "column": "document_id",
+        "target": "ops.source_documents",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "market.eligibility_policies": {
+    "object": "Inv_MarketEligibilityPolicies__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "scheme_id": {
+        "field": "SchemeId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "SchemeIdNumber__c",
+        "numberScale": 0
+      },
+      "share_class_id": {
+        "field": "ShareClassId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "ShareClassIdNumber__c",
+        "numberScale": 0
+      },
+      "kind": {
+        "field": "Kind__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "effective_from": {
+        "field": "EffectiveFrom__c",
+        "sourceType": "date",
+        "nullable": false,
+        "exactText": false
+      },
+      "effective_to": {
+        "field": "EffectiveTo__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      },
+      "applicability_basis": {
+        "field": "ApplicabilityBasis__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "parameters": {
+        "field": "Parameters__c",
+        "sourceType": "jsonb",
+        "nullable": false,
+        "exactText": false
+      },
+      "document_id": {
+        "field": "DocumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "DocumentIdNumber__c",
+        "numberScale": 0
+      },
+      "verification_state": {
+        "field": "VerificationState__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "SchemeRef__c",
+        "column": "scheme_id",
+        "target": "market.schemes",
+        "targetColumn": "id"
+      },
+      {
+        "field": "ShareClassRef__c",
+        "column": "share_class_id",
+        "target": "market.fund_share_classes",
+        "targetColumn": "instrument_id"
+      },
+      {
+        "field": "DocumentRef__c",
+        "column": "document_id",
+        "target": "ops.source_documents",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "market.exit_load_tiers": {
+    "object": "Inv_MarketExitLoadTiers__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "policy_id": {
+        "field": "PolicyId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "PolicyIdNumber__c",
+        "numberScale": 0
+      },
+      "age_from": {
+        "field": "AgeFrom__c",
+        "sourceType": "integer",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "AgeFromNumber__c",
+        "numberScale": 0
+      },
+      "age_to": {
+        "field": "AgeTo__c",
+        "sourceType": "integer",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "AgeToNumber__c",
+        "numberScale": 0
+      },
+      "age_unit": {
+        "field": "AgeUnit__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "free_units_ratio": {
+        "field": "FreeUnitsRatio__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "FreeUnitsRatioNumber__c",
+        "numberScale": 10
+      },
+      "load_ratio": {
+        "field": "LoadRatio__c",
+        "sourceType": "numeric",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "LoadRatioNumber__c",
+        "numberScale": 10
+      },
+      "conditions": {
+        "field": "Conditions__c",
+        "sourceType": "jsonb",
+        "nullable": false,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "PolicyRef__c",
+        "column": "policy_id",
+        "target": "market.eligibility_policies",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "market.expense_observations": {
+    "object": "Inv_MarketExpenseObservations__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "instrument_id": {
+        "field": "InstrumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "InstrumentIdNumber__c",
+        "numberScale": 0
+      },
+      "observed_on": {
+        "field": "ObservedOn__c",
+        "sourceType": "date",
+        "nullable": false,
+        "exactText": false
+      },
+      "effective_to": {
+        "field": "EffectiveTo__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      },
+      "ber_ratio": {
+        "field": "BerRatio__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "BerRatioNumber__c",
+        "numberScale": 10
+      },
+      "ter_ratio": {
+        "field": "TerRatio__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "TerRatioNumber__c",
+        "numberScale": 10
+      },
+      "underlying_cost_included": {
+        "field": "UnderlyingCostIncluded__c",
+        "sourceType": "boolean",
+        "nullable": true,
+        "exactText": false,
+        "knownField": "UnderlyingCostIncludedKnown__c"
+      },
+      "components": {
+        "field": "Components__c",
+        "sourceType": "jsonb",
+        "nullable": false,
+        "exactText": false
+      },
+      "document_id": {
+        "field": "DocumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "DocumentIdNumber__c",
+        "numberScale": 0
+      },
+      "published_at": {
+        "field": "PublishedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": true,
+        "exactText": false
+      },
+      "received_at": {
+        "field": "ReceivedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": false,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "InstrumentRef__c",
+        "column": "instrument_id",
+        "target": "market.fund_share_classes",
+        "targetColumn": "instrument_id"
+      },
+      {
+        "field": "DocumentRef__c",
+        "column": "document_id",
+        "target": "ops.source_documents",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "market.fund_portfolio_positions": {
+    "object": "Inv_MarketFundPortfolioPositions__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "snapshot_id": {
+        "field": "SnapshotId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "SnapshotIdNumber__c",
+        "numberScale": 0
+      },
+      "security_id": {
+        "field": "SecurityId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "SecurityIdNumber__c",
+        "numberScale": 0
+      },
+      "source_line": {
+        "field": "SourceLine__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "raw_label": {
+        "field": "RawLabel__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "weight_ratio": {
+        "field": "WeightRatio__c",
+        "sourceType": "numeric",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "WeightRatioNumber__c",
+        "numberScale": 10
+      },
+      "quantity": {
+        "field": "Quantity__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "QuantityNumber__c",
+        "numberScale": 12
+      },
+      "asset_kind": {
+        "field": "AssetKind__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "sector": {
+        "field": "Sector__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "market_cap_band": {
+        "field": "MarketCapBand__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "classification_as_of": {
+        "field": "ClassificationAsOf__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "SnapshotRef__c",
+        "column": "snapshot_id",
+        "target": "market.fund_portfolio_snapshots",
+        "targetColumn": "id"
+      },
+      {
+        "field": "SecurityRef__c",
+        "column": "security_id",
+        "target": "market.instruments",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "market.fund_portfolio_snapshots": {
+    "object": "Inv_MarketFundPortfolioSnapshots__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "scheme_id": {
+        "field": "SchemeId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "SchemeIdNumber__c",
+        "numberScale": 0
+      },
+      "holdings_as_of": {
+        "field": "HoldingsAsOf__c",
+        "sourceType": "date",
+        "nullable": false,
+        "exactText": false
+      },
+      "published_at": {
+        "field": "PublishedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": true,
+        "exactText": false
+      },
+      "received_at": {
+        "field": "ReceivedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": false,
+        "exactText": false
+      },
+      "document_id": {
+        "field": "DocumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "DocumentIdNumber__c",
+        "numberScale": 0
+      },
+      "coverage_state": {
+        "field": "CoverageState__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "weight_basis": {
+        "field": "WeightBasis__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "revision_no": {
+        "field": "RevisionNo__c",
+        "sourceType": "integer",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "RevisionNoNumber__c",
+        "numberScale": 0
+      }
+    },
+    "relationships": [
+      {
+        "field": "DocumentRef__c",
+        "column": "document_id",
+        "target": "ops.source_documents",
+        "targetColumn": "id"
+      },
+      {
+        "field": "SchemeRef__c",
+        "column": "scheme_id",
+        "target": "market.schemes",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "market.fund_share_classes": {
+    "object": "Inv_MarketFundShareClasses__c",
+    "fields": {
+      "instrument_id": {
+        "field": "InstrumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "InstrumentIdNumber__c",
+        "numberScale": 0
+      },
+      "scheme_id": {
+        "field": "SchemeId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "SchemeIdNumber__c",
+        "numberScale": 0
+      },
+      "plan": {
+        "field": "Plan__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "option": {
+        "field": "Option__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "amfi_code": {
+        "field": "AmfiCode__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "inception_date": {
+        "field": "InceptionDate__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "InstrumentRef__c",
+        "column": "instrument_id",
+        "target": "market.instruments",
+        "targetColumn": "id"
+      },
+      {
+        "field": "SchemeRef__c",
+        "column": "scheme_id",
+        "target": "market.schemes",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "market.instruments": {
+    "object": "Inv_MarketInstruments__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "kind": {
+        "field": "Kind__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "name": {
+        "field": "Name__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "currency": {
+        "field": "Currency__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "isin": {
+        "field": "Isin__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "provider_code": {
+        "field": "ProviderCode__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "benchmark_variant": {
+        "field": "BenchmarkVariant__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "active_from": {
+        "field": "ActiveFrom__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      },
+      "active_to": {
+        "field": "ActiveTo__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      }
+    },
+    "relationships": []
+  },
+  "market.price_observations": {
+    "object": "Inv_MarketPriceObservations__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "instrument_id": {
+        "field": "InstrumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "InstrumentIdNumber__c",
+        "numberScale": 0
+      },
+      "observed_on": {
+        "field": "ObservedOn__c",
+        "sourceType": "date",
+        "nullable": false,
+        "exactText": false
+      },
+      "value": {
+        "field": "Value__c",
+        "sourceType": "numeric",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "ValueNumber__c",
+        "numberScale": 10
+      },
+      "price_kind": {
+        "field": "PriceKind__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "provider_id": {
+        "field": "ProviderId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "ProviderIdNumber__c",
+        "numberScale": 0
+      },
+      "document_id": {
+        "field": "DocumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "DocumentIdNumber__c",
+        "numberScale": 0
+      },
+      "published_at": {
+        "field": "PublishedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": true,
+        "exactText": false
+      },
+      "received_at": {
+        "field": "ReceivedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": false,
+        "exactText": false
+      },
+      "revision_no": {
+        "field": "RevisionNo__c",
+        "sourceType": "integer",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "RevisionNoNumber__c",
+        "numberScale": 0
+      },
+      "supersedes_id": {
+        "field": "SupersedesId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "SupersedesIdNumber__c",
+        "numberScale": 0
+      },
+      "quality_status": {
+        "field": "QualityStatus__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "InstrumentRef__c",
+        "column": "instrument_id",
+        "target": "market.instruments",
+        "targetColumn": "id"
+      },
+      {
+        "field": "ProviderRef__c",
+        "column": "provider_id",
+        "target": "ops.providers",
+        "targetColumn": "id"
+      },
+      {
+        "field": "DocumentRef__c",
+        "column": "document_id",
+        "target": "ops.source_documents",
+        "targetColumn": "id"
+      },
+      {
+        "field": "SupersedesRef__c",
+        "column": "supersedes_id",
+        "target": "market.price_observations",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "market.scheme_versions": {
+    "object": "Inv_MarketSchemeVersions__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "scheme_id": {
+        "field": "SchemeId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "SchemeIdNumber__c",
+        "numberScale": 0
+      },
+      "category": {
+        "field": "Category__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "objective": {
+        "field": "Objective__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "effective_from": {
+        "field": "EffectiveFrom__c",
+        "sourceType": "date",
+        "nullable": false,
+        "exactText": false
+      },
+      "effective_to": {
+        "field": "EffectiveTo__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      },
+      "published_at": {
+        "field": "PublishedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": true,
+        "exactText": false
+      },
+      "document_id": {
+        "field": "DocumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "DocumentIdNumber__c",
+        "numberScale": 0
+      }
+    },
+    "relationships": [
+      {
+        "field": "SchemeRef__c",
+        "column": "scheme_id",
+        "target": "market.schemes",
+        "targetColumn": "id"
+      },
+      {
+        "field": "DocumentRef__c",
+        "column": "document_id",
+        "target": "ops.source_documents",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "market.schemes": {
+    "object": "Inv_MarketSchemes__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "amc_id": {
+        "field": "AmcId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "AmcIdNumber__c",
+        "numberScale": 0
+      },
+      "name": {
+        "field": "Name__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "inception_date": {
+        "field": "InceptionDate__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      },
+      "merged_into_id": {
+        "field": "MergedIntoId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "MergedIntoIdNumber__c",
+        "numberScale": 0
+      }
+    },
+    "relationships": [
+      {
+        "field": "AmcRef__c",
+        "column": "amc_id",
+        "target": "market.amcs",
+        "targetColumn": "id"
+      },
+      {
+        "field": "MergedIntoRef__c",
+        "column": "merged_into_id",
+        "target": "market.schemes",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "ops.change_log": {
+    "object": "Inv_OpsChangeLog__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "relation_name": {
+        "field": "RelationName__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "row_key": {
+        "field": "RowKey__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "old_row": {
+        "field": "OldRow__c",
+        "sourceType": "jsonb",
+        "nullable": true,
+        "exactText": false
+      },
+      "new_row": {
+        "field": "NewRow__c",
+        "sourceType": "jsonb",
+        "nullable": true,
+        "exactText": false
+      },
+      "changed_at": {
+        "field": "ChangedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": false,
+        "exactText": false
+      },
+      "actor": {
+        "field": "Actor__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      }
+    },
+    "relationships": []
+  },
+  "ops.data_issues": {
+    "object": "Inv_OpsDataIssues__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "issue_key": {
+        "field": "IssueKey__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "instrument_id": {
+        "field": "InstrumentId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "InstrumentIdNumber__c",
+        "numberScale": 0
+      },
+      "event_id": {
+        "field": "EventId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "EventIdNumber__c",
+        "numberScale": 0
+      },
+      "observed_on": {
+        "field": "ObservedOn__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      },
+      "severity": {
+        "field": "Severity__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "message": {
+        "field": "Message__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "evidence": {
+        "field": "Evidence__c",
+        "sourceType": "jsonb",
+        "nullable": false,
+        "exactText": false
+      },
+      "status": {
+        "field": "Status__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "created_at": {
+        "field": "CreatedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": false,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "InstrumentRef__c",
+        "column": "instrument_id",
+        "target": "market.instruments",
+        "targetColumn": "id"
+      },
+      {
+        "field": "EventRef__c",
+        "column": "event_id",
+        "target": "portfolio.events",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "ops.import_rows": {
+    "object": "Inv_OpsImportRows__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "run_id": {
+        "field": "RunId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "RunIdNumber__c",
+        "numberScale": 0
+      },
+      "document_id": {
+        "field": "DocumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "DocumentIdNumber__c",
+        "numberScale": 0
+      },
+      "source_locator": {
+        "field": "SourceLocator__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "source_record_id": {
+        "field": "SourceRecordId__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "raw_payload": {
+        "field": "RawPayload__c",
+        "sourceType": "jsonb",
+        "nullable": false,
+        "exactText": false
+      },
+      "target_kind": {
+        "field": "TargetKind__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "target_id": {
+        "field": "TargetId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "TargetIdNumber__c",
+        "numberScale": 0
+      },
+      "status": {
+        "field": "Status__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "issue_reason": {
+        "field": "IssueReason__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "RunRef__c",
+        "column": "run_id",
+        "target": "ops.import_runs",
+        "targetColumn": "id"
+      },
+      {
+        "field": "DocumentRef__c",
+        "column": "document_id",
+        "target": "ops.source_documents",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "ops.import_runs": {
+    "object": "Inv_OpsImportRuns__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "provider_id": {
+        "field": "ProviderId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "ProviderIdNumber__c",
+        "numberScale": 0
+      },
+      "started_at": {
+        "field": "StartedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": false,
+        "exactText": false
+      },
+      "completed_at": {
+        "field": "CompletedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": true,
+        "exactText": false
+      },
+      "status": {
+        "field": "Status__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "parser_version": {
+        "field": "ParserVersion__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "rows_seen": {
+        "field": "RowsSeen__c",
+        "sourceType": "integer",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "RowsSeenNumber__c",
+        "numberScale": 0
+      },
+      "rows_accepted": {
+        "field": "RowsAccepted__c",
+        "sourceType": "integer",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "RowsAcceptedNumber__c",
+        "numberScale": 0
+      },
+      "rows_rejected": {
+        "field": "RowsRejected__c",
+        "sourceType": "integer",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "RowsRejectedNumber__c",
+        "numberScale": 0
+      },
+      "error_summary": {
+        "field": "ErrorSummary__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "ProviderRef__c",
+        "column": "provider_id",
+        "target": "ops.providers",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "ops.providers": {
+    "object": "Inv_OpsProviders__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "name": {
+        "field": "Name__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "kind": {
+        "field": "Kind__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "base_url": {
+        "field": "BaseUrl__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "priority": {
+        "field": "Priority__c",
+        "sourceType": "integer",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "PriorityNumber__c",
+        "numberScale": 0
+      }
+    },
+    "relationships": []
+  },
+  "ops.reconciliations": {
+    "object": "Inv_OpsReconciliations__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "account_id": {
+        "field": "AccountId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "AccountIdNumber__c",
+        "numberScale": 0
+      },
+      "instrument_id": {
+        "field": "InstrumentId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "InstrumentIdNumber__c",
+        "numberScale": 0
+      },
+      "as_of": {
+        "field": "AsOf__c",
+        "sourceType": "date",
+        "nullable": false,
+        "exactText": false
+      },
+      "reported_units": {
+        "field": "ReportedUnits__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "ReportedUnitsNumber__c",
+        "numberScale": 12
+      },
+      "calculated_units": {
+        "field": "CalculatedUnits__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "CalculatedUnitsNumber__c",
+        "numberScale": 12
+      },
+      "unit_difference": {
+        "field": "UnitDifference__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "UnitDifferenceNumber__c",
+        "numberScale": 12
+      },
+      "reported_cash": {
+        "field": "ReportedCash__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "ReportedCashNumber__c",
+        "numberScale": 8
+      },
+      "calculated_cash": {
+        "field": "CalculatedCash__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "CalculatedCashNumber__c",
+        "numberScale": 8
+      },
+      "tolerance": {
+        "field": "Tolerance__c",
+        "sourceType": "numeric",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "ToleranceNumber__c",
+        "numberScale": 12
+      },
+      "status": {
+        "field": "Status__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "document_id": {
+        "field": "DocumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "DocumentIdNumber__c",
+        "numberScale": 0
+      },
+      "resolution": {
+        "field": "Resolution__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "AccountRef__c",
+        "column": "account_id",
+        "target": "portfolio.accounts",
+        "targetColumn": "id"
+      },
+      {
+        "field": "InstrumentRef__c",
+        "column": "instrument_id",
+        "target": "market.instruments",
+        "targetColumn": "id"
+      },
+      {
+        "field": "DocumentRef__c",
+        "column": "document_id",
+        "target": "ops.source_documents",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "ops.schema_migrations": {
+    "object": "Inv_OpsSchemaMigrations__c",
+    "fields": {
+      "version": {
+        "field": "Version__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "applied_at": {
+        "field": "AppliedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": false,
+        "exactText": false
+      }
+    },
+    "relationships": []
+  },
+  "ops.source_documents": {
+    "object": "Inv_OpsSourceDocuments__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "provider_id": {
+        "field": "ProviderId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "ProviderIdNumber__c",
+        "numberScale": 0
+      },
+      "source_url": {
+        "field": "SourceUrl__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "storage_uri": {
+        "field": "StorageUri__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "sha256": {
+        "field": "Sha256__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "media_type": {
+        "field": "MediaType__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "published_at": {
+        "field": "PublishedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": true,
+        "exactText": false
+      },
+      "retrieved_at": {
+        "field": "RetrievedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": false,
+        "exactText": false
+      },
+      "parser_version": {
+        "field": "ParserVersion__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "ProviderRef__c",
+        "column": "provider_id",
+        "target": "ops.providers",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "planning.action_dependencies": {
+    "object": "Inv_PlanningActionDependencies__c",
+    "fields": {
+      "action_id": {
+        "field": "ActionId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "ActionIdNumber__c",
+        "numberScale": 0
+      },
+      "prerequisite_id": {
+        "field": "PrerequisiteId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "PrerequisiteIdNumber__c",
+        "numberScale": 0
+      },
+      "kind": {
+        "field": "Kind__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "lag_days": {
+        "field": "LagDays__c",
+        "sourceType": "integer",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "LagDaysNumber__c",
+        "numberScale": 0
+      },
+      "day_basis": {
+        "field": "DayBasis__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "ActionRef__c",
+        "column": "action_id",
+        "target": "planning.actions",
+        "targetColumn": "id"
+      },
+      {
+        "field": "PrerequisiteRef__c",
+        "column": "prerequisite_id",
+        "target": "planning.actions",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "planning.actions": {
+    "object": "Inv_PlanningActions__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "plan_version_id": {
+        "field": "PlanVersionId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "PlanVersionIdNumber__c",
+        "numberScale": 0
+      },
+      "action_type": {
+        "field": "ActionType__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "account_id": {
+        "field": "AccountId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "AccountIdNumber__c",
+        "numberScale": 0
+      },
+      "instrument_id": {
+        "field": "InstrumentId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "InstrumentIdNumber__c",
+        "numberScale": 0
+      },
+      "requested_units": {
+        "field": "RequestedUnits__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "RequestedUnitsNumber__c",
+        "numberScale": 12
+      },
+      "requested_amount": {
+        "field": "RequestedAmount__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "RequestedAmountNumber__c",
+        "numberScale": 8
+      },
+      "all_available": {
+        "field": "AllAvailable__c",
+        "sourceType": "boolean",
+        "nullable": false,
+        "exactText": false
+      },
+      "intended_date": {
+        "field": "IntendedDate__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      },
+      "cash_hold_days": {
+        "field": "CashHoldDays__c",
+        "sourceType": "integer",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "CashHoldDaysNumber__c",
+        "numberScale": 0
+      },
+      "rationale": {
+        "field": "Rationale__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "PlanVersionRef__c",
+        "column": "plan_version_id",
+        "target": "planning.plan_versions",
+        "targetColumn": "id"
+      },
+      {
+        "field": "AccountRef__c",
+        "column": "account_id",
+        "target": "portfolio.accounts",
+        "targetColumn": "id"
+      },
+      {
+        "field": "InstrumentRef__c",
+        "column": "instrument_id",
+        "target": "market.instruments",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "planning.execution_records": {
+    "object": "Inv_PlanningExecutionRecords__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "action_id": {
+        "field": "ActionId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "ActionIdNumber__c",
+        "numberScale": 0
+      },
+      "status": {
+        "field": "Status__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "order_reference": {
+        "field": "OrderReference__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "submitted_at": {
+        "field": "SubmittedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": false,
+        "exactText": false
+      },
+      "filled_at": {
+        "field": "FilledAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": true,
+        "exactText": false
+      },
+      "settled_at": {
+        "field": "SettledAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": true,
+        "exactText": false
+      },
+      "confirmed_event_id": {
+        "field": "ConfirmedEventId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "ConfirmedEventIdNumber__c",
+        "numberScale": 0
+      }
+    },
+    "relationships": [
+      {
+        "field": "ActionRef__c",
+        "column": "action_id",
+        "target": "planning.actions",
+        "targetColumn": "id"
+      },
+      {
+        "field": "ConfirmedEventRef__c",
+        "column": "confirmed_event_id",
+        "target": "portfolio.events",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "planning.plan_versions": {
+    "object": "Inv_PlanningPlanVersions__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "plan_id": {
+        "field": "PlanId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "PlanIdNumber__c",
+        "numberScale": 0
+      },
+      "version_no": {
+        "field": "VersionNo__c",
+        "sourceType": "integer",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "VersionNoNumber__c",
+        "numberScale": 0
+      },
+      "status": {
+        "field": "Status__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "monthly_budget": {
+        "field": "MonthlyBudget__c",
+        "sourceType": "numeric",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "MonthlyBudgetNumber__c",
+        "numberScale": 8
+      },
+      "valuation_as_of": {
+        "field": "ValuationAsOf__c",
+        "sourceType": "date",
+        "nullable": false,
+        "exactText": false
+      },
+      "knowledge_cutoff": {
+        "field": "KnowledgeCutoff__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": false,
+        "exactText": false
+      },
+      "assumptions": {
+        "field": "Assumptions__c",
+        "sourceType": "jsonb",
+        "nullable": false,
+        "exactText": false
+      },
+      "approved_at": {
+        "field": "ApprovedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": true,
+        "exactText": false
+      },
+      "approved_by": {
+        "field": "ApprovedBy__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "supersedes_id": {
+        "field": "SupersedesId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "SupersedesIdNumber__c",
+        "numberScale": 0
+      },
+      "baseline_run_id": {
+        "field": "BaselineRunId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "BaselineRunIdNumber__c",
+        "numberScale": 0
+      },
+      "created_at": {
+        "field": "CreatedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": false,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "PlanRef__c",
+        "column": "plan_id",
+        "target": "planning.plans",
+        "targetColumn": "id"
+      },
+      {
+        "field": "SupersedesRef__c",
+        "column": "supersedes_id",
+        "target": "planning.plan_versions",
+        "targetColumn": "id"
+      },
+      {
+        "field": "BaselineRunRef__c",
+        "column": "baseline_run_id",
+        "target": "analytics.runs",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "planning.plans": {
+    "object": "Inv_PlanningPlans__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "portfolio_id": {
+        "field": "PortfolioId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "PortfolioIdNumber__c",
+        "numberScale": 0
+      },
+      "name": {
+        "field": "Name__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "goal": {
+        "field": "Goal__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "horizon_years": {
+        "field": "HorizonYears__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "HorizonYearsNumber__c",
+        "numberScale": 2
+      },
+      "created_at": {
+        "field": "CreatedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": false,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "PortfolioRef__c",
+        "column": "portfolio_id",
+        "target": "portfolio.portfolios",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "planning.review_items": {
+    "object": "Inv_PlanningReviewItems__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "plan_version_id": {
+        "field": "PlanVersionId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "PlanVersionIdNumber__c",
+        "numberScale": 0
+      },
+      "source_record_id": {
+        "field": "SourceRecordId__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "kind": {
+        "field": "Kind__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "account_id": {
+        "field": "AccountId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "AccountIdNumber__c",
+        "numberScale": 0
+      },
+      "instrument_id": {
+        "field": "InstrumentId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "InstrumentIdNumber__c",
+        "numberScale": 0
+      },
+      "monthly_or_transaction_amount": {
+        "field": "MonthlyOrTransactionAmount__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "MonthlyOrTransactionAmountNumber__c",
+        "numberScale": 8
+      },
+      "units": {
+        "field": "Units__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "UnitsNumber__c",
+        "numberScale": 12
+      },
+      "rationale": {
+        "field": "Rationale__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "document_id": {
+        "field": "DocumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "DocumentIdNumber__c",
+        "numberScale": 0
+      },
+      "resolution_action_id": {
+        "field": "ResolutionActionId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "ResolutionActionIdNumber__c",
+        "numberScale": 0
+      }
+    },
+    "relationships": [
+      {
+        "field": "PlanVersionRef__c",
+        "column": "plan_version_id",
+        "target": "planning.plan_versions",
+        "targetColumn": "id"
+      },
+      {
+        "field": "AccountRef__c",
+        "column": "account_id",
+        "target": "portfolio.accounts",
+        "targetColumn": "id"
+      },
+      {
+        "field": "InstrumentRef__c",
+        "column": "instrument_id",
+        "target": "market.instruments",
+        "targetColumn": "id"
+      },
+      {
+        "field": "DocumentRef__c",
+        "column": "document_id",
+        "target": "ops.source_documents",
+        "targetColumn": "id"
+      },
+      {
+        "field": "ResolutionActionRef__c",
+        "column": "resolution_action_id",
+        "target": "planning.actions",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "planning.targets": {
+    "object": "Inv_PlanningTargets__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "plan_version_id": {
+        "field": "PlanVersionId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "PlanVersionIdNumber__c",
+        "numberScale": 0
+      },
+      "axis": {
+        "field": "Axis__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "target_key": {
+        "field": "TargetKey__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "ratio": {
+        "field": "Ratio__c",
+        "sourceType": "numeric",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "RatioNumber__c",
+        "numberScale": 10
+      }
+    },
+    "relationships": [
+      {
+        "field": "PlanVersionRef__c",
+        "column": "plan_version_id",
+        "target": "planning.plan_versions",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "portfolio.accounts": {
+    "object": "Inv_PortfolioAccounts__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "portfolio_id": {
+        "field": "PortfolioId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "PortfolioIdNumber__c",
+        "numberScale": 0
+      },
+      "kind": {
+        "field": "Kind__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "provider": {
+        "field": "Provider__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "masked_reference": {
+        "field": "MaskedReference__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "opened_on": {
+        "field": "OpenedOn__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      },
+      "closed_on": {
+        "field": "ClosedOn__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "PortfolioRef__c",
+        "column": "portfolio_id",
+        "target": "portfolio.portfolios",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "portfolio.cash_entries": {
+    "object": "Inv_PortfolioCashEntries__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "event_id": {
+        "field": "EventId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "EventIdNumber__c",
+        "numberScale": 0
+      },
+      "account_id": {
+        "field": "AccountId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "AccountIdNumber__c",
+        "numberScale": 0
+      },
+      "currency": {
+        "field": "Currency__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "amount_delta": {
+        "field": "AmountDelta__c",
+        "sourceType": "numeric",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "AmountDeltaNumber__c",
+        "numberScale": 8
+      },
+      "flow_kind": {
+        "field": "FlowKind__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "occurred_on": {
+        "field": "OccurredOn__c",
+        "sourceType": "date",
+        "nullable": false,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "EventRef__c",
+        "column": "event_id",
+        "target": "portfolio.events",
+        "targetColumn": "id"
+      },
+      {
+        "field": "AccountRef__c",
+        "column": "account_id",
+        "target": "portfolio.accounts",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "portfolio.event_charges": {
+    "object": "Inv_PortfolioEventCharges__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "event_id": {
+        "field": "EventId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "EventIdNumber__c",
+        "numberScale": 0
+      },
+      "charge_kind": {
+        "field": "ChargeKind__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "amount": {
+        "field": "Amount__c",
+        "sourceType": "numeric",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "AmountNumber__c",
+        "numberScale": 8
+      },
+      "currency": {
+        "field": "Currency__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "included_in_basis": {
+        "field": "IncludedInBasis__c",
+        "sourceType": "boolean",
+        "nullable": false,
+        "exactText": false
+      },
+      "included_in_net_cash": {
+        "field": "IncludedInNetCash__c",
+        "sourceType": "boolean",
+        "nullable": false,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "EventRef__c",
+        "column": "event_id",
+        "target": "portfolio.events",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "portfolio.events": {
+    "object": "Inv_PortfolioEvents__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "event_type": {
+        "field": "EventType__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "event_date": {
+        "field": "EventDate__c",
+        "sourceType": "date",
+        "nullable": false,
+        "exactText": false
+      },
+      "source_sequence": {
+        "field": "SourceSequence__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "SourceSequenceNumber__c",
+        "numberScale": 0
+      },
+      "economic_group": {
+        "field": "EconomicGroup__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "posted_at": {
+        "field": "PostedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": true,
+        "exactText": false
+      },
+      "document_id": {
+        "field": "DocumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "DocumentIdNumber__c",
+        "numberScale": 0
+      },
+      "provider_event_id": {
+        "field": "ProviderEventId__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "reverses_id": {
+        "field": "ReversesId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "ReversesIdNumber__c",
+        "numberScale": 0
+      },
+      "provider_id": {
+        "field": "ProviderId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "ProviderIdNumber__c",
+        "numberScale": 0
+      },
+      "subject_instrument_id": {
+        "field": "SubjectInstrumentId__c",
+        "sourceType": "bigint",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "SubjectInstrumentIdNumber__c",
+        "numberScale": 0
+      }
+    },
+    "relationships": [
+      {
+        "field": "DocumentRef__c",
+        "column": "document_id",
+        "target": "ops.source_documents",
+        "targetColumn": "id"
+      },
+      {
+        "field": "ReversesRef__c",
+        "column": "reverses_id",
+        "target": "portfolio.events",
+        "targetColumn": "id"
+      },
+      {
+        "field": "ProviderRef__c",
+        "column": "provider_id",
+        "target": "ops.providers",
+        "targetColumn": "id"
+      },
+      {
+        "field": "SubjectInstrumentRef__c",
+        "column": "subject_instrument_id",
+        "target": "market.instruments",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "portfolio.portfolios": {
+    "object": "Inv_PortfolioPortfolios__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "name": {
+        "field": "Name__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "base_currency": {
+        "field": "BaseCurrency__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "reporting_boundary": {
+        "field": "ReportingBoundary__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      }
+    },
+    "relationships": []
+  },
+  "portfolio.position_snapshots": {
+    "object": "Inv_PortfolioPositionSnapshots__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "account_id": {
+        "field": "AccountId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "AccountIdNumber__c",
+        "numberScale": 0
+      },
+      "instrument_id": {
+        "field": "InstrumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "InstrumentIdNumber__c",
+        "numberScale": 0
+      },
+      "as_of": {
+        "field": "AsOf__c",
+        "sourceType": "date",
+        "nullable": false,
+        "exactText": false
+      },
+      "reported_units": {
+        "field": "ReportedUnits__c",
+        "sourceType": "numeric",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "ReportedUnitsNumber__c",
+        "numberScale": 12
+      },
+      "reported_cost": {
+        "field": "ReportedCost__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "ReportedCostNumber__c",
+        "numberScale": 8
+      },
+      "document_id": {
+        "field": "DocumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "DocumentIdNumber__c",
+        "numberScale": 0
+      }
+    },
+    "relationships": [
+      {
+        "field": "AccountRef__c",
+        "column": "account_id",
+        "target": "portfolio.accounts",
+        "targetColumn": "id"
+      },
+      {
+        "field": "InstrumentRef__c",
+        "column": "instrument_id",
+        "target": "market.instruments",
+        "targetColumn": "id"
+      },
+      {
+        "field": "DocumentRef__c",
+        "column": "document_id",
+        "target": "ops.source_documents",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "portfolio.sip_evidence": {
+    "object": "Inv_PortfolioSipEvidence__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "account_id": {
+        "field": "AccountId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "AccountIdNumber__c",
+        "numberScale": 0
+      },
+      "instrument_id": {
+        "field": "InstrumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "InstrumentIdNumber__c",
+        "numberScale": 0
+      },
+      "source_record_id": {
+        "field": "SourceRecordId__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "observed_amount": {
+        "field": "ObservedAmount__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "ObservedAmountNumber__c",
+        "numberScale": 8
+      },
+      "cancellation_recorded_on": {
+        "field": "CancellationRecordedOn__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      },
+      "user_confirmed_on": {
+        "field": "UserConfirmedOn__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      },
+      "platform_verified": {
+        "field": "PlatformVerified__c",
+        "sourceType": "boolean",
+        "nullable": false,
+        "exactText": false
+      },
+      "evidence": {
+        "field": "Evidence__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "document_id": {
+        "field": "DocumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "DocumentIdNumber__c",
+        "numberScale": 0
+      }
+    },
+    "relationships": [
+      {
+        "field": "AccountRef__c",
+        "column": "account_id",
+        "target": "portfolio.accounts",
+        "targetColumn": "id"
+      },
+      {
+        "field": "InstrumentRef__c",
+        "column": "instrument_id",
+        "target": "market.fund_share_classes",
+        "targetColumn": "instrument_id"
+      },
+      {
+        "field": "DocumentRef__c",
+        "column": "document_id",
+        "target": "ops.source_documents",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "portfolio.sip_versions": {
+    "object": "Inv_PortfolioSipVersions__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "account_id": {
+        "field": "AccountId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "AccountIdNumber__c",
+        "numberScale": 0
+      },
+      "instrument_id": {
+        "field": "InstrumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "InstrumentIdNumber__c",
+        "numberScale": 0
+      },
+      "mandate_reference": {
+        "field": "MandateReference__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "amount": {
+        "field": "Amount__c",
+        "sourceType": "numeric",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "AmountNumber__c",
+        "numberScale": 8
+      },
+      "frequency": {
+        "field": "Frequency__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "scheduled_day": {
+        "field": "ScheduledDay__c",
+        "sourceType": "integer",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "ScheduledDayNumber__c",
+        "numberScale": 0
+      },
+      "effective_from": {
+        "field": "EffectiveFrom__c",
+        "sourceType": "date",
+        "nullable": false,
+        "exactText": false
+      },
+      "effective_to": {
+        "field": "EffectiveTo__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      },
+      "reported_status": {
+        "field": "ReportedStatus__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "verification_state": {
+        "field": "VerificationState__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "confirmed_at": {
+        "field": "ConfirmedAt__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": true,
+        "exactText": false
+      },
+      "document_id": {
+        "field": "DocumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "DocumentIdNumber__c",
+        "numberScale": 0
+      }
+    },
+    "relationships": [
+      {
+        "field": "AccountRef__c",
+        "column": "account_id",
+        "target": "portfolio.accounts",
+        "targetColumn": "id"
+      },
+      {
+        "field": "InstrumentRef__c",
+        "column": "instrument_id",
+        "target": "market.fund_share_classes",
+        "targetColumn": "instrument_id"
+      },
+      {
+        "field": "DocumentRef__c",
+        "column": "document_id",
+        "target": "ops.source_documents",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "portfolio.unit_entries": {
+    "object": "Inv_PortfolioUnitEntries__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "IdNumber__c",
+        "numberScale": 0
+      },
+      "event_id": {
+        "field": "EventId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "EventIdNumber__c",
+        "numberScale": 0
+      },
+      "account_id": {
+        "field": "AccountId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "AccountIdNumber__c",
+        "numberScale": 0
+      },
+      "instrument_id": {
+        "field": "InstrumentId__c",
+        "sourceType": "bigint",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "InstrumentIdNumber__c",
+        "numberScale": 0
+      },
+      "units_delta": {
+        "field": "UnitsDelta__c",
+        "sourceType": "numeric",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "UnitsDeltaNumber__c",
+        "numberScale": 12
+      },
+      "consideration_amount": {
+        "field": "ConsiderationAmount__c",
+        "sourceType": "numeric",
+        "nullable": false,
+        "exactText": true,
+        "numberField": "ConsiderationAmountNumber__c",
+        "numberScale": 8
+      },
+      "acquisition_cost": {
+        "field": "AcquisitionCost__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "AcquisitionCostNumber__c",
+        "numberScale": 8
+      },
+      "source_nav": {
+        "field": "SourceNav__c",
+        "sourceType": "numeric",
+        "nullable": true,
+        "exactText": true,
+        "numberField": "SourceNavNumber__c",
+        "numberScale": 10
+      },
+      "currency": {
+        "field": "Currency__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      },
+      "acquisition_date": {
+        "field": "AcquisitionDate__c",
+        "sourceType": "date",
+        "nullable": true,
+        "exactText": false
+      },
+      "consideration_basis": {
+        "field": "ConsiderationBasis__c",
+        "sourceType": "text",
+        "nullable": false,
+        "exactText": false
+      }
+    },
+    "relationships": [
+      {
+        "field": "InstrumentRef__c",
+        "column": "instrument_id",
+        "target": "market.instruments",
+        "targetColumn": "id"
+      },
+      {
+        "field": "EventRef__c",
+        "column": "event_id",
+        "target": "portfolio.events",
+        "targetColumn": "id"
+      },
+      {
+        "field": "AccountRef__c",
+        "column": "account_id",
+        "target": "portfolio.accounts",
+        "targetColumn": "id"
+      }
+    ]
+  },
+  "workspace.documents": {
+    "object": "Inv_WorkspaceDocuments__c",
+    "fields": {
+      "id": {
+        "field": "Id__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "name": {
+        "field": "Name__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "body": {
+        "field": "Body__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "sourceId": {
+        "field": "Sourceid__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "sourceUrl": {
+        "field": "Sourceurl__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "originalEditedAt": {
+        "field": "Originaleditedat__c",
+        "sourceType": "text",
+        "nullable": true,
+        "exactText": false
+      },
+      "createdAt": {
+        "field": "Createdat__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": true,
+        "exactText": false
+      },
+      "updatedAt": {
+        "field": "Updatedat__c",
+        "sourceType": "timestamp with time zone",
+        "nullable": true,
+        "exactText": false
+      },
+      "sourceFiles": {
+        "field": "Sourcefiles__c",
+        "sourceType": "jsonb",
+        "nullable": true,
+        "exactText": false
+      }
+    },
+    "relationships": []
+  }
+}

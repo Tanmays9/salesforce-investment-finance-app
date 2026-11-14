@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>ClassificationAsOf__c</fullName>
+  <label>Classification As Of</label>
+  <type>Date</type>
+</CustomField>

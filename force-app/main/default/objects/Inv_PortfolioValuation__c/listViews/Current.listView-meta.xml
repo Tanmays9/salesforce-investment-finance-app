@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>Current</fullName>
+  <columns>NAME</columns>
+  <columns>MarketValue__c</columns>
+  <columns>Cost__c</columns>
+  <columns>UnrealizedGain__c</columns>
+  <columns>MonthlySIP__c</columns>
+  <columns>EarliestNAV__c</columns>
+  <columns>LatestNAV__c</columns>
+  <columns>XIRRDisplay__c</columns>
+  <filterScope>Everything</filterScope>
+  <filters>
+    <field>Published__c</field>
+    <operation>equals</operation>
+    <value>1</value>
+  </filters>
+  <label>Published portfolio summary</label>
+</ListView>

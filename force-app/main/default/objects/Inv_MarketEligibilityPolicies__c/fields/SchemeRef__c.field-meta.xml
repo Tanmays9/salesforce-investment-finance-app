@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>SchemeRef__c</fullName>
+  <deleteConstraint>Restrict</deleteConstraint>
+  <label>Scheme Id Link</label>
+  <referenceTo>Inv_MarketSchemes__c</referenceTo>
+  <relationshipLabel>MarketEligibilityPolicies SchemeId</relationshipLabel>
+  <relationshipName>MarketEligibilityPoliciesSchemeId</relationshipName>
+  <required>false</required>
+  <type>Lookup</type>
+</CustomField>

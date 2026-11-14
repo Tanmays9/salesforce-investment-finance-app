@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+  <deploymentStatus>Deployed</deploymentStatus>
+  <description>Preserved investment data. Historical calculations are dated snapshots.</description>
+  <enableActivities>false</enableActivities>
+  <enableReports>true</enableReports>
+  <label>Portfolio Sip Evidence</label>
+  <nameField>
+    <displayFormat>SIPEVID-{0000000000}</displayFormat>
+    <label>Investment record</label>
+    <type>AutoNumber</type>
+  </nameField>
+  <pluralLabel>Portfolio Sip Evidence</pluralLabel>
+  <sharingModel>Private</sharingModel>
+</CustomObject>

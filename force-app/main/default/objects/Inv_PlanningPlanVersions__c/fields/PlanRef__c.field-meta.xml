@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>PlanRef__c</fullName>
+  <deleteConstraint>Restrict</deleteConstraint>
+  <label>Plan Id Link</label>
+  <referenceTo>Inv_PlanningPlans__c</referenceTo>
+  <relationshipLabel>PlanningPlanVersions PlanId</relationshipLabel>
+  <relationshipName>PlanningPlanVersionsPlanId</relationshipName>
+  <required>false</required>
+  <type>Lookup</type>
+</CustomField>

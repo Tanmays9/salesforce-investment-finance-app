@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>ProviderRef__c</fullName>
+  <deleteConstraint>Restrict</deleteConstraint>
+  <label>Provider Id Link</label>
+  <referenceTo>Inv_OpsProviders__c</referenceTo>
+  <relationshipLabel>MarketPriceObservations ProviderId</relationshipLabel>
+  <relationshipName>MarketPriceObservationsProviderId</relationshipName>
+  <required>false</required>
+  <type>Lookup</type>
+</CustomField>

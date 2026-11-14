@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>WithoutSIP</fullName>
+  <columns>NAME</columns>
+  <columns>FundDisplayName__c</columns>
+  <columns>Units__c</columns>
+  <columns>Cost__c</columns>
+  <columns>MarketValue__c</columns>
+  <columns>NAVDate__c</columns>
+  <columns>Coverage__c</columns>
+  <filterScope>Everything</filterScope>
+  <filters>
+    <field>Status__c</field>
+    <operation>equals</operation>
+    <value>Active</value>
+  </filters>
+  <filters>
+    <field>SIPAmount__c</field>
+    <operation>equals</operation>
+    <value>0</value>
+  </filters>
+  <label>Holdings Without Active SIPs</label>
+</ListView>

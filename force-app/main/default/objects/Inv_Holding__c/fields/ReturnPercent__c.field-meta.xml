@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>ReturnPercent__c</fullName>
+  <formula>IF(OR(ISBLANK(Cost__c),Cost__c = 0), NULL, UnrealizedGain__c / Cost__c)</formula>
+  <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+  <label>Unrealized return</label>
+  <precision>18</precision>
+  <scale>2</scale>
+  <type>Percent</type>
+</CustomField>

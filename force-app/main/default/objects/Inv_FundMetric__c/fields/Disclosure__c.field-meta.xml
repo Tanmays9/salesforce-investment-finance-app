@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>Disclosure__c</fullName>
+  <deleteConstraint>Restrict</deleteConstraint>
+  <label>Fund disclosure</label>
+  <referenceTo>Inv_MarketFundPortfolioSnapshots__c</referenceTo>
+  <relationshipLabel>FundMetricEvidence</relationshipLabel>
+  <relationshipName>FundMetricDisclosure</relationshipName>
+  <type>Lookup</type>
+</CustomField>

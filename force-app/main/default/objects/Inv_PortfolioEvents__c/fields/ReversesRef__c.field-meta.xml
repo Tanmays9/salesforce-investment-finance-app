@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>ReversesRef__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <label>Reverses Id Link</label>
+  <referenceTo>Inv_PortfolioEvents__c</referenceTo>
+  <relationshipLabel>PortfolioEvents ReversesId</relationshipLabel>
+  <relationshipName>PortfolioEventsReversesId</relationshipName>
+  <required>false</required>
+  <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>ConfirmedEventRef__c</fullName>
+  <deleteConstraint>Restrict</deleteConstraint>
+  <label>Confirmed Event Id Link</label>
+  <referenceTo>Inv_PortfolioEvents__c</referenceTo>
+  <relationshipLabel>PlanningExecutionRecords ConfirmedEventId</relationshipLabel>
+  <relationshipName>PlanningExecutionRecordsConfirmedEventId</relationshipName>
+  <required>false</required>
+  <type>Lookup</type>
+</CustomField>

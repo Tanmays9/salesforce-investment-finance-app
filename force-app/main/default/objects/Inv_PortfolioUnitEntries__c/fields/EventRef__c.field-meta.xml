@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>EventRef__c</fullName>
+  <deleteConstraint>Restrict</deleteConstraint>
+  <label>Event Id Link</label>
+  <referenceTo>Inv_PortfolioEvents__c</referenceTo>
+  <relationshipLabel>PortfolioUnitEntries EventId</relationshipLabel>
+  <relationshipName>PortfolioUnitEntriesEventId</relationshipName>
+  <required>false</required>
+  <type>Lookup</type>
+</CustomField>

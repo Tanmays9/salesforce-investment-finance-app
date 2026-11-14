@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+  <deploymentStatus>Deployed</deploymentStatus>
+  <description>Operational portfolio analysis; source history remains separately preserved.</description>
+  <enableReports>true</enableReports>
+  <label>Portfolio valuation</label>
+  <nameField>
+    <label>Portfolio valuation name</label>
+    <type>Text</type>
+  </nameField>
+  <pluralLabel>Portfolio Valuations</pluralLabel>
+  <sharingModel>Private</sharingModel>
+</CustomObject>

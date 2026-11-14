@@ -1,0 +1,919 @@
+{
+  "objects": {
+    "Inv_Holding__c": [
+      "Holding",
+      "Holdings",
+      {
+        "Portfolio__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Portfolio",
+          "referenceTo": "Inv_PortfolioPortfolios__c",
+          "relationshipLabel": "OperationalHoldings",
+          "relationshipName": "OperationalHoldings",
+          "type": "Lookup"
+        },
+        "Account__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Investment account",
+          "referenceTo": "Inv_PortfolioAccounts__c",
+          "relationshipLabel": "Holdings",
+          "relationshipName": "Holdings",
+          "type": "Lookup"
+        },
+        "Fund__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Fund",
+          "referenceTo": "Inv_MarketInstruments__c",
+          "relationshipLabel": "OperationalHoldings",
+          "relationshipName": "OperationalHoldings",
+          "type": "Lookup"
+        },
+        "FundDisplayName__c": {
+          "formula": "IF(ISBLANK(Fund__r.DisplayName__c), Fund__r.Name, Fund__r.DisplayName__c)",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Fund name",
+          "type": "Text"
+        },
+        "Category__c": {
+          "label": "Fund category",
+          "length": 255,
+          "type": "Text"
+        },
+        "AMC__c": {
+          "label": "AMC",
+          "length": 255,
+          "type": "Text"
+        },
+        "Units__c": {
+          "label": "Remaining units",
+          "precision": 18,
+          "scale": 8,
+          "type": "Number"
+        },
+        "Cost__c": {
+          "label": "Remaining cost INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "NAV__c": {
+          "label": "Selected NAV",
+          "precision": 18,
+          "scale": 10,
+          "type": "Number"
+        },
+        "NAVDate__c": {
+          "label": "NAV date",
+          "type": "Date"
+        },
+        "ReconciledThrough__c": {
+          "label": "Transactions reconciled through",
+          "type": "Date"
+        },
+        "MarketValue__c": {
+          "label": "Market value INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "UnrealizedGain__c": {
+          "label": "Unrealized gain INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "RealizedGain__c": {
+          "label": "Realized gain INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "XIRR__c": {
+          "label": "Personal XIRR",
+          "precision": 18,
+          "scale": 10,
+          "type": "Number"
+        },
+        "Weight__c": {
+          "label": "Portfolio weight",
+          "precision": 18,
+          "scale": 10,
+          "type": "Number"
+        },
+        "SIPAmount__c": {
+          "label": "Monthly SIP INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "XIRRDisplay__c": {
+          "formula": "IF(ISBLANK(XIRR__c), NULL, XIRR__c)",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Personal XIRR percent",
+          "precision": 18,
+          "scale": 2,
+          "type": "Percent"
+        },
+        "WeightDisplay__c": {
+          "formula": "IF(ISBLANK(Weight__c), NULL, Weight__c)",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Portfolio weight percent",
+          "precision": 18,
+          "scale": 2,
+          "type": "Percent"
+        },
+        "Status__c": {
+          "label": "Position status",
+          "length": 40,
+          "type": "Text"
+        },
+        "Coverage__c": {
+          "label": "Calculation coverage",
+          "length": 255,
+          "type": "Text"
+        },
+        "Warnings__c": {
+          "label": "Review notes",
+          "length": 32768,
+          "visibleLines": 3,
+          "type": "LongTextArea"
+        },
+        "Run__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Analysis run",
+          "referenceTo": "Inv_AnalyticsRuns__c",
+          "relationshipLabel": "OperationalResults",
+          "relationshipName": "OperationalResults",
+          "type": "Lookup"
+        },
+        "ReturnPercent__c": {
+          "formula": "IF(OR(ISBLANK(Cost__c),Cost__c = 0), NULL, UnrealizedGain__c / Cost__c)",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Unrealized return",
+          "precision": 18,
+          "scale": 2,
+          "type": "Percent"
+        }
+      }
+    ],
+    "Inv_HoldingValuation__c": [
+      "Holding valuation",
+      "Holding Valuations",
+      {
+        "Holding__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Holding",
+          "referenceTo": "Inv_Holding__c",
+          "relationshipLabel": "Valuations",
+          "relationshipName": "Valuations",
+          "type": "Lookup"
+        },
+        "Portfolio__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Portfolio",
+          "referenceTo": "Inv_PortfolioPortfolios__c",
+          "relationshipLabel": "OperationalHoldings",
+          "relationshipName": "OperationalHoldings",
+          "type": "Lookup"
+        },
+        "Fund__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Fund",
+          "referenceTo": "Inv_MarketInstruments__c",
+          "relationshipLabel": "OperationalHoldings",
+          "relationshipName": "OperationalHoldings",
+          "type": "Lookup"
+        },
+        "Run__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Analysis run",
+          "referenceTo": "Inv_AnalyticsRuns__c",
+          "relationshipLabel": "OperationalResults",
+          "relationshipName": "OperationalResults",
+          "type": "Lookup"
+        },
+        "AsOf__c": {
+          "label": "Valuation date",
+          "type": "Date"
+        },
+        "NAVDate__c": {
+          "label": "NAV date",
+          "type": "Date"
+        },
+        "Units__c": {
+          "label": "Units",
+          "precision": 18,
+          "scale": 8,
+          "type": "Number"
+        },
+        "NAV__c": {
+          "label": "NAV",
+          "precision": 18,
+          "scale": 10,
+          "type": "Number"
+        },
+        "Cost__c": {
+          "label": "Remaining cost INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "MarketValue__c": {
+          "label": "Market value INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "UnrealizedGain__c": {
+          "label": "Unrealized gain INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "Coverage__c": {
+          "label": "Coverage",
+          "length": 255,
+          "type": "Text"
+        },
+        "Published__c": {
+          "defaultValue": false,
+          "label": "Published",
+          "type": "Checkbox"
+        }
+      }
+    ],
+    "Inv_PortfolioValuation__c": [
+      "Portfolio valuation",
+      "Portfolio Valuations",
+      {
+        "Portfolio__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Portfolio",
+          "referenceTo": "Inv_PortfolioPortfolios__c",
+          "relationshipLabel": "OperationalHoldings",
+          "relationshipName": "OperationalHoldings",
+          "type": "Lookup"
+        },
+        "Run__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Analysis run",
+          "referenceTo": "Inv_AnalyticsRuns__c",
+          "relationshipLabel": "OperationalResults",
+          "relationshipName": "OperationalResults",
+          "type": "Lookup"
+        },
+        "AsOf__c": {
+          "label": "Valuation date",
+          "type": "Date"
+        },
+        "EarliestNAV__c": {
+          "label": "Earliest NAV date",
+          "type": "Date"
+        },
+        "LatestNAV__c": {
+          "label": "Latest NAV date",
+          "type": "Date"
+        },
+        "MarketValue__c": {
+          "label": "Market value INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "Cost__c": {
+          "label": "Remaining cost INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "UnrealizedGain__c": {
+          "label": "Unrealized gain INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "RealizedGain__c": {
+          "label": "Realized gain INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "XIRR__c": {
+          "label": "Portfolio XIRR",
+          "precision": 18,
+          "scale": 10,
+          "type": "Number"
+        },
+        "MonthlySIP__c": {
+          "label": "Monthly SIP INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "HoldingCount__c": {
+          "label": "Active positions",
+          "precision": 18,
+          "scale": 0,
+          "type": "Number"
+        },
+        "XIRRDisplay__c": {
+          "formula": "IF(ISBLANK(XIRR__c), NULL, XIRR__c)",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Portfolio XIRR percent",
+          "precision": 18,
+          "scale": 2,
+          "type": "Percent"
+        },
+        "Coverage__c": {
+          "label": "Coverage and review notes",
+          "length": 32768,
+          "visibleLines": 3,
+          "type": "LongTextArea"
+        },
+        "Published__c": {
+          "defaultValue": false,
+          "label": "Published",
+          "type": "Checkbox"
+        },
+        "LatestForDate__c": {
+          "defaultValue": false,
+          "label": "Latest valuation for date",
+          "type": "Checkbox"
+        },
+        "InputHash__c": {
+          "label": "Input fingerprint",
+          "length": 64,
+          "type": "Text"
+        }
+      }
+    ],
+    "Inv_Exposure__c": [
+      "Exposure",
+      "Exposures",
+      {
+        "Portfolio__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Portfolio",
+          "referenceTo": "Inv_PortfolioPortfolios__c",
+          "relationshipLabel": "OperationalHoldings",
+          "relationshipName": "OperationalHoldings",
+          "type": "Lookup"
+        },
+        "Fund__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Fund",
+          "referenceTo": "Inv_MarketInstruments__c",
+          "relationshipLabel": "OperationalHoldings",
+          "relationshipName": "OperationalHoldings",
+          "type": "Lookup"
+        },
+        "Run__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Analysis run",
+          "referenceTo": "Inv_AnalyticsRuns__c",
+          "relationshipLabel": "OperationalResults",
+          "relationshipName": "OperationalResults",
+          "type": "Lookup"
+        },
+        "Dimension__c": {
+          "label": "Dimension",
+          "length": 60,
+          "type": "Text"
+        },
+        "Member__c": {
+          "label": "Exposure member",
+          "length": 255,
+          "type": "Text"
+        },
+        "Value__c": {
+          "label": "Attributed value INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "Weight__c": {
+          "label": "Portfolio weight",
+          "precision": 18,
+          "scale": 10,
+          "type": "Number"
+        },
+        "DisclosureDate__c": {
+          "label": "Disclosure date",
+          "type": "Date"
+        },
+        "Coverage__c": {
+          "label": "Coverage",
+          "length": 255,
+          "type": "Text"
+        },
+        "Published__c": {
+          "defaultValue": false,
+          "label": "Published",
+          "type": "Checkbox"
+        }
+      }
+    ],
+    "Inv_FundMetric__c": [
+      "Fund metric",
+      "Fund Metrics",
+      {
+        "Fund__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Fund",
+          "referenceTo": "Inv_MarketInstruments__c",
+          "relationshipLabel": "OperationalHoldings",
+          "relationshipName": "OperationalHoldings",
+          "type": "Lookup"
+        },
+        "Run__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Analysis run",
+          "referenceTo": "Inv_AnalyticsRuns__c",
+          "relationshipLabel": "OperationalResults",
+          "relationshipName": "OperationalResults",
+          "type": "Lookup"
+        },
+        "Metric__c": {
+          "label": "Metric",
+          "length": 80,
+          "type": "Text"
+        },
+        "PeriodStart__c": {
+          "label": "Period start",
+          "type": "Date"
+        },
+        "PeriodEnd__c": {
+          "label": "Period end",
+          "type": "Date"
+        },
+        "Value__c": {
+          "label": "Value",
+          "precision": 18,
+          "scale": 10,
+          "type": "Number"
+        },
+        "Coverage__c": {
+          "label": "Coverage",
+          "length": 255,
+          "type": "Text"
+        },
+        "Benchmark__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Benchmark",
+          "referenceTo": "Inv_MarketInstruments__c",
+          "relationshipLabel": "FundComparisons",
+          "relationshipName": "FundComparisons",
+          "type": "Lookup"
+        },
+        "Published__c": {
+          "defaultValue": false,
+          "label": "Published",
+          "type": "Checkbox"
+        },
+        "CounterpartyFund__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Compared fund",
+          "referenceTo": "Inv_MarketInstruments__c",
+          "relationshipLabel": "OverlapComparisons",
+          "relationshipName": "OverlapComparisons",
+          "type": "Lookup"
+        },
+        "Disclosure__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Fund disclosure",
+          "referenceTo": "Inv_MarketFundPortfolioSnapshots__c",
+          "relationshipLabel": "FundMetricEvidence",
+          "relationshipName": "FundMetricEvidence",
+          "type": "Lookup"
+        },
+        "ComparedDisclosure__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Compared disclosure",
+          "referenceTo": "Inv_MarketFundPortfolioSnapshots__c",
+          "relationshipLabel": "ComparedMetricEvidence",
+          "relationshipName": "ComparedMetricEvidence",
+          "type": "Lookup"
+        },
+        "ValuePercent__c": {
+          "formula": "IF(ISBLANK(Value__c), NULL, Value__c)",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Metric percent",
+          "precision": 18,
+          "scale": 2,
+          "type": "Percent"
+        }
+      }
+    ],
+    "Inv_PlanImpact__c": [
+      "Plan impact",
+      "Plan Impacts",
+      {
+        "PlanVersion__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Plan version",
+          "referenceTo": "Inv_PlanningPlanVersions__c",
+          "relationshipLabel": "Impacts",
+          "relationshipName": "Impacts",
+          "type": "Lookup"
+        },
+        "Run__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Analysis run",
+          "referenceTo": "Inv_AnalyticsRuns__c",
+          "relationshipLabel": "OperationalResults",
+          "relationshipName": "OperationalResults",
+          "type": "Lookup"
+        },
+        "Fund__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Fund",
+          "referenceTo": "Inv_MarketInstruments__c",
+          "relationshipLabel": "OperationalHoldings",
+          "relationshipName": "OperationalHoldings",
+          "type": "Lookup"
+        },
+        "Scope__c": {
+          "label": "Scope",
+          "length": 100,
+          "type": "Text"
+        },
+        "Metric__c": {
+          "label": "Metric",
+          "length": 100,
+          "type": "Text"
+        },
+        "Baseline__c": {
+          "label": "Current",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "Dimension__c": {
+          "label": "Exposure dimension",
+          "length": 60,
+          "type": "Text"
+        },
+        "Member__c": {
+          "label": "Exposure member",
+          "length": 255,
+          "type": "Text"
+        },
+        "Proposed__c": {
+          "label": "Proposed",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "Coverage__c": {
+          "label": "Coverage",
+          "length": 255,
+          "type": "Text"
+        },
+        "Notes__c": {
+          "label": "Assumptions and warnings",
+          "length": 32768,
+          "visibleLines": 3,
+          "type": "LongTextArea"
+        },
+        "Published__c": {
+          "defaultValue": false,
+          "label": "Published",
+          "type": "Checkbox"
+        }
+      }
+    ]
+  },
+  "extensions": {
+    "Inv_PlanningTargets__c": {
+      "Fund__c": {
+        "deleteConstraint": "Restrict",
+        "label": "Target fund",
+        "referenceTo": "Inv_MarketInstruments__c",
+        "relationshipLabel": "AllocationTargets",
+        "relationshipName": "AllocationTargets",
+        "type": "Lookup"
+      }
+    },
+    "Inv_PortfolioAccounts__c": {
+      "CASScopeKey__c": {
+        "label": "Verified CAS account scope",
+        "length": 64,
+        "type": "Text",
+        "externalId": true,
+        "unique": true
+      }
+    },
+    "Inv_PortfolioPortfolios__c": {
+      "PublishedRun__c": {
+        "deleteConstraint": "Restrict",
+        "label": "Published analysis run",
+        "referenceTo": "Inv_AnalyticsRuns__c",
+        "relationshipLabel": "PublishedPortfolios",
+        "relationshipName": "PublishedPortfolios",
+        "type": "Lookup"
+      }
+    },
+    "Inv_MarketInstruments__c": {
+      "DisplayName__c": {
+        "label": "Fund or security name",
+        "length": 255,
+        "type": "Text"
+      },
+      "Tracked__c": {
+        "defaultValue": false,
+        "label": "Track NAV",
+        "type": "Checkbox"
+      },
+      "NAVAttemptAt__c": {
+        "label": "NAV refresh attempted at",
+        "type": "DateTime"
+      },
+      "NAVRefreshStatus__c": {
+        "label": "NAV refresh status",
+        "length": 40,
+        "type": "Text"
+      },
+      "AMFICode__c": {
+        "label": "Verified AMFI scheme code",
+        "length": 20,
+        "type": "Text"
+      },
+      "MappingVerified__c": {
+        "defaultValue": false,
+        "label": "Share-class mapping verified",
+        "type": "Checkbox"
+      },
+      "LatestTER__c": {
+        "label": "Latest disclosed TER ratio",
+        "precision": 18,
+        "scale": 10,
+        "type": "Number"
+      },
+      "LatestBER__c": {
+        "label": "Latest disclosed BER ratio",
+        "precision": 18,
+        "scale": 10,
+        "type": "Number"
+      },
+      "ExpenseDate__c": {
+        "label": "Expense disclosure date",
+        "type": "Date"
+      },
+      "ExpenseEvidence__c": {
+        "deleteConstraint": "Restrict",
+        "label": "Expense evidence",
+        "referenceTo": "Inv_MarketExpenseObservations__c",
+        "relationshipLabel": "FundExpenseSummaries",
+        "relationshipName": "FundExpenseSummaries",
+        "type": "Lookup"
+      },
+      "TERPercent__c": {
+        "formula": "IF(ISBLANK(LatestTER__c), NULL, LatestTER__c)",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "Latest disclosed TER",
+        "precision": 18,
+        "scale": 2,
+        "type": "Percent"
+      },
+      "BERPercent__c": {
+        "formula": "IF(ISBLANK(LatestBER__c), NULL, LatestBER__c)",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "Latest disclosed BER",
+        "precision": 18,
+        "scale": 2,
+        "type": "Percent"
+      }
+    },
+    "Inv_AnalyticsRuns__c": {
+      "OperationalStatus__c": {
+        "label": "Operational status",
+        "length": 40,
+        "type": "Text"
+      },
+      "Failure__c": {
+        "label": "Failure summary",
+        "length": 32768,
+        "visibleLines": 3,
+        "type": "LongTextArea"
+      }
+    },
+    "Inv_MarketPriceObservations__c": {
+      "ObservationKey__c": {
+        "label": "Observation identity",
+        "length": 200,
+        "type": "Text",
+        "externalId": true,
+        "unique": true
+      },
+      "RecentChartDate__c": {
+        "formula": "AND(NOT(ISBLANK(ObservedOn__c)), ObservedOn__c >= ADDMONTHS(TODAY(), -60))",
+        "label": "Within five year chart window",
+        "type": "Checkbox"
+      },
+      "RetrievedAt__c": {
+        "label": "Retrieved at",
+        "type": "DateTime"
+      },
+      "KindFilter__c": {
+        "label": "Price type",
+        "length": 30,
+        "type": "Text"
+      },
+      "QualityFilter__c": {
+        "label": "Observation quality",
+        "length": 40,
+        "type": "Text"
+      },
+      "SelectedNAV__c": {
+        "defaultValue": false,
+        "label": "Selected NAV for this date",
+        "type": "Checkbox"
+      }
+    },
+    "Inv_OpsImportRuns__c": {
+      "FileHash__c": {
+        "label": "Source file SHA-256",
+        "length": 64,
+        "type": "Text",
+        "externalId": true,
+        "unique": true
+      },
+      "Portfolio__c": {
+        "deleteConstraint": "Restrict",
+        "label": "Destination portfolio",
+        "referenceTo": "Inv_PortfolioPortfolios__c",
+        "relationshipLabel": "StatementImports",
+        "relationshipName": "StatementImports",
+        "type": "Lookup"
+      },
+      "DuplicateOf__c": {
+        "deleteConstraint": "SetNull",
+        "label": "Existing import",
+        "referenceTo": "Inv_OpsImportRuns__c",
+        "relationshipLabel": "DuplicateUploads",
+        "relationshipName": "DuplicateUploads",
+        "type": "Lookup"
+      },
+      "CASParserVersion__c": {
+        "label": "CAS parser version",
+        "length": 60,
+        "type": "Text"
+      },
+      "ContentVersionId__c": {
+        "label": "Source file version",
+        "length": 18,
+        "type": "Text"
+      },
+      "OperationalStatus__c": {
+        "label": "Import status",
+        "length": 40,
+        "type": "Text"
+      },
+      "ParserJobId__c": {
+        "label": "Parser job identity",
+        "length": 100,
+        "type": "Text"
+      },
+      "Failure__c": {
+        "label": "Failure summary",
+        "length": 32768,
+        "visibleLines": 3,
+        "type": "LongTextArea"
+      }
+    },
+    "Inv_OpsImportRows__c": {
+      "PostingKey__c": {
+        "label": "Posting identity",
+        "length": 200,
+        "type": "Text",
+        "externalId": true,
+        "unique": true
+      },
+      "RowIdentity__c": {
+        "label": "Staged row identity",
+        "length": 200,
+        "type": "Text",
+        "externalId": true,
+        "unique": true
+      },
+      "ScopeKey__c": {
+        "label": "CAS account scope",
+        "length": 64,
+        "type": "Text"
+      },
+      "RowKind__c": {
+        "label": "Statement row kind",
+        "length": 30,
+        "type": "Text"
+      },
+      "MatchKey__c": {
+        "label": "Economic matching key",
+        "length": 64,
+        "type": "Text",
+        "externalId": true
+      },
+      "Account__c": {
+        "deleteConstraint": "Restrict",
+        "label": "Mapped account",
+        "referenceTo": "Inv_PortfolioAccounts__c",
+        "relationshipLabel": "StatementRows",
+        "relationshipName": "StatementRows",
+        "type": "Lookup"
+      },
+      "Fund__c": {
+        "deleteConstraint": "Restrict",
+        "label": "Mapped share class",
+        "referenceTo": "Inv_MarketInstruments__c",
+        "relationshipLabel": "StatementRows",
+        "relationshipName": "StatementRows",
+        "type": "Lookup"
+      },
+      "ISIN__c": {
+        "label": "ISIN",
+        "length": 20,
+        "type": "Text"
+      },
+      "TradeDate__c": {
+        "label": "Transaction date",
+        "type": "Date"
+      },
+      "TransactionType__c": {
+        "label": "Transaction type",
+        "length": 40,
+        "type": "Text"
+      },
+      "Units__c": {
+        "label": "Exact signed units",
+        "length": 80,
+        "type": "Text"
+      },
+      "Amount__c": {
+        "label": "Exact consideration INR",
+        "length": 80,
+        "type": "Text"
+      },
+      "Cost__c": {
+        "label": "Exact acquisition cost INR",
+        "length": 80,
+        "type": "Text"
+      },
+      "NAV__c": {
+        "label": "Exact source NAV",
+        "length": 80,
+        "type": "Text"
+      },
+      "OpeningUnits__c": {
+        "label": "Statement opening units",
+        "length": 80,
+        "type": "Text"
+      },
+      "ClosingUnits__c": {
+        "label": "Statement closing units",
+        "length": 80,
+        "type": "Text"
+      },
+      "PeriodStart__c": {
+        "label": "Statement start",
+        "type": "Date"
+      },
+      "PeriodEnd__c": {
+        "label": "Statement end",
+        "type": "Date"
+      },
+      "Occurrence__c": {
+        "label": "Matching occurrence",
+        "precision": 18,
+        "scale": 0,
+        "type": "Number"
+      },
+      "MatchStatus__c": {
+        "label": "Match status",
+        "length": 40,
+        "type": "Text"
+      },
+      "MatchedEvent__c": {
+        "deleteConstraint": "Restrict",
+        "label": "Existing economic event",
+        "referenceTo": "Inv_PortfolioEvents__c",
+        "relationshipLabel": "ImportEvidence",
+        "relationshipName": "ImportEvidence",
+        "type": "Lookup"
+      }
+    },
+    "Inv_PortfolioEvents__c": {
+      "PostingKey__c": {
+        "label": "Posting identity",
+        "length": 200,
+        "type": "Text",
+        "externalId": true,
+        "unique": true
+      },
+      "EconomicKey__c": {
+        "label": "Economic matching key",
+        "length": 64,
+        "type": "Text",
+        "externalId": true
+      }
+    }
+  }
+}

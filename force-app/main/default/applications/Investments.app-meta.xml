@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+  <description>Portfolio review, fund analysis and versioned investment plans.</description>
+  <formFactors>Large</formFactors>
+  <formFactors>Small</formFactors>
+  <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+  <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+  <label>Investments</label>
+  <navType>Standard</navType>
+  <tabs>Inv_Overview</tabs>
+  <tabs>Inv_PortfolioPortfolios__c</tabs>
+  <tabs>Inv_Holding__c</tabs>
+  <tabs>Inv_MarketInstruments__c</tabs>
+  <tabs>Inv_PortfolioSipVersions__c</tabs>
+  <tabs>Inv_PlanningPlans__c</tabs>
+  <tabs>Inv_OpsImportRuns__c</tabs>
+  <tabs>Inv_OpsDataIssues__c</tabs>
+  <tabs>standard-report</tabs>
+  <tabs>standard-Dashboard</tabs>
+  <uiType>Lightning</uiType>
+</CustomApplication>

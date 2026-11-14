@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+  <types>
+    <members>Inv_Holding__c.FundDisplayName__c</members>
+    <name>CustomField</name>
+  </types>
+  <types>
+    <members>Inv_Holding_Analysis</members>
+    <name>ReportType</name>
+  </types>
+  <types>
+    <members>Investments/Holdings</members>
+    <members>Investments/FundAllocation</members>
+    <members>Investments/SIPAllocation</members>
+    <members>Investments/HoldingGains</members>
+    <name>Report</name>
+  </types>
+  <types>
+    <members>Investments/PortfolioOverview</members>
+    <name>Dashboard</name>
+  </types>
+  <types>
+    <members>Inv_Holding__c-Portfolio Analysis</members>
+    <name>Layout</name>
+  </types>
+  <types>
+    <members>Inv_Holding__c.All</members>
+    <members>Inv_Holding__c.Current</members>
+    <members>Inv_Holding__c.Closed</members>
+    <members>Inv_Holding__c.WithoutSIP</members>
+    <members>Inv_Holding__c.NeedsReview</members>
+    <name>ListView</name>
+  </types>
+  <types>
+    <members>Inv_Viewer</members>
+    <members>Inv_MigrationAdmin</members>
+    <name>PermissionSet</name>
+  </types>
+  <version>68.0</version>
+</Package>

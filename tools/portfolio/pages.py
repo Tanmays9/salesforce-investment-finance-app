@@ -1,0 +1,97 @@
+"""Native Lightning navigation and contextual standard report charts."""
+import sys
+from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'investment-migration'))
+from prepare import ROOT,xml,NS,object_presentation
+from build import DEST,section
+import xml.etree.ElementTree as ET
+
+def component(name,identity,properties):
+ return {'componentInstance':{'componentInstanceProperties':[{'name':k,'value':v} for k,v in properties.items()],
+  'componentName':name,'identifier':identity}}
+
+def main():
+ members={}
+ def add(kind,name):members.setdefault(kind,[]).append(name)
+ charts=[component('flexipage:filterListCard','summary',{'entityName':'Inv_PortfolioValuation__c','filterName':'Current','pageSize':'5'}),
+         component('flexipage:reportChart','allocation',{'reportName':'FundAllocation','showRefreshButton':'true'}),
+         component('flexipage:reportChart','category',{'reportName':'CategoryAllocation','showRefreshButton':'true'}),
+         component('flexipage:reportChart','sip',{'reportName':'SIPAllocation','showRefreshButton':'true'})]
+ xml(DEST/'flexipages/Inv_Overview.flexipage-meta.xml','FlexiPage',{'description':'Portfolio allocation and SIP review. Open Holdings for units, valuation dates and reconciliation.',
+  'flexiPageRegions':{'itemInstances':charts,'name':'main','type':'Region'},'masterLabel':'Portfolio Overview',
+  'template':{'name':'flexipage:defaultAppHomeTemplate'},'type':'AppPage'});add('FlexiPage','Inv_Overview')
+ xml(DEST/'tabs/Inv_Overview.tab-meta.xml','CustomTab',{'flexiPage':'Inv_Overview','label':'Overview','motif':'Custom18: Form'});add('CustomTab','Inv_Overview')
+ for api,original,label in [('Inv_MarketInstruments__c','Market Instruments Layout','Fund analysis'),('Inv_PortfolioPortfolios__c','Portfolio Portfolios Layout','Portfolio review'),('Inv_PlanningPlanVersions__c','Planning Plan Versions Layout','Plan comparison')]:
+  fund=api=='Inv_MarketInstruments__c'
+  report_specs=[('NAVHistory','Inv_MarketPriceObservations__c$InstrumentRef__c.Id'),('Exposure','Inv_Exposure__c$Fund__c.Id')] if fund else [('PlanComparison','Inv_PlanImpact__c$PlanVersion__c.Id'),('PlanSIPs','Inv_PlanImpact__c$PlanVersion__c.Id')] if api=='Inv_PlanningPlanVersions__c' else [('FundAllocation','Inv_Holding__c$Portfolio__c.Id'),('CategoryAllocation','Inv_Holding__c$Portfolio__c.Id')]
+  path=DEST/'layouts'/(api+'-'+original+'.layout-meta.xml');root=ET.parse(path).getroot()
+  for node in list(root.findall('{'+NS+'}layoutSections')):
+   if node.find('{'+NS+'}label').text in ['Analysis charts','Fund identity']:root.remove(node)
+  chartsection=ET.Element('{'+NS+'}layoutSections')
+  for k,v in [('customLabel','true'),('detailHeading','true'),('editHeading','false'),('label','Analysis charts')]:ET.SubElement(chartsection,'{'+NS+'}'+k).text=v
+  column=ET.SubElement(chartsection,'{'+NS+'}layoutColumns')
+  for report,context in report_specs[:2]:
+   item=ET.SubElement(column,'{'+NS+'}layoutItems');chart=ET.SubElement(item,'{'+NS+'}reportChartComponent')
+   for k,v in {'cacheData':'true','contextFilterableField':context.replace('$','.'),'hideOnError':'false','includeContext':'true','reportName':report,'showTitle':'true','size':'LARGE'}.items():ET.SubElement(chart,'{'+NS+'}'+k).text=v
+  ET.SubElement(chartsection,'{'+NS+'}style').text='OneColumn';root.insert(0,chartsection)
+  if fund:
+   for col in root.findall('.//{'+NS+'}layoutColumns'):
+    for item in list(col):
+     field=item.find('{'+NS+'}field')
+     if field is not None and field.text in ['DisplayName__c','Isin__c','AMFICode__c','MappingVerified__c','Tracked__c']:col.remove(item)
+   # A standard field section exposes readable scheme identity without renaming imported IDs.
+   value=section('Fund identity',['DisplayName__c','Isin__c','AMFICode__c','MappingVerified__c','Tracked__c','TERPercent__c','BERPercent__c','ExpenseDate__c','ExpenseEvidence__c'])
+   temp=DEST/'layouts/_temporary.layout-meta.xml';xml(temp,'Layout',{'layoutSections':value});root.insert(0,ET.parse(temp).getroot()[0]);temp.unlink()
+  ET.indent(root,space='  ');ET.ElementTree(root).write(path,encoding='UTF-8',xml_declaration=True);add('Layout',api+'-'+original)
+  if fund:
+   for child,field,columns in [('Inv_Holding__c','Fund__c',['NAME','Units__c','Cost__c','MarketValue__c','XIRRDisplay__c','NAVDate__c']),('Inv_FundMetric__c','Fund__c',['NAME','CounterpartyFund__c','ValuePercent__c','PeriodEnd__c','Coverage__c'])]:
+    name=child+'.'+field
+    if not any(n.find('{'+NS+'}relatedList').text==name for n in root.findall('{'+NS+'}relatedLists')):
+     node=ET.SubElement(root,'{'+NS+'}relatedLists')
+     for column in columns:ET.SubElement(node,'{'+NS+'}fields').text=column
+     ET.SubElement(node,'{'+NS+'}relatedList').text=name
+   root[:]=sorted(root,key=lambda n:n.tag);ET.indent(root,space='  ');ET.ElementTree(root).write(path,encoding='UTF-8',xml_declaration=True)
+ tabs=['Inv_Overview','Inv_PortfolioPortfolios__c','Inv_Holding__c','Inv_MarketInstruments__c','Inv_PortfolioSipVersions__c','Inv_PlanningPlans__c','Inv_OpsImportRuns__c','Inv_OpsDataIssues__c','standard-report','standard-Dashboard']
+ xml(DEST/'applications/Investments.app-meta.xml','CustomApplication',{'description':'Portfolio review, fund analysis and versioned investment plans.',
+  'formFactors':['Large','Small'],'isNavAutoTempTabsDisabled':False,'isNavPersonalizationDisabled':False,
+  'label':'Investments','navType':'Standard','tabs':tabs,'uiType':'Lightning'});add('CustomApplication','Investments')
+ for role in ['Inv_Viewer','Inv_MigrationAdmin']:
+  path=DEST/'permissionsets'/(role+'.permissionset-meta.xml');root=ET.parse(path).getroot()
+  for tab in tabs:
+   if tab.startswith('standard-'):continue
+   if not any(n.find('{'+NS+'}tab').text==tab for n in root.findall('{'+NS+'}tabSettings')):
+    n=ET.SubElement(root,'{'+NS+'}tabSettings');ET.SubElement(n,'{'+NS+'}tab').text=tab;ET.SubElement(n,'{'+NS+'}visibility').text='Visible'
+  root[:]=sorted(root,key=lambda n:n.tag);ET.indent(root,space='  ');ET.ElementTree(root).write(path,encoding='UTF-8',xml_declaration=True);add('PermissionSet',role)
+ for table,api in [('portfolio.portfolios','Inv_PortfolioPortfolios__c'),('market.instruments','Inv_MarketInstruments__c'),('portfolio.sip_versions','Inv_PortfolioSipVersions__c'),('planning.plans','Inv_PlanningPlans__c'),('ops.import_runs','Inv_OpsImportRuns__c'),('ops.data_issues','Inv_OpsDataIssues__c')]:
+  path=DEST/'objects'/api/(api+'.object-meta.xml');root=ET.parse(path).getroot();presentation=object_presentation(table)
+  root.find('{'+NS+'}label').text=presentation['label'];root.find('{'+NS+'}pluralLabel').text=presentation['pluralLabel']
+  ET.indent(root,space='  ');ET.ElementTree(root).write(path,encoding='UTF-8',xml_declaration=True);add('CustomObject',api)
+ for api,fields in {
+  'Inv_OpsImportRuns__c':['OperationalStatus__c','Portfolio__c','CASParserVersion__c','DuplicateOf__c','Failure__c'],
+  'Inv_OpsImportRows__c':['RowKind__c','MatchStatus__c','Account__c','Fund__c','TradeDate__c','TransactionType__c','Units__c','Amount__c','Cost__c','NAV__c','PeriodStart__c','PeriodEnd__c','OpeningUnits__c','ClosingUnits__c','MatchedEvent__c']}.items():
+  path=next((DEST/'layouts').glob(api+'-*.layout-meta.xml'));root=ET.parse(path).getroot()
+  for node in list(root.findall('{'+NS+'}layoutSections')):
+   if node.find('{'+NS+'}label').text=='Statement review':root.remove(node)
+  temp=DEST/'layouts/_review.layout-meta.xml';xml(temp,'Layout',{'layoutSections':section('Statement review',fields)});root.insert(0,ET.parse(temp).getroot()[0]);temp.unlink()
+  ET.indent(root,space='  ');ET.ElementTree(root).write(path,encoding='UTF-8',xml_declaration=True);add('Layout',path.name.removesuffix('.layout-meta.xml'))
+ for name,label,kind in [('Accounts','Account reconciliation','Account'),('Transactions','Transaction matches','Transaction')]:
+  api='Inv_OpsImportRows__c'
+  xml(DEST/'objects'/api/'listViews'/(name+'.listView-meta.xml'),'ListView',{'fullName':name,
+   'columns':['NAME','MatchStatus__c','Account__c','Fund__c','PeriodEnd__c','ClosingUnits__c'] if kind=='Account' else ['NAME','MatchStatus__c','Account__c','Fund__c','TradeDate__c','Units__c','Amount__c'],
+   'filterScope':'Everything','filters':{'field':'RowKind__c','operation':'equals','value':kind},'label':label});add('ListView',api+'.'+name)
+ xml(DEST/'objects/Inv_MarketInstruments__c/listViews/Funds.listView-meta.xml','ListView',{'fullName':'Funds','columns':['NAME','DisplayName__c','AMFICode__c','MappingVerified__c','Tracked__c'],
+  'filterScope':'Everything','filters':{'field':'MappingVerified__c','operation':'equals','value':'1'},'label':'Verified mutual funds'});add('ListView','Inv_MarketInstruments__c.Funds')
+ api='Inv_MarketInstruments__c'
+ xml(DEST/'objects'/api/'compactLayouts/Inv_Summary.compactLayout-meta.xml','CompactLayout',{'fullName':'Inv_Summary','fields':['DisplayName__c','AMFICode__c','Tracked__c','TERPercent__c','ExpenseDate__c'],'label':'Fund summary'});add('CompactLayout',api+'.Inv_Summary')
+ path=DEST/'objects'/api/(api+'.object-meta.xml');root=ET.parse(path).getroot()
+ for tag in ['compactLayoutAssignment','searchLayouts']:
+  for node in root.findall('{'+NS+'}'+tag):root.remove(node)
+ ET.SubElement(root,'{'+NS+'}compactLayoutAssignment').text='Inv_Summary'
+ search=ET.SubElement(root,'{'+NS+'}searchLayouts')
+ for tag in ['lookupDialogsAdditionalFields','searchResultsAdditionalFields']:
+  for field in ['DisplayName__c','Isin__c','AMFICode__c']:ET.SubElement(search,'{'+NS+'}'+tag).text=field
+ root[:]=sorted(root,key=lambda n:n.tag);ET.indent(root,space='  ');ET.ElementTree(root).write(path,encoding='UTF-8',xml_declaration=True)
+ xml(ROOT/'manifest/portfolio-pages.xml','Package',{'types':[{'members':v,'name':k} for k,v in members.items()],'version':'68.0'})
+ print('Generated native overview and context-filtered record charts')
+
+if __name__=='__main__':main()

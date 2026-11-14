@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>XIRRDisplay__c</fullName>
+  <formula>IF(ISBLANK(XIRR__c), NULL, XIRR__c)</formula>
+  <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+  <label>Portfolio XIRR percent</label>
+  <precision>18</precision>
+  <scale>2</scale>
+  <type>Percent</type>
+</CustomField>

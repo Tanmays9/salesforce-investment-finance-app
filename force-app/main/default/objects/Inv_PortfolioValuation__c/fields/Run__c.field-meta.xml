@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>Run__c</fullName>
+  <deleteConstraint>Restrict</deleteConstraint>
+  <label>Analysis run</label>
+  <referenceTo>Inv_AnalyticsRuns__c</referenceTo>
+  <relationshipLabel>OperationalResults</relationshipLabel>
+  <relationshipName>PortfolioValuationRun</relationshipName>
+  <type>Lookup</type>
+</CustomField>

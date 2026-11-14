@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>MatchedEvent__c</fullName>
+  <deleteConstraint>Restrict</deleteConstraint>
+  <label>Existing economic event</label>
+  <referenceTo>Inv_PortfolioEvents__c</referenceTo>
+  <relationshipLabel>ImportEvidence</relationshipLabel>
+  <relationshipName>OpsImportRowsMatchedEvent</relationshipName>
+  <type>Lookup</type>
+</CustomField>

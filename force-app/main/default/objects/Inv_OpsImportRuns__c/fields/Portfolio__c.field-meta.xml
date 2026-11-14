@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>Portfolio__c</fullName>
+  <deleteConstraint>Restrict</deleteConstraint>
+  <label>Destination portfolio</label>
+  <referenceTo>Inv_PortfolioPortfolios__c</referenceTo>
+  <relationshipLabel>StatementImports</relationshipLabel>
+  <relationshipName>OpsImportRunsPortfolio</relationshipName>
+  <type>Lookup</type>
+</CustomField>

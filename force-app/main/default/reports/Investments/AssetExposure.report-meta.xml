@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+  <chart>
+    <chartSummaries>
+      <aggregate>Sum</aggregate>
+      <column>Inv_Exposure__c$Value__c</column>
+      <axisBinding>y</axisBinding>
+    </chartSummaries>
+    <chartType>VerticalColumn</chartType>
+    <enableHoverLabels>true</enableHoverLabels>
+    <expandOthers>true</expandOthers>
+    <groupingColumn>Inv_Exposure__c$Member__c</groupingColumn>
+    <location>CHART_TOP</location>
+    <showAxisLabels>true</showAxisLabels>
+    <showPercentage>false</showPercentage>
+    <showValues>true</showValues>
+    <size>Large</size>
+    <summaryAxisRange>Auto</summaryAxisRange>
+    <textSize>12</textSize>
+    <title>Asset-class exposure</title>
+    <titleSize>14</titleSize>
+  </chart>
+  <columns>
+    <aggregateTypes>Sum</aggregateTypes>
+    <field>Inv_Exposure__c$Value__c</field>
+  </columns>
+  <columns>
+    <field>Inv_Exposure__c$Coverage__c</field>
+  </columns>
+  <columns>
+    <field>Inv_Exposure__c$Portfolio__c.Id</field>
+  </columns>
+  <columns>
+    <field>Inv_Exposure__c$Fund__c.Id</field>
+  </columns>
+  <filter>
+    <criteriaItems>
+      <column>Inv_Exposure__c$Published__c</column>
+      <operator>equals</operator>
+      <value>true</value>
+    </criteriaItems>
+    <criteriaItems>
+      <column>Inv_Exposure__c$Dimension__c</column>
+      <operator>equals</operator>
+      <value>Asset class</value>
+    </criteriaItems>
+  </filter>
+  <format>Summary</format>
+  <groupingsDown>
+    <dateGranularity>Day</dateGranularity>
+    <field>Inv_Exposure__c$Member__c</field>
+    <sortOrder>Asc</sortOrder>
+  </groupingsDown>
+  <name>Asset-class exposure</name>
+  <reportType>Inv_Exposure_Analysis__c</reportType>
+  <scope>organization</scope>
+  <showDetails>true</showDetails>
+  <showGrandTotal>true</showGrandTotal>
+  <showSubTotals>true</showSubTotals>
+  <timeFrameFilter>
+    <dateColumn>Inv_Exposure__c$CreatedDate</dateColumn>
+    <interval>INTERVAL_CUSTOM</interval>
+  </timeFrameFilter>
+</Report>

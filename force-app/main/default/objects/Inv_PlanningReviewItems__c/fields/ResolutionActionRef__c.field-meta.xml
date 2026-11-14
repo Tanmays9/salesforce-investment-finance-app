@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>ResolutionActionRef__c</fullName>
+  <deleteConstraint>Restrict</deleteConstraint>
+  <label>Resolution Action Id Link</label>
+  <referenceTo>Inv_PlanningActions__c</referenceTo>
+  <relationshipLabel>PlanningReviewItems ResolutionActionId</relationshipLabel>
+  <relationshipName>PlanningReviewItemsResolutionActionId</relationshipName>
+  <required>false</required>
+  <type>Lookup</type>
+</CustomField>

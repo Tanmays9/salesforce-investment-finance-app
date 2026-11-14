@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+  <types>
+    <members>Inv_Overview</members>
+    <name>FlexiPage</name>
+  </types>
+  <types>
+    <members>Inv_Overview</members>
+    <name>CustomTab</name>
+  </types>
+  <types>
+    <members>Inv_MarketInstruments__c-Market Instruments Layout</members>
+    <members>Inv_PortfolioPortfolios__c-Portfolio Portfolios Layout</members>
+    <members>Inv_PlanningPlanVersions__c-Planning Plan Versions Layout</members>
+    <members>Inv_OpsImportRuns__c-Ops Import Runs Layout</members>
+    <members>Inv_OpsImportRows__c-Ops Import Rows Layout</members>
+    <name>Layout</name>
+  </types>
+  <types>
+    <members>Investments</members>
+    <name>CustomApplication</name>
+  </types>
+  <types>
+    <members>Inv_Viewer</members>
+    <members>Inv_MigrationAdmin</members>
+    <name>PermissionSet</name>
+  </types>
+  <types>
+    <members>Inv_PortfolioPortfolios__c</members>
+    <members>Inv_MarketInstruments__c</members>
+    <members>Inv_PortfolioSipVersions__c</members>
+    <members>Inv_PlanningPlans__c</members>
+    <members>Inv_OpsImportRuns__c</members>
+    <members>Inv_OpsDataIssues__c</members>
+    <name>CustomObject</name>
+  </types>
+  <types>
+    <members>Inv_OpsImportRows__c.Accounts</members>
+    <members>Inv_OpsImportRows__c.Transactions</members>
+    <members>Inv_MarketInstruments__c.Funds</members>
+    <name>ListView</name>
+  </types>
+  <types>
+    <members>Inv_MarketInstruments__c.Inv_Summary</members>
+    <name>CompactLayout</name>
+  </types>
+  <version>68.0</version>
+</Package>

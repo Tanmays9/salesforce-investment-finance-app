@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Group xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Public group for investment workspace viewers. Membership and record sharing are configured separately.</description>
+    <doesIncludeBosses>false</doesIncludeBosses>
+    <name>Investment Viewers</name>
+</Group>

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>MergedIntoRef__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <label>Merged Into Id Link</label>
+  <referenceTo>Inv_MarketSchemes__c</referenceTo>
+  <relationshipLabel>MarketSchemes MergedIntoId</relationshipLabel>
+  <relationshipName>MarketSchemesMergedIntoId</relationshipName>
+  <required>false</required>
+  <type>Lookup</type>
+</CustomField>

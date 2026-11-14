@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>ExpenseEvidence__c</fullName>
+  <deleteConstraint>Restrict</deleteConstraint>
+  <label>Expense evidence</label>
+  <referenceTo>Inv_MarketExpenseObservations__c</referenceTo>
+  <relationshipLabel>FundExpenseSummaries</relationshipLabel>
+  <relationshipName>MarketInstrumentsExpenseEvidence</relationshipName>
+  <type>Lookup</type>
+</CustomField>

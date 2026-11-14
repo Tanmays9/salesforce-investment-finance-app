@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+  <baseObject>Inv_PlanImpact__c</baseObject>
+  <category>other</category>
+  <deployed>true</deployed>
+  <description>Operational investment analysis with portfolio and fund context.</description>
+  <label>Plan Impacts</label>
+  <sections>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>Id</field>
+      <table>Inv_PlanImpact__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>Name</field>
+      <table>Inv_PlanImpact__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>PlanVersion__c</field>
+      <table>Inv_PlanImpact__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>Run__c</field>
+      <table>Inv_PlanImpact__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>Fund__c</field>
+      <table>Inv_PlanImpact__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>Scope__c</field>
+      <table>Inv_PlanImpact__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>Metric__c</field>
+      <table>Inv_PlanImpact__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>Baseline__c</field>
+      <table>Inv_PlanImpact__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>Proposed__c</field>
+      <table>Inv_PlanImpact__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>Coverage__c</field>
+      <table>Inv_PlanImpact__c</table>
+    </columns>
+    <masterLabel>Plan Impacts</masterLabel>
+  </sections>
+</ReportType>

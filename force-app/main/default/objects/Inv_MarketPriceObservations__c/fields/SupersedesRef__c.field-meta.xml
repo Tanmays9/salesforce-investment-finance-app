@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>SupersedesRef__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <label>Supersedes Id Link</label>
+  <referenceTo>Inv_MarketPriceObservations__c</referenceTo>
+  <relationshipLabel>MarketPriceObservations SupersedesId</relationshipLabel>
+  <relationshipName>MarketPriceObservationsSupersedesId</relationshipName>
+  <required>false</required>
+  <type>Lookup</type>
+</CustomField>
