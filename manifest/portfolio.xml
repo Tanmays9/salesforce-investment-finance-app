@@ -12,6 +12,7 @@
     <members>Inv_Exposure__c</members>
     <members>Inv_FundMetric__c</members>
     <members>Inv_PlanImpact__c</members>
+    <members>Inv_WatchlistItems__c</members>
     <name>CustomObject</name>
   </types>
   <types>
@@ -21,6 +22,7 @@
     <members>Inv_Exposure__c</members>
     <members>Inv_FundMetric__c</members>
     <members>Inv_PlanImpact__c</members>
+    <members>Inv_WatchlistItems__c</members>
     <name>CustomTab</name>
   </types>
   <types>
@@ -30,6 +32,7 @@
     <members>Inv_Exposure__c-Portfolio Analysis</members>
     <members>Inv_FundMetric__c-Portfolio Analysis</members>
     <members>Inv_PlanImpact__c-Portfolio Analysis</members>
+    <members>Inv_WatchlistItems__c-Watchlist</members>
     <name>Layout</name>
   </types>
   <types>
@@ -39,6 +42,8 @@
     <members>Inv_Exposure__c.All</members>
     <members>Inv_FundMetric__c.All</members>
     <members>Inv_PlanImpact__c.All</members>
+    <members>Inv_WatchlistItems__c.All</members>
+    <members>Inv_WatchlistItems__c.Active</members>
     <members>Inv_Holding__c.Current</members>
     <members>Inv_Holding__c.Closed</members>
     <members>Inv_Holding__c.WithoutSIP</members>
@@ -99,8 +104,22 @@
     <members>Inv_OpsImportRows__c.Occurrence__c</members>
     <members>Inv_OpsImportRows__c.MatchStatus__c</members>
     <members>Inv_OpsImportRows__c.MatchedEvent__c</members>
+    <members>Inv_OpsImportRows__c.AmountCurrency__c</members>
+    <members>Inv_OpsImportRows__c.CostCurrency__c</members>
     <members>Inv_PortfolioEvents__c.PostingKey__c</members>
     <members>Inv_PortfolioEvents__c.EconomicKey__c</members>
+    <members>Inv_PortfolioUnitEntries__c.AcquisitionCostCurrency__c</members>
+    <members>Inv_PortfolioUnitEntries__c.ConsiderationCurrency__c</members>
+    <members>Inv_PortfolioSipVersions__c.AmountCurrency__c</members>
+    <members>Inv_PortfolioSipEvidence__c.ObservedAmountCurrency__c</members>
+    <members>Inv_PortfolioPositionSnapshots__c.ReportedCostCurrency__c</members>
+    <members>Inv_PortfolioEventCharges__c.AmountCurrency__c</members>
+    <members>Inv_PortfolioCashEntries__c.AmountDeltaCurrency__c</members>
+    <members>Inv_PlanningReviewItems__c.AmountCurrency__c</members>
+    <members>Inv_PlanningPlanVersions__c.MonthlyBudgetCurrency__c</members>
+    <members>Inv_PlanningActions__c.RequestedAmountCurrency__c</members>
+    <members>Inv_OpsReconciliations__c.CalculatedCashCurrency__c</members>
+    <members>Inv_OpsReconciliations__c.ReportedCashCurrency__c</members>
     <name>CustomField</name>
   </types>
   <types>

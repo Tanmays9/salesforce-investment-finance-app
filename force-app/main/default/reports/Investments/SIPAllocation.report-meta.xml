@@ -3,7 +3,7 @@
   <chart>
     <chartSummaries>
       <aggregate>Sum</aggregate>
-      <column>Inv_Holding__c$SIPAmount__c</column>
+      <column>Inv_Holding__c$SIPAmountDisplay__c</column>
       <axisBinding>y</axisBinding>
     </chartSummaries>
     <chartType>VerticalColumn</chartType>
@@ -22,7 +22,7 @@
   </chart>
   <columns>
     <aggregateTypes>Sum</aggregateTypes>
-    <field>Inv_Holding__c$SIPAmount__c</field>
+    <field>Inv_Holding__c$SIPAmountDisplay__c</field>
   </columns>
   <columns>
     <field>Inv_Holding__c$Portfolio__c.Id</field>

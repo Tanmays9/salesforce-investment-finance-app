@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>RealizedGainDisplay__c</fullName>
+  <formula>IF(ISBLANK(RealizedGain__c), NULL, ROUND(RealizedGain__c, 2))</formula>
+  <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+  <label>Realized gain (INR)</label>
+  <precision>18</precision>
+  <scale>2</scale>
+  <type>Currency</type>
+</CustomField>

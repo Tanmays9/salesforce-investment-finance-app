@@ -82,7 +82,7 @@
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>MonthlyBudgetNumber__c</field>
+        <field>MonthlyBudgetCurrency__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>

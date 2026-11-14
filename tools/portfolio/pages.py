@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'investment-migration'))
 from prepare import ROOT,xml,NS,object_presentation
-from build import DEST,section
+from build import DEST,section,AUX_OBJECTS,DISPLAY_FIELDS
 import xml.etree.ElementTree as ET
 
 def component(name,identity,properties):
@@ -14,10 +14,11 @@ def main():
  members={}
  def add(kind,name):members.setdefault(kind,[]).append(name)
  charts=[component('flexipage:filterListCard','summary',{'entityName':'Inv_PortfolioValuation__c','filterName':'Current','pageSize':'5'}),
+         component('c:invWatchlistCard','watchlist',{}),
          component('flexipage:reportChart','allocation',{'reportName':'FundAllocation','showRefreshButton':'true'}),
          component('flexipage:reportChart','category',{'reportName':'CategoryAllocation','showRefreshButton':'true'}),
          component('flexipage:reportChart','sip',{'reportName':'SIPAllocation','showRefreshButton':'true'})]
- xml(DEST/'flexipages/Inv_Overview.flexipage-meta.xml','FlexiPage',{'description':'Portfolio allocation and SIP review. Open Holdings for units, valuation dates and reconciliation.',
+ xml(DEST/'flexipages/Inv_Overview.flexipage-meta.xml','FlexiPage',{'description':'Portfolio snapshot, current holdings, watchlist, allocation and SIP review.',
   'flexiPageRegions':{'itemInstances':charts,'name':'main','type':'Region'},'masterLabel':'Portfolio Overview',
   'template':{'name':'flexipage:defaultAppHomeTemplate'},'type':'AppPage'});add('FlexiPage','Inv_Overview')
  xml(DEST/'tabs/Inv_Overview.tab-meta.xml','CustomTab',{'flexiPage':'Inv_Overview','label':'Overview','motif':'Custom18: Form'});add('CustomTab','Inv_Overview')
@@ -44,18 +45,18 @@ def main():
    temp=DEST/'layouts/_temporary.layout-meta.xml';xml(temp,'Layout',{'layoutSections':value});root.insert(0,ET.parse(temp).getroot()[0]);temp.unlink()
   ET.indent(root,space='  ');ET.ElementTree(root).write(path,encoding='UTF-8',xml_declaration=True);add('Layout',api+'-'+original)
   if fund:
-   for child,field,columns in [('Inv_Holding__c','Fund__c',['NAME','Units__c','Cost__c','MarketValue__c','XIRRDisplay__c','NAVDate__c']),('Inv_FundMetric__c','Fund__c',['NAME','CounterpartyFund__c','ValuePercent__c','PeriodEnd__c','Coverage__c'])]:
+   for child,field,columns in [('Inv_Holding__c','Fund__c',['NAME','Units__c','CostDisplay__c','MarketValueDisplay__c','XIRRDisplay__c','NAVDate__c']),('Inv_FundMetric__c','Fund__c',['NAME','CounterpartyFund__c','ValuePercent__c','PeriodEnd__c','Coverage__c'])]:
     name=child+'.'+field
     if not any(n.find('{'+NS+'}relatedList').text==name for n in root.findall('{'+NS+'}relatedLists')):
      node=ET.SubElement(root,'{'+NS+'}relatedLists')
      for column in columns:ET.SubElement(node,'{'+NS+'}fields').text=column
      ET.SubElement(node,'{'+NS+'}relatedList').text=name
    root[:]=sorted(root,key=lambda n:n.tag);ET.indent(root,space='  ');ET.ElementTree(root).write(path,encoding='UTF-8',xml_declaration=True)
- tabs=['Inv_Overview','Inv_PortfolioPortfolios__c','Inv_Holding__c','Inv_MarketInstruments__c','Inv_PortfolioSipVersions__c','Inv_PlanningPlans__c','Inv_OpsImportRuns__c','Inv_OpsDataIssues__c','standard-report','standard-Dashboard']
+ tabs=['Inv_Overview','Inv_PortfolioPortfolios__c','Inv_Holding__c','Inv_WatchlistItems__c','Inv_MarketInstruments__c','Inv_PortfolioSipVersions__c','Inv_PlanningPlans__c','Inv_OpsImportRuns__c','Inv_OpsDataIssues__c','standard-report','standard-Dashboard']
  xml(DEST/'applications/Investments.app-meta.xml','CustomApplication',{'description':'Portfolio review, fund analysis and versioned investment plans.',
   'formFactors':['Large','Small'],'isNavAutoTempTabsDisabled':False,'isNavPersonalizationDisabled':False,
   'label':'Investments','navType':'Standard','tabs':tabs,'uiType':'Lightning'});add('CustomApplication','Investments')
- for role in ['Inv_Viewer','Inv_MigrationAdmin']:
+ for role in ['Inv_Viewer','Inv_MigrationAdmin','Inv_PortfolioManager']:
   path=DEST/'permissionsets'/(role+'.permissionset-meta.xml');root=ET.parse(path).getroot()
   for tab in tabs:
    if tab.startswith('standard-'):continue
@@ -68,7 +69,7 @@ def main():
   ET.indent(root,space='  ');ET.ElementTree(root).write(path,encoding='UTF-8',xml_declaration=True);add('CustomObject',api)
  for api,fields in {
   'Inv_OpsImportRuns__c':['OperationalStatus__c','Portfolio__c','CASParserVersion__c','DuplicateOf__c','Failure__c'],
-  'Inv_OpsImportRows__c':['RowKind__c','MatchStatus__c','Account__c','Fund__c','TradeDate__c','TransactionType__c','Units__c','Amount__c','Cost__c','NAV__c','PeriodStart__c','PeriodEnd__c','OpeningUnits__c','ClosingUnits__c','MatchedEvent__c']}.items():
+  'Inv_OpsImportRows__c':['RowKind__c','MatchStatus__c','Account__c','Fund__c','TradeDate__c','TransactionType__c','Units__c','AmountCurrency__c','CostCurrency__c','NAV__c','PeriodStart__c','PeriodEnd__c','OpeningUnits__c','ClosingUnits__c','MatchedEvent__c']}.items():
   path=next((DEST/'layouts').glob(api+'-*.layout-meta.xml'));root=ET.parse(path).getroot()
   for node in list(root.findall('{'+NS+'}layoutSections')):
    if node.find('{'+NS+'}label').text=='Statement review':root.remove(node)
@@ -77,7 +78,7 @@ def main():
  for name,label,kind in [('Accounts','Account reconciliation','Account'),('Transactions','Transaction matches','Transaction')]:
   api='Inv_OpsImportRows__c'
   xml(DEST/'objects'/api/'listViews'/(name+'.listView-meta.xml'),'ListView',{'fullName':name,
-   'columns':['NAME','MatchStatus__c','Account__c','Fund__c','PeriodEnd__c','ClosingUnits__c'] if kind=='Account' else ['NAME','MatchStatus__c','Account__c','Fund__c','TradeDate__c','Units__c','Amount__c'],
+    'columns':['NAME','MatchStatus__c','Account__c','Fund__c','PeriodEnd__c','ClosingUnits__c'] if kind=='Account' else ['NAME','MatchStatus__c','Account__c','Fund__c','TradeDate__c','Units__c','AmountCurrency__c'],
    'filterScope':'Everything','filters':{'field':'RowKind__c','operation':'equals','value':kind},'label':label});add('ListView',api+'.'+name)
  xml(DEST/'objects/Inv_MarketInstruments__c/listViews/Funds.listView-meta.xml','ListView',{'fullName':'Funds','columns':['NAME','DisplayName__c','AMFICode__c','MappingVerified__c','Tracked__c'],
   'filterScope':'Everything','filters':{'field':'MappingVerified__c','operation':'equals','value':'1'},'label':'Verified mutual funds'});add('ListView','Inv_MarketInstruments__c.Funds')
@@ -91,6 +92,21 @@ def main():
  for tag in ['lookupDialogsAdditionalFields','searchResultsAdditionalFields']:
   for field in ['DisplayName__c','Isin__c','AMFICode__c']:ET.SubElement(search,'{'+NS+'}'+tag).text=field
  root[:]=sorted(root,key=lambda n:n.tag);ET.indent(root,space='  ');ET.ElementTree(root).write(path,encoding='UTF-8',xml_declaration=True)
+ for api,replacements in DISPLAY_FIELDS.items():
+  for path in (DEST/'layouts').glob(api+'-*.layout-meta.xml'):
+   root=ET.parse(path).getroot();changed=False
+   for field in root.findall('.//{'+NS+'}field'):
+    if field.text in replacements:field.text=replacements[field.text];changed=True
+   if changed:
+    ET.indent(root,space='  ');ET.ElementTree(root).write(path,encoding='UTF-8',xml_declaration=True);add('Layout',path.name.removesuffix('.layout-meta.xml'))
+  for path in (DEST/'objects'/api/'listViews').glob('*.listView-meta.xml'):
+   root=ET.parse(path).getroot();changed=False
+   for column in root.findall('{'+NS+'}columns'):
+    if column.text in replacements:column.text=replacements[column.text];changed=True
+   if changed:
+    ET.indent(root,space='  ');ET.ElementTree(root).write(path,encoding='UTF-8',xml_declaration=True);add('ListView',api+'.'+path.stem)
+ if (DEST/'lwc/invWatchlistCard').exists():
+  add('LightningComponentBundle','invWatchlistCard')
  xml(ROOT/'manifest/portfolio-pages.xml','Package',{'types':[{'members':v,'name':k} for k,v in members.items()],'version':'68.0'})
  print('Generated native overview and context-filtered record charts')
 

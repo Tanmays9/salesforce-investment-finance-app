@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
   <types>
+    <members>InvBenchmarkEngine</members>
     <members>InvBenchmarkRefresh</members>
     <members>InvBenchmarkRefreshTest</members>
-    <members>InvBenchmarkEngine</members>
     <members>InvCASService</members>
     <members>InvCASTest</members>
     <members>InvDailyRefresh</members>
@@ -67,8 +67,10 @@
     <members>Inv_MarketPriceObservations__c.RetrievedAt__c</members>
     <members>Inv_MarketPriceObservations__c.SelectedNAV__c</members>
     <members>Inv_OpsImportRows__c.Account__c</members>
+    <members>Inv_OpsImportRows__c.AmountCurrency__c</members>
     <members>Inv_OpsImportRows__c.Amount__c</members>
     <members>Inv_OpsImportRows__c.ClosingUnits__c</members>
+    <members>Inv_OpsImportRows__c.CostCurrency__c</members>
     <members>Inv_OpsImportRows__c.Cost__c</members>
     <members>Inv_OpsImportRows__c.Fund__c</members>
     <members>Inv_OpsImportRows__c.ISIN__c</members>
@@ -95,11 +97,23 @@
     <members>Inv_OpsImportRuns__c.OperationalStatus__c</members>
     <members>Inv_OpsImportRuns__c.ParserJobId__c</members>
     <members>Inv_OpsImportRuns__c.Portfolio__c</members>
+    <members>Inv_OpsReconciliations__c.CalculatedCashCurrency__c</members>
+    <members>Inv_OpsReconciliations__c.ReportedCashCurrency__c</members>
+    <members>Inv_PlanningActions__c.RequestedAmountCurrency__c</members>
+    <members>Inv_PlanningPlanVersions__c.MonthlyBudgetCurrency__c</members>
+    <members>Inv_PlanningReviewItems__c.AmountCurrency__c</members>
     <members>Inv_PlanningTargets__c.Fund__c</members>
     <members>Inv_PortfolioAccounts__c.CASScopeKey__c</members>
+    <members>Inv_PortfolioCashEntries__c.AmountDeltaCurrency__c</members>
+    <members>Inv_PortfolioEventCharges__c.AmountCurrency__c</members>
     <members>Inv_PortfolioEvents__c.EconomicKey__c</members>
     <members>Inv_PortfolioEvents__c.PostingKey__c</members>
     <members>Inv_PortfolioPortfolios__c.PublishedRun__c</members>
+    <members>Inv_PortfolioPositionSnapshots__c.ReportedCostCurrency__c</members>
+    <members>Inv_PortfolioSipEvidence__c.ObservedAmountCurrency__c</members>
+    <members>Inv_PortfolioSipVersions__c.AmountCurrency__c</members>
+    <members>Inv_PortfolioUnitEntries__c.AcquisitionCostCurrency__c</members>
+    <members>Inv_PortfolioUnitEntries__c.ConsiderationCurrency__c</members>
     <name>CustomField</name>
   </types>
   <types>
@@ -115,6 +129,7 @@
     <members>Inv_PortfolioPortfolios__c</members>
     <members>Inv_PortfolioSipVersions__c</members>
     <members>Inv_PortfolioValuation__c</members>
+    <members>Inv_WatchlistItems__c</members>
     <name>CustomObject</name>
   </types>
   <types>
@@ -130,6 +145,7 @@
     <members>Inv_Overview</members>
     <members>Inv_PlanImpact__c</members>
     <members>Inv_PortfolioValuation__c</members>
+    <members>Inv_WatchlistItems__c</members>
     <name>CustomTab</name>
   </types>
   <types>
@@ -174,10 +190,12 @@
     <members>Inv_PlanningPlans__c-Planning Plans Layout</members>
     <members>Inv_PortfolioPortfolios__c-Portfolio Portfolios Layout</members>
     <members>Inv_PortfolioValuation__c-Portfolio Analysis</members>
+    <members>Inv_WatchlistItems__c-Watchlist</members>
     <name>Layout</name>
   </types>
   <types>
     <members>invParseStatement</members>
+    <members>invWatchlistCard</members>
     <name>LightningComponentBundle</name>
   </types>
   <types>
@@ -195,13 +213,13 @@
     <members>Inv_PlanImpact__c.All</members>
     <members>Inv_PortfolioValuation__c.All</members>
     <members>Inv_PortfolioValuation__c.Current</members>
+    <members>Inv_WatchlistItems__c.Active</members>
+    <members>Inv_WatchlistItems__c.All</members>
     <name>ListView</name>
   </types>
   <types>
     <members>Inv_AMFI</members>
-    <members>Inv_BSEIndices</members>
     <members>Inv_MFapi</members>
-    <members>Inv_NSEIndices</members>
     <name>NamedCredential</name>
   </types>
   <types>
@@ -249,6 +267,7 @@
     <members>Investments/SIPAllocation</members>
     <members>Investments/SecurityExposure</members>
     <members>Investments/ValuationHistory</members>
+    <members>Investments/Watchlist</members>
     <name>Report</name>
   </types>
   <types>
@@ -263,6 +282,7 @@
     <members>Inv_MarketPriceObservations_Analysis</members>
     <members>Inv_PlanImpact_Analysis</members>
     <members>Inv_PortfolioValuation_Analysis</members>
+    <members>Inv_WatchlistItems_Analysis</members>
     <name>ReportType</name>
   </types>
   <version>68.0</version>

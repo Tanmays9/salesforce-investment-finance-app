@@ -7,7 +7,7 @@
   <columns>Fund__c</columns>
   <columns>TradeDate__c</columns>
   <columns>Units__c</columns>
-  <columns>Amount__c</columns>
+  <columns>AmountCurrency__c</columns>
   <filterScope>Everything</filterScope>
   <filters>
     <field>RowKind__c</field>

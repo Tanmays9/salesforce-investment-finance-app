@@ -23,6 +23,7 @@
   <types>
     <members>Inv_Viewer</members>
     <members>Inv_MigrationAdmin</members>
+    <members>Inv_PortfolioManager</members>
     <name>PermissionSet</name>
   </types>
   <types>
@@ -43,6 +44,10 @@
   <types>
     <members>Inv_MarketInstruments__c.Inv_Summary</members>
     <name>CompactLayout</name>
+  </types>
+  <types>
+    <members>invWatchlistCard</members>
+    <name>LightningComponentBundle</name>
   </types>
   <version>68.0</version>
 </Package>

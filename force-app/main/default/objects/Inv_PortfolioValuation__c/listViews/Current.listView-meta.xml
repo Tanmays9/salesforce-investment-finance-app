@@ -2,10 +2,10 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
   <fullName>Current</fullName>
   <columns>NAME</columns>
-  <columns>MarketValue__c</columns>
-  <columns>Cost__c</columns>
-  <columns>UnrealizedGain__c</columns>
-  <columns>MonthlySIP__c</columns>
+  <columns>MarketValueDisplay__c</columns>
+  <columns>CostDisplay__c</columns>
+  <columns>UnrealizedGainDisplay__c</columns>
+  <columns>MonthlySIPDisplay__c</columns>
   <columns>EarliestNAV__c</columns>
   <columns>LatestNAV__c</columns>
   <columns>XIRRDisplay__c</columns>

@@ -24,7 +24,7 @@
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>Cost__c</field>
+        <field>CostCurrency__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
@@ -54,7 +54,7 @@
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>Amount__c</field>
+        <field>AmountCurrency__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>

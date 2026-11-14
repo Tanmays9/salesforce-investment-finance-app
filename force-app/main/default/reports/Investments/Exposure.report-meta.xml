@@ -3,7 +3,7 @@
   <chart>
     <chartSummaries>
       <aggregate>Sum</aggregate>
-      <column>Inv_Exposure__c$Value__c</column>
+      <column>Inv_Exposure__c$ValueDisplay__c</column>
       <axisBinding>y</axisBinding>
     </chartSummaries>
     <chartType>VerticalColumn</chartType>
@@ -25,7 +25,7 @@
   </columns>
   <columns>
     <aggregateTypes>Sum</aggregateTypes>
-    <field>Inv_Exposure__c$Value__c</field>
+    <field>Inv_Exposure__c$ValueDisplay__c</field>
   </columns>
   <columns>
     <field>Inv_Exposure__c$Coverage__c</field>

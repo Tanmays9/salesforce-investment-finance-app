@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
-  <description>Portfolio allocation and SIP review. Open Holdings for units, valuation dates and reconciliation.</description>
+  <description>Portfolio snapshot, current holdings, watchlist, allocation and SIP review.</description>
   <flexiPageRegions>
     <itemInstances>
       <componentInstance>
@@ -18,6 +18,12 @@
         </componentInstanceProperties>
         <componentName>flexipage:filterListCard</componentName>
         <identifier>summary</identifier>
+      </componentInstance>
+    </itemInstances>
+    <itemInstances>
+      <componentInstance>
+        <componentName>c:invWatchlistCard</componentName>
+        <identifier>watchlist</identifier>
       </componentInstance>
     </itemInstances>
     <itemInstances>

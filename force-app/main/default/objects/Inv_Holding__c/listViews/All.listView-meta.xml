@@ -4,9 +4,9 @@
   <columns>NAME</columns>
   <columns>FundDisplayName__c</columns>
   <columns>Status__c</columns>
-  <columns>MarketValue__c</columns>
-  <columns>Cost__c</columns>
-  <columns>UnrealizedGain__c</columns>
+  <columns>MarketValueDisplay__c</columns>
+  <columns>CostDisplay__c</columns>
+  <columns>UnrealizedGainDisplay__c</columns>
   <columns>NAVDate__c</columns>
   <columns>Coverage__c</columns>
   <filterScope>Everything</filterScope>

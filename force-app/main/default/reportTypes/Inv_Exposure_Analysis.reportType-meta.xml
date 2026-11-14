@@ -53,6 +53,11 @@
     </columns>
     <columns>
       <checkedByDefault>true</checkedByDefault>
+      <field>ValueDisplay__c</field>
+      <table>Inv_Exposure__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
       <field>Weight__c</field>
       <table>Inv_Exposure__c</table>
     </columns>

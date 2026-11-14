@@ -55,7 +55,7 @@
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>ReportedCostNumber__c</field>
+        <field>ReportedCostCurrency__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>

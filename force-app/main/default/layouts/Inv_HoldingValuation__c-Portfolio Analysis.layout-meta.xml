@@ -28,11 +28,11 @@
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>NAV__c</field>
+        <field>NAVDisplay__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>MarketValue__c</field>
+        <field>MarketValueDisplay__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
@@ -62,11 +62,11 @@
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>Cost__c</field>
+        <field>CostDisplay__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>UnrealizedGain__c</field>
+        <field>UnrealizedGainDisplay__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>

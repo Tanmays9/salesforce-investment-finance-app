@@ -56,11 +56,27 @@
           "scale": 6,
           "type": "Number"
         },
+        "CostDisplay__c": {
+          "formula": "IF(ISBLANK(Cost__c), NULL, ROUND(Cost__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Remaining cost (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
+        },
         "NAV__c": {
           "label": "Selected NAV",
           "precision": 18,
           "scale": 10,
           "type": "Number"
+        },
+        "NAVDisplay__c": {
+          "formula": "IF(ISBLANK(NAV__c), NULL, ROUND(NAV__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Selected NAV (INR per unit)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
         },
         "NAVDate__c": {
           "label": "NAV date",
@@ -76,17 +92,41 @@
           "scale": 6,
           "type": "Number"
         },
+        "MarketValueDisplay__c": {
+          "formula": "IF(ISBLANK(MarketValue__c), NULL, ROUND(MarketValue__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Market value (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
+        },
         "UnrealizedGain__c": {
           "label": "Unrealized gain INR",
           "precision": 18,
           "scale": 6,
           "type": "Number"
         },
+        "UnrealizedGainDisplay__c": {
+          "formula": "IF(ISBLANK(UnrealizedGain__c), NULL, ROUND(UnrealizedGain__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Unrealized gain (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
+        },
         "RealizedGain__c": {
           "label": "Realized gain INR",
           "precision": 18,
           "scale": 6,
           "type": "Number"
+        },
+        "RealizedGainDisplay__c": {
+          "formula": "IF(ISBLANK(RealizedGain__c), NULL, ROUND(RealizedGain__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Realized gain (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
         },
         "XIRR__c": {
           "label": "Personal XIRR",
@@ -105,6 +145,14 @@
           "precision": 18,
           "scale": 6,
           "type": "Number"
+        },
+        "SIPAmountDisplay__c": {
+          "formula": "IF(ISBLANK(SIPAmount__c), NULL, ROUND(SIPAmount__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Monthly SIP (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
         },
         "XIRRDisplay__c": {
           "formula": "IF(ISBLANK(XIRR__c), NULL, XIRR__c)",
@@ -212,11 +260,27 @@
           "scale": 10,
           "type": "Number"
         },
+        "NAVDisplay__c": {
+          "formula": "IF(ISBLANK(NAV__c), NULL, ROUND(NAV__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "NAV (INR per unit)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
+        },
         "Cost__c": {
           "label": "Remaining cost INR",
           "precision": 18,
           "scale": 6,
           "type": "Number"
+        },
+        "CostDisplay__c": {
+          "formula": "IF(ISBLANK(Cost__c), NULL, ROUND(Cost__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Remaining cost (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
         },
         "MarketValue__c": {
           "label": "Market value INR",
@@ -224,11 +288,27 @@
           "scale": 6,
           "type": "Number"
         },
+        "MarketValueDisplay__c": {
+          "formula": "IF(ISBLANK(MarketValue__c), NULL, ROUND(MarketValue__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Market value (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
+        },
         "UnrealizedGain__c": {
           "label": "Unrealized gain INR",
           "precision": 18,
           "scale": 6,
           "type": "Number"
+        },
+        "UnrealizedGainDisplay__c": {
+          "formula": "IF(ISBLANK(UnrealizedGain__c), NULL, ROUND(UnrealizedGain__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Unrealized gain (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
         },
         "Coverage__c": {
           "label": "Coverage",
@@ -280,11 +360,27 @@
           "scale": 6,
           "type": "Number"
         },
+        "MarketValueDisplay__c": {
+          "formula": "IF(ISBLANK(MarketValue__c), NULL, ROUND(MarketValue__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Market value (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
+        },
         "Cost__c": {
           "label": "Remaining cost INR",
           "precision": 18,
           "scale": 6,
           "type": "Number"
+        },
+        "CostDisplay__c": {
+          "formula": "IF(ISBLANK(Cost__c), NULL, ROUND(Cost__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Remaining cost (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
         },
         "UnrealizedGain__c": {
           "label": "Unrealized gain INR",
@@ -292,11 +388,27 @@
           "scale": 6,
           "type": "Number"
         },
+        "UnrealizedGainDisplay__c": {
+          "formula": "IF(ISBLANK(UnrealizedGain__c), NULL, ROUND(UnrealizedGain__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Unrealized gain (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
+        },
         "RealizedGain__c": {
           "label": "Realized gain INR",
           "precision": 18,
           "scale": 6,
           "type": "Number"
+        },
+        "RealizedGainDisplay__c": {
+          "formula": "IF(ISBLANK(RealizedGain__c), NULL, ROUND(RealizedGain__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Realized gain (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
         },
         "XIRR__c": {
           "label": "Portfolio XIRR",
@@ -309,6 +421,14 @@
           "precision": 18,
           "scale": 6,
           "type": "Number"
+        },
+        "MonthlySIPDisplay__c": {
+          "formula": "IF(ISBLANK(MonthlySIP__c), NULL, ROUND(MonthlySIP__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Monthly SIP (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
         },
         "HoldingCount__c": {
           "label": "Active positions",
@@ -390,6 +510,14 @@
           "precision": 18,
           "scale": 6,
           "type": "Number"
+        },
+        "ValueDisplay__c": {
+          "formula": "IF(ISBLANK(Value__c), NULL, ROUND(Value__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Attributed value (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
         },
         "Weight__c": {
           "label": "Portfolio weight",
@@ -548,6 +676,14 @@
           "scale": 6,
           "type": "Number"
         },
+        "BaselineCurrencyDisplay__c": {
+          "formula": "IF(ISBLANK(Baseline__c), NULL, ROUND(Baseline__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Current amount (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
+        },
         "Dimension__c": {
           "label": "Exposure dimension",
           "length": 60,
@@ -563,6 +699,14 @@
           "precision": 18,
           "scale": 6,
           "type": "Number"
+        },
+        "ProposedCurrencyDisplay__c": {
+          "formula": "IF(ISBLANK(Proposed__c), NULL, ROUND(Proposed__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Proposed amount (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
         },
         "Coverage__c": {
           "label": "Coverage",
@@ -898,6 +1042,22 @@
         "relationshipLabel": "ImportEvidence",
         "relationshipName": "ImportEvidence",
         "type": "Lookup"
+      },
+      "AmountCurrency__c": {
+        "formula": "IF(ISNUMBER(Amount__c), ROUND(VALUE(Amount__c), 2), NULL)",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "Consideration (INR)",
+        "precision": 18,
+        "scale": 2,
+        "type": "Currency"
+      },
+      "CostCurrency__c": {
+        "formula": "IF(ISNUMBER(Cost__c), ROUND(VALUE(Cost__c), 2), NULL)",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "Acquisition cost (INR)",
+        "precision": 18,
+        "scale": 2,
+        "type": "Currency"
       }
     },
     "Inv_PortfolioEvents__c": {
@@ -914,6 +1074,222 @@
         "type": "Text",
         "externalId": true
       }
+    },
+    "Inv_PortfolioUnitEntries__c": {
+      "AcquisitionCostCurrency__c": {
+        "formula": "IF(ISBLANK(AcquisitionCostNumber__c), NULL, ROUND(AcquisitionCostNumber__c, 2))",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "Acquisition cost (INR)",
+        "precision": 18,
+        "scale": 2,
+        "type": "Currency"
+      },
+      "ConsiderationCurrency__c": {
+        "formula": "IF(ISBLANK(ConsiderationAmountNumber__c), NULL, ROUND(ConsiderationAmountNumber__c, 2))",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "Consideration (INR)",
+        "precision": 18,
+        "scale": 2,
+        "type": "Currency"
+      }
+    },
+    "Inv_PortfolioSipVersions__c": {
+      "AmountCurrency__c": {
+        "formula": "IF(ISBLANK(AmountNumber__c), NULL, ROUND(AmountNumber__c, 2))",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "Monthly SIP amount (INR)",
+        "precision": 18,
+        "scale": 2,
+        "type": "Currency"
+      }
+    },
+    "Inv_PortfolioSipEvidence__c": {
+      "ObservedAmountCurrency__c": {
+        "formula": "IF(ISBLANK(ObservedAmountNumber__c), NULL, ROUND(ObservedAmountNumber__c, 2))",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "Observed SIP amount (INR)",
+        "precision": 18,
+        "scale": 2,
+        "type": "Currency"
+      }
+    },
+    "Inv_PortfolioPositionSnapshots__c": {
+      "ReportedCostCurrency__c": {
+        "formula": "IF(ISBLANK(ReportedCostNumber__c), NULL, ROUND(ReportedCostNumber__c, 2))",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "Reported cost (INR)",
+        "precision": 18,
+        "scale": 2,
+        "type": "Currency"
+      }
+    },
+    "Inv_PortfolioEventCharges__c": {
+      "AmountCurrency__c": {
+        "formula": "IF(ISBLANK(AmountNumber__c), NULL, ROUND(AmountNumber__c, 2))",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "Charge amount (INR)",
+        "precision": 18,
+        "scale": 2,
+        "type": "Currency"
+      }
+    },
+    "Inv_PortfolioCashEntries__c": {
+      "AmountDeltaCurrency__c": {
+        "formula": "IF(ISBLANK(AmountDeltaNumber__c), NULL, ROUND(AmountDeltaNumber__c, 2))",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "Cash movement (INR)",
+        "precision": 18,
+        "scale": 2,
+        "type": "Currency"
+      }
+    },
+    "Inv_PlanningReviewItems__c": {
+      "AmountCurrency__c": {
+        "formula": "IF(ISBLANK(MonthlyOrTransactionAmountNumber__c), NULL, ROUND(MonthlyOrTransactionAmountNumber__c, 2))",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "Monthly or transaction amount (INR)",
+        "precision": 18,
+        "scale": 2,
+        "type": "Currency"
+      }
+    },
+    "Inv_PlanningPlanVersions__c": {
+      "MonthlyBudgetCurrency__c": {
+        "formula": "IF(ISBLANK(MonthlyBudgetNumber__c), NULL, ROUND(MonthlyBudgetNumber__c, 2))",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "Monthly budget (INR)",
+        "precision": 18,
+        "scale": 2,
+        "type": "Currency"
+      }
+    },
+    "Inv_PlanningActions__c": {
+      "RequestedAmountCurrency__c": {
+        "formula": "IF(ISBLANK(RequestedAmountNumber__c), NULL, ROUND(RequestedAmountNumber__c, 2))",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "Requested amount (INR)",
+        "precision": 18,
+        "scale": 2,
+        "type": "Currency"
+      }
+    },
+    "Inv_OpsReconciliations__c": {
+      "CalculatedCashCurrency__c": {
+        "formula": "IF(ISBLANK(CalculatedCashNumber__c), NULL, ROUND(CalculatedCashNumber__c, 2))",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "Calculated cash (INR)",
+        "precision": 18,
+        "scale": 2,
+        "type": "Currency"
+      },
+      "ReportedCashCurrency__c": {
+        "formula": "IF(ISBLANK(ReportedCashNumber__c), NULL, ROUND(ReportedCashNumber__c, 2))",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "Reported cash (INR)",
+        "precision": 18,
+        "scale": 2,
+        "type": "Currency"
+      }
     }
+  },
+  "auxiliary": {
+    "Inv_WatchlistItems__c": [
+      "Watchlist item",
+      "Watchlist",
+      {
+        "AssetType__c": {
+          "label": "Asset type",
+          "type": "Picklist",
+          "valueSet": {
+            "restricted": true,
+            "valueSetDefinition": {
+              "sorted": true,
+              "value": [
+                {
+                  "fullName": "Stock",
+                  "default": false,
+                  "label": "Stock"
+                },
+                {
+                  "fullName": "Mutual Fund",
+                  "default": false,
+                  "label": "Mutual Fund"
+                },
+                {
+                  "fullName": "ETF",
+                  "default": false,
+                  "label": "ETF"
+                }
+              ]
+            }
+          }
+        },
+        "Symbol__c": {
+          "label": "Ticker or symbol",
+          "length": 40,
+          "type": "Text"
+        },
+        "Exchange__c": {
+          "label": "Exchange",
+          "type": "Picklist",
+          "valueSet": {
+            "restricted": true,
+            "valueSetDefinition": {
+              "sorted": true,
+              "value": [
+                {
+                  "fullName": "NSE",
+                  "default": false,
+                  "label": "NSE"
+                },
+                {
+                  "fullName": "BSE",
+                  "default": false,
+                  "label": "BSE"
+                },
+                {
+                  "fullName": "Other",
+                  "default": false,
+                  "label": "Other"
+                }
+              ]
+            }
+          }
+        },
+        "ISIN__c": {
+          "label": "ISIN",
+          "length": 20,
+          "type": "Text"
+        },
+        "SchemeCode__c": {
+          "label": "AMFI scheme code",
+          "length": 20,
+          "type": "Text"
+        },
+        "Fund__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Linked mutual fund",
+          "referenceTo": "Inv_MarketInstruments__c",
+          "relationshipLabel": "WatchlistItems",
+          "relationshipName": "WatchlistItems",
+          "type": "Lookup"
+        },
+        "Active__c": {
+          "defaultValue": true,
+          "label": "On watchlist",
+          "type": "Checkbox"
+        },
+        "AddedOn__c": {
+          "label": "Added on",
+          "type": "Date"
+        },
+        "Notes__c": {
+          "label": "Notes",
+          "length": 32768,
+          "visibleLines": 3,
+          "type": "LongTextArea"
+        }
+      }
+    ]
   }
 }

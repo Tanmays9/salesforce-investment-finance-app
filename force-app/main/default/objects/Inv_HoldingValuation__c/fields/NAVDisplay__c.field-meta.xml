@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>NAVDisplay__c</fullName>
+  <formula>IF(ISBLANK(NAV__c), NULL, ROUND(NAV__c, 2))</formula>
+  <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+  <label>NAV (INR per unit)</label>
+  <precision>18</precision>
+  <scale>2</scale>
+  <type>Currency</type>
+</CustomField>

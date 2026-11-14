@@ -3,7 +3,7 @@
   <chart>
     <chartSummaries>
       <aggregate>Sum</aggregate>
-      <column>Inv_Holding__c$MarketValue__c</column>
+      <column>Inv_Holding__c$MarketValueDisplay__c</column>
       <axisBinding>y</axisBinding>
     </chartSummaries>
     <chartType>VerticalColumn</chartType>
@@ -25,7 +25,7 @@
   </columns>
   <columns>
     <aggregateTypes>Sum</aggregateTypes>
-    <field>Inv_Holding__c$MarketValue__c</field>
+    <field>Inv_Holding__c$MarketValueDisplay__c</field>
   </columns>
   <columns>
     <field>Inv_Holding__c$Portfolio__c.Id</field>

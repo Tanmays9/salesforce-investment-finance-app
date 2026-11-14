@@ -63,11 +63,11 @@
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>ReportedCashNumber__c</field>
+        <field>ReportedCashCurrency__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>CalculatedCashNumber__c</field>
+        <field>CalculatedCashCurrency__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>

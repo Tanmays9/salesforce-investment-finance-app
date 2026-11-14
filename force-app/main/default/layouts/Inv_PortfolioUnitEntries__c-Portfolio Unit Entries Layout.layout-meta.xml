@@ -97,11 +97,11 @@
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>ConsiderationAmountNumber__c</field>
+        <field>ConsiderationCurrency__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>AcquisitionCostNumber__c</field>
+        <field>AcquisitionCostCurrency__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>

@@ -13,13 +13,13 @@
     <field>Inv_Holding__c$Units__c</field>
   </columns>
   <columns>
-    <field>Inv_Holding__c$Cost__c</field>
+    <field>Inv_Holding__c$CostDisplay__c</field>
   </columns>
   <columns>
-    <field>Inv_Holding__c$MarketValue__c</field>
+    <field>Inv_Holding__c$MarketValueDisplay__c</field>
   </columns>
   <columns>
-    <field>Inv_Holding__c$UnrealizedGain__c</field>
+    <field>Inv_Holding__c$UnrealizedGainDisplay__c</field>
   </columns>
   <columns>
     <field>Inv_Holding__c$NAVDate__c</field>

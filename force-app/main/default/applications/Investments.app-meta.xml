@@ -10,6 +10,7 @@
   <tabs>Inv_Overview</tabs>
   <tabs>Inv_PortfolioPortfolios__c</tabs>
   <tabs>Inv_Holding__c</tabs>
+  <tabs>Inv_WatchlistItems__c</tabs>
   <tabs>Inv_MarketInstruments__c</tabs>
   <tabs>Inv_PortfolioSipVersions__c</tabs>
   <tabs>Inv_PlanningPlans__c</tabs>

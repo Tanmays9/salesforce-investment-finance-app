@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>AmountCurrency__c</fullName>
+  <formula>IF(ISBLANK(AmountNumber__c), NULL, ROUND(AmountNumber__c, 2))</formula>
+  <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+  <label>Charge amount (INR)</label>
+  <precision>18</precision>
+  <scale>2</scale>
+  <type>Currency</type>
+</CustomField>

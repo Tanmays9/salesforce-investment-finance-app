@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+  <types>
+    <members>Inv_Exposure__c.ValueDisplay__c</members>
+    <members>Inv_HoldingValuation__c.CostDisplay__c</members>
+    <members>Inv_HoldingValuation__c.MarketValueDisplay__c</members>
+    <members>Inv_HoldingValuation__c.NAVDisplay__c</members>
+    <members>Inv_HoldingValuation__c.UnrealizedGainDisplay__c</members>
+    <members>Inv_Holding__c.CostDisplay__c</members>
+    <members>Inv_Holding__c.MarketValueDisplay__c</members>
+    <members>Inv_Holding__c.NAVDisplay__c</members>
+    <members>Inv_Holding__c.RealizedGainDisplay__c</members>
+    <members>Inv_Holding__c.SIPAmountDisplay__c</members>
+    <members>Inv_Holding__c.UnrealizedGainDisplay__c</members>
+    <members>Inv_OpsImportRows__c.AmountCurrency__c</members>
+    <members>Inv_OpsImportRows__c.CostCurrency__c</members>
+    <members>Inv_OpsReconciliations__c.CalculatedCashCurrency__c</members>
+    <members>Inv_OpsReconciliations__c.ReportedCashCurrency__c</members>
+    <members>Inv_PlanImpact__c.BaselineCurrencyDisplay__c</members>
+    <members>Inv_PlanImpact__c.ProposedCurrencyDisplay__c</members>
+    <members>Inv_PlanningActions__c.RequestedAmountCurrency__c</members>
+    <members>Inv_PlanningPlanVersions__c.MonthlyBudgetCurrency__c</members>
+    <members>Inv_PlanningReviewItems__c.AmountCurrency__c</members>
+    <members>Inv_PortfolioCashEntries__c.AmountDeltaCurrency__c</members>
+    <members>Inv_PortfolioEventCharges__c.AmountCurrency__c</members>
+    <members>Inv_PortfolioPositionSnapshots__c.ReportedCostCurrency__c</members>
+    <members>Inv_PortfolioSipEvidence__c.ObservedAmountCurrency__c</members>
+    <members>Inv_PortfolioSipVersions__c.AmountCurrency__c</members>
+    <members>Inv_PortfolioUnitEntries__c.AcquisitionCostCurrency__c</members>
+    <members>Inv_PortfolioUnitEntries__c.ConsiderationCurrency__c</members>
+    <members>Inv_PortfolioValuation__c.CostDisplay__c</members>
+    <members>Inv_PortfolioValuation__c.MarketValueDisplay__c</members>
+    <members>Inv_PortfolioValuation__c.MonthlySIPDisplay__c</members>
+    <members>Inv_PortfolioValuation__c.RealizedGainDisplay__c</members>
+    <members>Inv_PortfolioValuation__c.UnrealizedGainDisplay__c</members>
+    <members>Inv_WatchlistItems__c.Active__c</members>
+    <members>Inv_WatchlistItems__c.AddedOn__c</members>
+    <members>Inv_WatchlistItems__c.AssetType__c</members>
+    <members>Inv_WatchlistItems__c.Exchange__c</members>
+    <members>Inv_WatchlistItems__c.Fund__c</members>
+    <members>Inv_WatchlistItems__c.ISIN__c</members>
+    <members>Inv_WatchlistItems__c.Notes__c</members>
+    <members>Inv_WatchlistItems__c.SchemeCode__c</members>
+    <members>Inv_WatchlistItems__c.Symbol__c</members>
+    <name>CustomField</name>
+  </types>
+  <types>
+    <members>Inv_WatchlistItems__c</members>
+    <name>CustomObject</name>
+  </types>
+  <types>
+    <members>Inv_WatchlistItems__c</members>
+    <name>CustomTab</name>
+  </types>
+  <types>
+    <members>Inv_Exposure__c-Portfolio Analysis</members>
+    <members>Inv_HoldingValuation__c-Portfolio Analysis</members>
+    <members>Inv_Holding__c-Portfolio Analysis</members>
+    <members>Inv_OpsImportRows__c-Ops Import Rows Layout</members>
+    <members>Inv_OpsReconciliations__c-Ops Reconciliations Layout</members>
+    <members>Inv_PlanningActions__c-Planning Actions Layout</members>
+    <members>Inv_PlanningPlanVersions__c-Planning Plan Versions Layout</members>
+    <members>Inv_PlanningReviewItems__c-Planning Review Items Layout</members>
+    <members>Inv_PortfolioCashEntries__c-Portfolio Cash Entries Layout</members>
+    <members>Inv_PortfolioEventCharges__c-Portfolio Event Charges Layout</members>
+    <members>Inv_PortfolioPositionSnapshots__c-Portfolio Position Snapshots Layout</members>
+    <members>Inv_PortfolioSipEvidence__c-Portfolio Sip Evidence Layout</members>
+    <members>Inv_PortfolioSipVersions__c-Portfolio Sip Versions Layout</members>
+    <members>Inv_PortfolioUnitEntries__c-Portfolio Unit Entries Layout</members>
+    <members>Inv_PortfolioValuation__c-Portfolio Analysis</members>
+    <members>Inv_WatchlistItems__c-Watchlist</members>
+    <name>Layout</name>
+  </types>
+  <types>
+    <members>Inv_HoldingValuation__c.All</members>
+    <members>Inv_Holding__c.All</members>
+    <members>Inv_Holding__c.Closed</members>
+    <members>Inv_Holding__c.Current</members>
+    <members>Inv_Holding__c.NeedsReview</members>
+    <members>Inv_Holding__c.WithoutSIP</members>
+    <members>Inv_OpsImportRows__c.Transactions</members>
+    <members>Inv_PortfolioEventCharges__c.All</members>
+    <members>Inv_PortfolioSipVersions__c.All</members>
+    <members>Inv_PortfolioValuation__c.All</members>
+    <members>Inv_PortfolioValuation__c.Current</members>
+    <members>Inv_WatchlistItems__c.Active</members>
+    <members>Inv_WatchlistItems__c.All</members>
+    <name>ListView</name>
+  </types>
+  <types>
+    <members>Inv_MigrationAdmin</members>
+    <members>Inv_PortfolioManager</members>
+    <members>Inv_Viewer</members>
+    <name>PermissionSet</name>
+  </types>
+  <types>
+    <members>Inv_Exposure_Analysis</members>
+    <members>Inv_HoldingValuation_Analysis</members>
+    <members>Inv_Holding_Analysis</members>
+    <members>Inv_PlanImpact_Analysis</members>
+    <members>Inv_PortfolioValuation_Analysis</members>
+    <members>Inv_WatchlistItems_Analysis</members>
+    <name>ReportType</name>
+  </types>
+  <types>
+    <members>Investments/AMCAllocation</members>
+    <members>Investments/AssetExposure</members>
+    <members>Investments/CapExposure</members>
+    <members>Investments/CategoryAllocation</members>
+    <members>Investments/Exposure</members>
+    <members>Investments/FundAllocation</members>
+    <members>Investments/HoldingGains</members>
+    <members>Investments/Holdings</members>
+    <members>Investments/PlanComparison</members>
+    <members>Investments/PlanSIPs</members>
+    <members>Investments/SIPAllocation</members>
+    <members>Investments/SecurityExposure</members>
+    <members>Investments/ValuationHistory</members>
+    <members>Investments/Watchlist</members>
+    <name>Report</name>
+  </types>
+  <types>
+    <members>Investments</members>
+    <name>CustomApplication</name>
+  </types>
+  <types>
+    <members>Inv_Overview</members>
+    <name>FlexiPage</name>
+  </types>
+  <types>
+    <members>Investments</members>
+    <name>ReportFolder</name>
+  </types>
+  <version>68.0</version>
+</Package>

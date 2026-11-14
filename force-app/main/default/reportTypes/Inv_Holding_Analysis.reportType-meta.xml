@@ -63,7 +63,17 @@
     </columns>
     <columns>
       <checkedByDefault>true</checkedByDefault>
+      <field>CostDisplay__c</field>
+      <table>Inv_Holding__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
       <field>NAV__c</field>
+      <table>Inv_Holding__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>NAVDisplay__c</field>
       <table>Inv_Holding__c</table>
     </columns>
     <columns>
@@ -83,12 +93,27 @@
     </columns>
     <columns>
       <checkedByDefault>true</checkedByDefault>
+      <field>MarketValueDisplay__c</field>
+      <table>Inv_Holding__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
       <field>UnrealizedGain__c</field>
       <table>Inv_Holding__c</table>
     </columns>
     <columns>
       <checkedByDefault>true</checkedByDefault>
+      <field>UnrealizedGainDisplay__c</field>
+      <table>Inv_Holding__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
       <field>RealizedGain__c</field>
+      <table>Inv_Holding__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>RealizedGainDisplay__c</field>
       <table>Inv_Holding__c</table>
     </columns>
     <columns>
@@ -104,6 +129,11 @@
     <columns>
       <checkedByDefault>true</checkedByDefault>
       <field>SIPAmount__c</field>
+      <table>Inv_Holding__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>SIPAmountDisplay__c</field>
       <table>Inv_Holding__c</table>
     </columns>
     <columns>

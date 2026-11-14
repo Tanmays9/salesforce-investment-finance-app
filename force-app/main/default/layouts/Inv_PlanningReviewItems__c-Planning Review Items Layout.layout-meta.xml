@@ -97,7 +97,7 @@
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>MonthlyOrTransactionAmountNumber__c</field>
+        <field>AmountCurrency__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>

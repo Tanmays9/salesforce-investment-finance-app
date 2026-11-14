@@ -7,6 +7,7 @@
     <members>Inv_Exposure_Analysis</members>
     <members>Inv_FundMetric_Analysis</members>
     <members>Inv_PlanImpact_Analysis</members>
+    <members>Inv_WatchlistItems_Analysis</members>
     <members>Inv_MarketPriceObservations_Analysis</members>
     <name>ReportType</name>
   </types>
@@ -40,6 +41,7 @@
     <members>Investments/PlanAssets</members>
     <members>Investments/PlanCaps</members>
     <members>Investments/PlanTargets</members>
+    <members>Investments/Watchlist</members>
     <name>Report</name>
   </types>
   <types>

@@ -53,6 +53,11 @@
     </columns>
     <columns>
       <checkedByDefault>true</checkedByDefault>
+      <field>BaselineCurrencyDisplay__c</field>
+      <table>Inv_PlanImpact__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
       <field>Dimension__c</field>
       <table>Inv_PlanImpact__c</table>
     </columns>
@@ -64,6 +69,11 @@
     <columns>
       <checkedByDefault>true</checkedByDefault>
       <field>Proposed__c</field>
+      <table>Inv_PlanImpact__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>ProposedCurrencyDisplay__c</field>
       <table>Inv_PlanImpact__c</table>
     </columns>
     <columns>

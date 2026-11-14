@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>ObservedAmountCurrency__c</fullName>
+  <formula>IF(ISBLANK(ObservedAmountNumber__c), NULL, ROUND(ObservedAmountNumber__c, 2))</formula>
+  <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+  <label>Observed SIP amount (INR)</label>
+  <precision>18</precision>
+  <scale>2</scale>
+  <type>Currency</type>
+</CustomField>

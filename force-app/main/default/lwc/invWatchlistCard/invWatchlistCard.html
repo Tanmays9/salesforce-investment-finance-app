@@ -1,0 +1,20 @@
+<template>
+    <lightning-card title="Watchlist" icon-name="standard:asset_object">
+        <div slot="actions">
+            <lightning-button label="New" title="Add a watchlist item" onclick={handleNew}></lightning-button>
+            <lightning-button class="slds-m-left_x-small" label="View All" title="Open the watchlist" onclick={handleViewAll}></lightning-button>
+        </div>
+        <template lwc:if={error}>
+            <div class="slds-p-around_medium" role="alert">The watchlist could not be loaded. Open the Watchlist tab to review it.</div>
+        </template>
+        <template lwc:elseif={loading}>
+            <lightning-spinner alternative-text="Loading watchlist"></lightning-spinner>
+        </template>
+        <template lwc:elseif={hasRows}>
+            <lightning-datatable key-field="id" data={rows} columns={columns} hide-checkbox-column></lightning-datatable>
+        </template>
+        <template lwc:else>
+            <div class="slds-p-around_medium">No active items yet. Add a stock, mutual fund, or ETF with New.</div>
+        </template>
+    </lightning-card>
+</template>

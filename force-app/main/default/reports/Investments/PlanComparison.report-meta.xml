@@ -3,12 +3,12 @@
   <chart>
     <chartSummaries>
       <aggregate>Sum</aggregate>
-      <column>Inv_PlanImpact__c$Baseline__c</column>
+      <column>Inv_PlanImpact__c$BaselineCurrencyDisplay__c</column>
       <axisBinding>y</axisBinding>
     </chartSummaries>
     <chartSummaries>
       <aggregate>Sum</aggregate>
-      <column>Inv_PlanImpact__c$Proposed__c</column>
+      <column>Inv_PlanImpact__c$ProposedCurrencyDisplay__c</column>
       <axisBinding>y</axisBinding>
     </chartSummaries>
     <chartType>VerticalColumn</chartType>
@@ -29,12 +29,12 @@
     <field>Inv_PlanImpact__c$Name</field>
   </columns>
   <columns>
-    <field>Inv_PlanImpact__c$Baseline__c</field>
+    <field>Inv_PlanImpact__c$BaselineCurrencyDisplay__c</field>
     <aggregateTypes>Sum</aggregateTypes>
   </columns>
   <columns>
     <aggregateTypes>Sum</aggregateTypes>
-    <field>Inv_PlanImpact__c$Proposed__c</field>
+    <field>Inv_PlanImpact__c$ProposedCurrencyDisplay__c</field>
   </columns>
   <columns>
     <field>Inv_PlanImpact__c$Coverage__c</field>
