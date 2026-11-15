@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { loadScript } from 'lightning/platformResourceLoader';
 import CHARTJS from '@salesforce/resourceUrl/chartjs';
@@ -9,7 +9,8 @@ const inr = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR',
 const currencyColumn = { type: 'currency', typeAttributes: { currencyCode: 'INR', minimumFractionDigits: 2, maximumFractionDigits: 2 } };
 
 export default class InvPortfolioResearch extends NavigationMixin(LightningElement) {
-    @api recordId;
+    // App pages do not receive a recordId. Passing null selects the portfolio's published baseline.
+    @api recordId = null;
     data;
     errorMessage;
     loading = true;
@@ -34,20 +35,26 @@ export default class InvPortfolioResearch extends NavigationMixin(LightningEleme
     allocationChart;
     _chartPromise;
 
-    @wire(getPortfolioResearch, { requestedPortfolioId: '$recordId' })
-    wiredPortfolio({ data, error }) {
-        this.loading = false;
-        if (data) {
-            this.data = data; this.errorMessage = null;
-            const points = data.marketValueHistory || [];
+    connectedCallback() { this.loadPortfolio(); }
+    async loadPortfolio() {
+        if (this._portfolioRequestInFlight) return;
+        this._portfolioRequestInFlight = true; this.loading = true; this.errorMessage = null;
+        try {
+            const data = await getPortfolioResearch({ requestedPortfolioId: this.recordId || null });
+            this.data = data;
+            const points = data?.marketValueHistory || [];
             if (points.length > 1 && !this.movementStartRunId) {
                 this.movementStartRunId = points[points.length - 2].runId;
                 this.movementEndRunId = points[points.length - 1].runId;
                 this.loadMovement();
             }
+        } catch (error) {
+            this.data = null;
+            this.errorMessage = error.body?.message || error.message || 'Unable to load the published portfolio analysis.';
+        } finally {
+            this.loading = false; this._portfolioRequestInFlight = false;
             this.renderCharts();
         }
-        else if (error) { this.data = null; this.errorMessage = error.body?.message || 'Unable to load the published portfolio analysis.'; }
     }
 
     get summaryCards() {
@@ -61,6 +68,28 @@ export default class InvPortfolioResearch extends NavigationMixin(LightningEleme
             { label: 'Monthly SIP', value: this.data.monthlySip == null ? 'Incomplete' : inr.format(this.data.monthlySip) }
         ];
     }
+    get overviewHoldingColumns() { return [
+        { label: 'Fund', fieldName: 'fundUrl', type: 'url', typeAttributes: { label: { fieldName: 'fundName' }, target: '_self' } },
+        { label: 'Category', fieldName: 'category' }, { label: 'Market value', fieldName: 'marketValue', ...currencyColumn },
+        { label: 'Allocation', fieldName: 'weight', type: 'percent', typeAttributes: { minimumFractionDigits: 2, maximumFractionDigits: 2 } },
+        { label: 'Gain / loss', fieldName: 'unrealizedGain', ...currencyColumn }, { label: 'Personal XIRR', fieldName: 'xirr', type: 'percent', typeAttributes: { minimumFractionDigits: 2, maximumFractionDigits: 2 } }
+    ]; }
+    get allocationColumns() { return [{ label: this.allocationDimension, fieldName: 'label' }, { label: 'Value represented (INR)', fieldName: 'value', ...currencyColumn }]; }
+    get reviewColumns() { return [
+        { label: 'Fund', fieldName: 'fundUrl', type: 'url', typeAttributes: { label: { fieldName: 'fundName' }, target: '_self' } }, { label: 'Position', fieldName: 'status' },
+        { label: 'Coverage', fieldName: 'coverage' }, { label: 'Review note', fieldName: 'reviewReason', wrapText: true }
+    ]; }
+    get overviewHoldings() {
+        return (this.data?.holdings || []).filter(row => row.status === 'Active' && row.marketValue > 0).slice(0, 6)
+            .map((row, index) => ({ ...row, holdingId: row.holdingId || `${row.fundId}-${index}`, fundUrl: row.fundId ? `/lightning/r/Inv_MarketInstruments__c/${row.fundId}/view` : null }));
+    }
+    get reviewHoldings() {
+        return (this.data?.holdings || []).filter(row => row.coverage !== 'complete' || row.warnings)
+            .map((row, index) => ({ ...row, holdingId: row.holdingId || `${row.fundId}-review-${index}`, fundUrl: row.fundId ? `/lightning/r/Inv_MarketInstruments__c/${row.fundId}/view` : null, reviewReason: row.warnings || `Coverage: ${row.coverage || 'unknown'}` }));
+    }
+    get hasReviewHoldings() { return this.reviewHoldings.length > 0; }
+    get reviewCount() { return this.reviewHoldings.length; }
+    get hasSips() { return this.sipRows.length > 0; }
     get holdingColumns() { return [
         { label: 'Fund', fieldName: 'fundUrl', type: 'url', typeAttributes: { label: { fieldName: 'fundName' }, target: '_self' } },
         { label: 'Identity verified', fieldName: 'mappingVerified', type: 'boolean' }, { label: 'Category', fieldName: 'category' }, { label: 'AMC', fieldName: 'amc' }, { label: 'Status', fieldName: 'status' },
@@ -128,6 +157,7 @@ export default class InvPortfolioResearch extends NavigationMixin(LightningEleme
         }
         return [...groups.values()].sort((left, right) => right.value - left.value);
     }
+    get allocationRows() { return this.allocationGroups.map((row, index) => ({ key: `${row.key}-${index}`, label: row.label, value: row.value })); }
     get visibleHoldings() {
         const rows = (this.data?.holdings || []).map((row, index) => ({ ...row, holdingId: row.holdingId || `${row.fundId}-${index}`, fundUrl: row.fundId ? `/lightning/r/Inv_MarketInstruments__c/${row.fundId}/view` : null }));
         const term = this.searchTerm.trim().toLowerCase();
@@ -170,6 +200,16 @@ export default class InvPortfolioResearch extends NavigationMixin(LightningEleme
         try { this.movementResult = await compareMovement({ portfolioId: this.data.portfolioId, openingRunId: this.movementStartRunId, closingRunId: this.movementEndRunId }); }
         catch (error) { this.movementResult = null; this.movementError = error.body?.message || error.message || 'Unable to attribute this portfolio movement.'; }
         finally { this.movementLoading = false; }
+    }
+    openPlanComparison() { this.openNavItem('Inv_PlanComparison'); }
+    openRedemptionReview() { this.openNavItem('Inv_RedemptionReview'); }
+    openDataHealth() { this.openObject('Inv_OpsDataIssues__c'); }
+    openHoldings() { this.openObject('Inv_Holding__c'); }
+    openNavItem(apiName) {
+        this[NavigationMixin.Navigate]({ type: 'standard__navItemPage', attributes: { apiName } });
+    }
+    openObject(objectApiName) {
+        this[NavigationMixin.Navigate]({ type: 'standard__objectPage', attributes: { objectApiName, actionName: 'list' } });
     }
     handleRowAction(event) {
         const row = event.detail.row;

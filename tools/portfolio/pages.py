@@ -22,14 +22,9 @@ def main():
  def add(kind,name):
   values=members.setdefault(kind,[])
   if name not in values:values.append(name)
- charts=[component('flexipage:filterListCard','summary',{'entityName':'Inv_PortfolioValuation__c','filterName':'Current','pageSize':'5'}),
-         component('c:invPortfolioResearch','portfolioResearch',{}),
-         component('c:invWatchlistCard','watchlist',{}),
-         component('flexipage:reportChart','allocation',{'reportName':'FundAllocation','showRefreshButton':'true'}),
-         component('flexipage:reportChart','category',{'reportName':'CategoryAllocation','showRefreshButton':'true'}),
-         component('flexipage:reportChart','sip',{'reportName':'SIPAllocation','showRefreshButton':'true'})]
- xml(DEST/'flexipages/Inv_Overview.flexipage-meta.xml','FlexiPage',{'description':'Portfolio snapshot, current holdings, watchlist, allocation and SIP review.',
-  'flexiPageRegions':{'itemInstances':charts,'name':'main','type':'Region'},'masterLabel':'Portfolio Overview',
+ overview=[component('c:invPortfolioResearch','portfolioResearch',{})]
+ xml(DEST/'flexipages/Inv_Overview.flexipage-meta.xml','FlexiPage',{'description':'Portfolio 360 overview with published valuations, holdings, allocation, SIPs, review flags and watchlist.',
+  'flexiPageRegions':{'itemInstances':overview,'name':'main','type':'Region'},'masterLabel':'Portfolio 360',
   'template':{'name':'flexipage:defaultAppHomeTemplate'},'type':'AppPage'});add('FlexiPage','Inv_Overview')
  xml(DEST/'tabs/Inv_Overview.tab-meta.xml','CustomTab',{'flexiPage':'Inv_Overview','label':'Overview','motif':'Custom18: Form'});add('CustomTab','Inv_Overview')
  for page,bundle,label in [('Inv_PlanComparison','c:invPlanComparison','Plan Comparison'),('Inv_RedemptionReview','c:invRedemptionReview','Redemption Review')]:
