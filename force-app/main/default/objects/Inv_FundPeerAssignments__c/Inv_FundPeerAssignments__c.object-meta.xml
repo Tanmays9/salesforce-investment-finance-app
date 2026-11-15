@@ -3,11 +3,11 @@
   <deploymentStatus>Deployed</deploymentStatus>
   <description>Operational portfolio analysis; source history remains separately preserved.</description>
   <enableReports>true</enableReports>
-  <label>Fund peer assignment</label>
+  <label>Peer assignment</label>
   <nameField>
-    <label>Fund peer assignment name</label>
+    <label>Peer assignment name</label>
     <type>Text</type>
   </nameField>
-  <pluralLabel>Fund peer assignments</pluralLabel>
+  <pluralLabel>Peer assignments</pluralLabel>
   <sharingModel>Private</sharingModel>
 </CustomObject>

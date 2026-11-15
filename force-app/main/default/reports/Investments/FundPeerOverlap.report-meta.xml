@@ -9,7 +9,7 @@
     <chartType>HorizontalBar</chartType>
     <enableHoverLabels>true</enableHoverLabels>
     <expandOthers>true</expandOthers>
-    <groupingColumn>Inv_FundMetric__c$CounterpartyFund__c.DisplayName__c</groupingColumn>
+    <groupingColumn>Inv_FundMetric__c$CounterpartyFundDisplayName__c</groupingColumn>
     <location>CHART_TOP</location>
     <showAxisLabels>true</showAxisLabels>
     <showPercentage>false</showPercentage>
@@ -17,11 +17,11 @@
     <size>Large</size>
     <summaryAxisRange>Auto</summaryAxisRange>
     <textSize>12</textSize>
-    <title>Mapped equity overlap tracked peers</title>
+    <title>Tracked fund equity overlap</title>
     <titleSize>14</titleSize>
   </chart>
   <columns>
-    <field>Inv_FundMetric__c$Fund__c.DisplayName__c</field>
+    <field>Inv_FundMetric__c$FundDisplayName__c</field>
   </columns>
   <columns>
     <aggregateTypes>Average</aggregateTypes>
@@ -47,12 +47,11 @@
       <operator>equals</operator>
       <value>Mapped equity overlap</value>
     </criteriaItems>
-    <booleanFilter>1 AND 2</booleanFilter>
   </filter>
   <format>Summary</format>
   <groupingsDown>
     <dateGranularity>Day</dateGranularity>
-    <field>Inv_FundMetric__c$CounterpartyFund__c.DisplayName__c</field>
+    <field>Inv_FundMetric__c$CounterpartyFundDisplayName__c</field>
     <sortOrder>Asc</sortOrder>
   </groupingsDown>
   <name>Tracked fund equity overlap</name>

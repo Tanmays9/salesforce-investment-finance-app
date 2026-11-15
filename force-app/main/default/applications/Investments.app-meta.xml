@@ -30,6 +30,7 @@
   <tabs>Inv_PlanComparison</tabs>
   <tabs>Inv_RedemptionReview</tabs>
   <tabs>Inv_WatchlistItems__c</tabs>
+  <tabs>Inv_FundPeerAssignments__c</tabs>
   <tabs>Inv_OpsImportRuns__c</tabs>
   <tabs>Inv_OpsDataIssues__c</tabs>
   <tabs>standard-report</tabs>

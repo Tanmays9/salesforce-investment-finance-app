@@ -688,6 +688,12 @@
           "relationshipName": "OperationalHoldings",
           "type": "Lookup"
         },
+        "FundDisplayName__c": {
+          "formula": "IF(ISBLANK(Fund__r.DisplayName__c), Fund__r.Name, Fund__r.DisplayName__c)",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Fund name",
+          "type": "Text"
+        },
         "Run__c": {
           "deleteConstraint": "Restrict",
           "label": "Analysis run",
@@ -740,6 +746,12 @@
           "relationshipLabel": "OverlapComparisons",
           "relationshipName": "OverlapComparisons",
           "type": "Lookup"
+        },
+        "CounterpartyFundDisplayName__c": {
+          "formula": "IF(ISBLANK(CounterpartyFund__r.DisplayName__c), CounterpartyFund__r.Name, CounterpartyFund__r.DisplayName__c)",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Compared fund name",
+          "type": "Text"
         },
         "Disclosure__c": {
           "deleteConstraint": "Restrict",
@@ -927,15 +939,15 @@
       }
     ],
     "Inv_FundPeerAssignments__c": [
-      "Fund peer assignment",
-      "Fund peer assignments",
+      "Peer assignment",
+      "Peer assignments",
       {
         "Fund__c": {
           "deleteConstraint": "Restrict",
           "label": "Fund",
           "referenceTo": "Inv_MarketInstruments__c",
-          "relationshipLabel": "OperationalHoldings",
-          "relationshipName": "OperationalHoldings",
+          "relationshipLabel": "FundPeerAssignments",
+          "relationshipName": "FundPeerAssignments",
           "type": "Lookup"
         },
         "PeerFund__c": {

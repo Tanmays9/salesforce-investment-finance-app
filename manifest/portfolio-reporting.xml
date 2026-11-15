@@ -35,6 +35,7 @@
     <members>Investments/CapExposure</members>
     <members>Investments/SecurityExposure</members>
     <members>Investments/FundMetrics</members>
+    <members>Investments/FundPeerOverlap</members>
     <members>Investments/NAVHistory</members>
     <members>Investments/ValuationHistory</members>
     <members>Investments/PlanComparison</members>

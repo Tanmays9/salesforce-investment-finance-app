@@ -76,10 +76,12 @@ OBJECTS={
   'Coverage__c':text('Coverage'),'Published__c':check('Published'),
  }),
  'Inv_FundMetric__c':('Fund metric','Fund Metrics',{
-  'Fund__c':FUND,'Run__c':RUN,'Metric__c':text('Metric',80),'PeriodStart__c':date('Period start'),
+  'Fund__c':FUND,'FundDisplayName__c':{'formula':'IF(ISBLANK(Fund__r.DisplayName__c), Fund__r.Name, Fund__r.DisplayName__c)','formulaTreatBlanksAs':'BlankAsBlank','label':'Fund name','type':'Text'},
+  'Run__c':RUN,'Metric__c':text('Metric',80),'PeriodStart__c':date('Period start'),
   'PeriodEnd__c':date('Period end'),'Value__c':number('Value',10),'Coverage__c':text('Coverage'),
   'Benchmark__c':lookup('Benchmark','Inv_MarketInstruments__c','FundComparisons'),'Published__c':check('Published'),
   'CounterpartyFund__c':lookup('Compared fund','Inv_MarketInstruments__c','OverlapComparisons'),
+  'CounterpartyFundDisplayName__c':{'formula':'IF(ISBLANK(CounterpartyFund__r.DisplayName__c), CounterpartyFund__r.Name, CounterpartyFund__r.DisplayName__c)','formulaTreatBlanksAs':'BlankAsBlank','label':'Compared fund name','type':'Text'},
   'Disclosure__c':lookup('Fund disclosure','Inv_MarketFundPortfolioSnapshots__c','FundMetricEvidence'),
   'ComparedDisclosure__c':lookup('Compared disclosure','Inv_MarketFundPortfolioSnapshots__c','ComparedMetricEvidence'),
   'ValuePercent__c':percent('Metric percent','Value__c'),'SampleCount__c':number('Observation count',0),
@@ -97,8 +99,8 @@ OBJECTS={
   'Proposed__c':number('Proposed'),'ProposedCurrencyDisplay__c':currency('Proposed amount (INR)','Proposed__c'),
   'Coverage__c':text('Coverage'),'Notes__c':long('Assumptions and warnings'),'Published__c':check('Published'),
  }),
- 'Inv_FundPeerAssignments__c':('Fund peer assignment','Fund peer assignments',{
-  'Fund__c':FUND,'PeerFund__c':lookup('Peer fund','Inv_MarketInstruments__c','PeerAssignments'),
+ 'Inv_FundPeerAssignments__c':('Peer assignment','Peer assignments',{
+  'Fund__c':lookup('Fund','Inv_MarketInstruments__c','FundPeerAssignments'),'PeerFund__c':lookup('Peer fund','Inv_MarketInstruments__c','PeerAssignments'),
   'SchemeVersion__c':lookup('Category evidence','Inv_MarketSchemeVersions__c','PeerAssignments'),
   'EffectiveFrom__c':date('Effective from'),'EffectiveTo__c':date('Effective to'),
   'AssignmentStatus__c':text('Assignment status',40),'Category__c':text('Peer category'),
@@ -319,9 +321,12 @@ def main():
   'description':'Controlled plan actions and reviewed account import confirmation. Assign together with Inv_Viewer.',
   'flowAccesses':[{'enabled':True,'flow':p.stem.removesuffix('.flow-meta')} for p in (DEST/'flows').glob('Inv_*.flow-meta.xml')],
   'label':'Investment Portfolio Manager','userPermissions':{'enabled':True,'name':'RunReports'},
-  'objectPermissions':{'allowCreate':True,'allowDelete':True,'allowEdit':True,'allowRead':True,'modifyAllRecords':False,'object':'Inv_WatchlistItems__c','viewAllRecords':False},
+  'objectPermissions':[{'allowCreate':True,'allowDelete':True,'allowEdit':True,'allowRead':True,'modifyAllRecords':False,'object':'Inv_WatchlistItems__c','viewAllRecords':False},
+   {'allowCreate':True,'allowDelete':False,'allowEdit':True,'allowRead':True,'modifyAllRecords':False,'object':'Inv_FundPeerAssignments__c','viewAllRecords':False}],
   'fieldPermissions':[{'editable':field in ['AssetType__c','Symbol__c','Exchange__c','ISIN__c','SchemeCode__c','Fund__c','Active__c','AddedOn__c','Notes__c'],
-    'field':'Inv_WatchlistItems__c.'+field,'readable':True} for field in AUX_OBJECTS['Inv_WatchlistItems__c'][2]]});add('PermissionSet','Inv_PortfolioManager')
+    'field':'Inv_WatchlistItems__c.'+field,'readable':True} for field in AUX_OBJECTS['Inv_WatchlistItems__c'][2]]+
+   [{'editable':field in ['Key__c','Fund__c','PeerFund__c','SchemeVersion__c','EffectiveFrom__c','EffectiveTo__c','AssignmentStatus__c','Category__c','ShareClassRule__c','Rationale__c'],
+    'field':'Inv_FundPeerAssignments__c.'+field,'readable':True} for field in OBJECTS['Inv_FundPeerAssignments__c'][2]]});add('PermissionSet','Inv_PortfolioManager')
  if (DEST/'lwc/invParseStatement').exists():add('LightningComponentBundle','invParseStatement')
  xml(DEST/'permissionsets/Inv_Parser.permissionset-meta.xml','PermissionSet',{
   'classAccesses':{'apexClass':'InvImportEndpoint','enabled':True},'customPermissions':{'enabled':True,'name':'Inv_ParseStatements'},

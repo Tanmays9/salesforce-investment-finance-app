@@ -228,6 +228,16 @@
     <fields>Coverage__c</fields>
     <relatedList>Inv_FundMetric__c.Fund__c</relatedList>
   </relatedLists>
+  <relatedLists>
+    <fields>PeerFund__c</fields>
+    <fields>Category__c</fields>
+    <fields>ShareClassRule__c</fields>
+    <fields>EffectiveFrom__c</fields>
+    <fields>EffectiveTo__c</fields>
+    <fields>AssignmentStatus__c</fields>
+    <fields>Rationale__c</fields>
+    <relatedList>Inv_FundPeerAssignments__c.Fund__c</relatedList>
+  </relatedLists>
   <showEmailCheckbox>false</showEmailCheckbox>
   <showHighlightsPanel>true</showHighlightsPanel>
   <showInteractionLogPanel>false</showInteractionLogPanel>

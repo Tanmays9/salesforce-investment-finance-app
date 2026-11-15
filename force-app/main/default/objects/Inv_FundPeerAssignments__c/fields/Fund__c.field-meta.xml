@@ -4,7 +4,7 @@
   <deleteConstraint>Restrict</deleteConstraint>
   <label>Fund</label>
   <referenceTo>Inv_MarketInstruments__c</referenceTo>
-  <relationshipLabel>OperationalHoldings</relationshipLabel>
+  <relationshipLabel>FundPeerAssignments</relationshipLabel>
   <relationshipName>FundPeerAssignmentsFund</relationshipName>
   <type>Lookup</type>
 </CustomField>

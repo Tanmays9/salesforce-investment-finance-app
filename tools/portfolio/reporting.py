@@ -39,7 +39,10 @@ def main():
   ('AssetExposure','Asset-class exposure','Inv_Exposure__c','Member__c',['Member__c','ValueDisplay__c','Coverage__c'],[('Published__c','equals','true'),('Dimension__c','equals','Asset class')],'ValueDisplay__c'),
   ('CapExposure','Market-cap exposure','Inv_Exposure__c','Member__c',['Member__c','ValueDisplay__c','Coverage__c'],[('Published__c','equals','true'),('Dimension__c','equals','Market cap')],'ValueDisplay__c'),
   ('SecurityExposure','Underlying securities','Inv_Exposure__c','Member__c',['Member__c','ValueDisplay__c','Coverage__c'],[('Published__c','equals','true'),('Dimension__c','equals','Security')],'ValueDisplay__c'),
-  ('FundMetrics','Fund performance and coverage','Inv_FundMetric__c',None,['Fund__c','Metric__c','CounterpartyFund__c','ValuePercent__c','PeriodStart__c','PeriodEnd__c','Coverage__c'],[('Published__c','equals','true')],None),
+  ('FundMetrics','Fund performance and coverage','Inv_FundMetric__c',None,['FundDisplayName__c','Metric__c','CounterpartyFundDisplayName__c','ValuePercent__c','PeriodStart__c','PeriodEnd__c','Coverage__c'],[('Published__c','equals','true')],None),
+  ('FundPeerOverlap','Tracked fund equity overlap','Inv_FundMetric__c','CounterpartyFundDisplayName__c',
+   ['FundDisplayName__c','ValuePercent__c','PeriodStart__c','PeriodEnd__c','Coverage__c'],
+   [('Published__c','equals','true'),('Metric__c','equals','Mapped equity overlap')],'ValuePercent__c'),
   ('NAVHistory','Fund NAV history (last five years)','Inv_MarketPriceObservations__c','ObservedOn__c',['ValueNumber__c'],[('KindFilter__c','equals','NAV'),('QualityFilter__c','equals','accepted'),('SelectedNAV__c','equals','true'),('RecentChartDate__c','equals','true')],'ValueNumber__c'),
   ('ValuationHistory','Portfolio value history','Inv_PortfolioValuation__c','AsOf__c',['Name','MarketValueDisplay__c','CostDisplay__c','EarliestNAV__c','LatestNAV__c'],[('LatestForDate__c','equals','true')],'MarketValueDisplay__c'),
   ('PlanComparison','Current versus proposed fund values','Inv_PlanImpact__c','Fund__c',['Name','BaselineCurrencyDisplay__c','ProposedCurrencyDisplay__c','Coverage__c'],[('Published__c','equals','true'),('Metric__c','equals','Market value INR')],'ProposedCurrencyDisplay__c'),
@@ -54,16 +57,17 @@ def main():
  for name,label,api,group,cols,filters,measure in specs:
   def col(f):return api+'$'+f
   values={
-   'columns':[{'aggregateTypes':'Average' if name=='NAVHistory' else 'Sum','field':col(f)} if f==measure else {'field':col(f)} for f in cols if f!=group]+
-             [{'field':col(f+'.Id')} for f in ['Portfolio__c','Fund__c','InstrumentRef__c','PlanVersion__c'] if f in MODELS[api][2]],
+   'columns':[{'aggregateTypes':'Average' if name in ['NAVHistory','FundPeerOverlap'] else 'Sum','field':col(f)} if f==measure else {'field':col(f)} for f in cols if f!=group]+
+             [{'field':col(f+'.Id')} for f in ['Portfolio__c','Fund__c','InstrumentRef__c','PlanVersion__c'] if f in MODELS[api][2] and not (name in ['FundMetrics','FundPeerOverlap'] and f=='Fund__c')],
    'format':'Summary' if group else 'Tabular','name':label[:40],'reportType':api.removesuffix('__c')+'_Analysis__c',
    'scope':'organization','showDetails':True,'showGrandTotal':True,'showSubTotals':True,
    'timeFrameFilter':{'dateColumn':api+'$CreatedDate','interval':'INTERVAL_CUSTOM'}}
   if filters:values['filter']={'criteriaItems':[{'column':col(f),'operator':op,'value':v} for f,op,v in filters]}
   if group:
+   if name=='FundPeerOverlap':values.update(showGrandTotal=False,showSubTotals=False)
    values['groupingsDown']={'dateGranularity':'Day','field':col(group),'sortOrder':'Asc'}
-   values['chart']={'chartSummaries':{'aggregate':'Average' if name=='NAVHistory' else 'Sum','column':col(measure),'axisBinding':'y'},
-    'chartType':'Line' if name in ['ValuationHistory','NAVHistory'] else 'VerticalColumn','enableHoverLabels':True,
+   values['chart']={'chartSummaries':{'aggregate':'Average' if name in ['NAVHistory','FundPeerOverlap'] else 'Sum','column':col(measure),'axisBinding':'y'},
+    'chartType':'Line' if name in ['ValuationHistory','NAVHistory'] else 'HorizontalBar' if name=='FundPeerOverlap' else 'VerticalColumn','enableHoverLabels':True,
     'expandOthers':True,'groupingColumn':col(group),'location':'CHART_TOP',
     'showAxisLabels':True,'showPercentage':False,'showValues':True,'size':'Large',
     'summaryAxisRange':'Auto','textSize':12,'title':label[:40],'titleSize':14}

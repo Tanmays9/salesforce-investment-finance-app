@@ -70,6 +70,51 @@
     <field>Inv_WatchlistItems__c.Notes__c</field>
     <readable>true</readable>
   </fieldPermissions>
+  <fieldPermissions>
+    <editable>true</editable>
+    <field>Inv_FundPeerAssignments__c.Fund__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
+  <fieldPermissions>
+    <editable>true</editable>
+    <field>Inv_FundPeerAssignments__c.PeerFund__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
+  <fieldPermissions>
+    <editable>true</editable>
+    <field>Inv_FundPeerAssignments__c.SchemeVersion__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
+  <fieldPermissions>
+    <editable>true</editable>
+    <field>Inv_FundPeerAssignments__c.EffectiveFrom__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
+  <fieldPermissions>
+    <editable>true</editable>
+    <field>Inv_FundPeerAssignments__c.EffectiveTo__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
+  <fieldPermissions>
+    <editable>true</editable>
+    <field>Inv_FundPeerAssignments__c.AssignmentStatus__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
+  <fieldPermissions>
+    <editable>true</editable>
+    <field>Inv_FundPeerAssignments__c.Category__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
+  <fieldPermissions>
+    <editable>true</editable>
+    <field>Inv_FundPeerAssignments__c.ShareClassRule__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
+  <fieldPermissions>
+    <editable>true</editable>
+    <field>Inv_FundPeerAssignments__c.Rationale__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
   <flowAccesses>
     <enabled>true</enabled>
     <flow>Inv_AddPlanAction</flow>
@@ -132,6 +177,15 @@
     <object>Inv_WatchlistItems__c</object>
     <viewAllRecords>false</viewAllRecords>
   </objectPermissions>
+  <objectPermissions>
+    <allowCreate>true</allowCreate>
+    <allowDelete>false</allowDelete>
+    <allowEdit>true</allowEdit>
+    <allowRead>true</allowRead>
+    <modifyAllRecords>false</modifyAllRecords>
+    <object>Inv_FundPeerAssignments__c</object>
+    <viewAllRecords>false</viewAllRecords>
+  </objectPermissions>
   <tabSettings>
     <tab>Inv_Overview</tab>
     <visibility>Visible</visibility>
@@ -166,6 +220,10 @@
   </tabSettings>
   <tabSettings>
     <tab>Inv_WatchlistItems__c</tab>
+    <visibility>Visible</visibility>
+  </tabSettings>
+  <tabSettings>
+    <tab>Inv_FundPeerAssignments__c</tab>
     <visibility>Visible</visibility>
   </tabSettings>
   <tabSettings>

@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+  <types>
+    <members>InvResearchService</members>
+    <name>ApexClass</name>
+  </types>
+  <types>
+    <members>Inv_FundPeerAssignments__c</members>
+    <name>CustomObject</name>
+  </types>
+  <types>
+    <members>Inv_FundPeerAssignments__c.Fund__c</members>
+    <name>CustomField</name>
+  </types>
+  <types>
+    <members>Inv_MarketInstruments__c-Market Instruments Layout</members>
+    <name>Layout</name>
+  </types>
+  <types>
+    <members>Investments</members>
+    <name>CustomApplication</name>
+  </types>
+  <types>
+    <members>Inv_FundPeerAssignments__c</members>
+    <name>CustomTab</name>
+  </types>
+  <types>
+    <members>Inv_Viewer</members>
+    <members>Inv_MigrationAdmin</members>
+    <members>Inv_PortfolioManager</members>
+    <name>PermissionSet</name>
+  </types>
+  <types>
+    <members>invFundResearch</members>
+    <name>LightningComponentBundle</name>
+  </types>
+  <version>68.0</version>
+</Package>

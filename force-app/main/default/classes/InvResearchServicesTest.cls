@@ -34,7 +34,12 @@
             Account__c=account.Id,Fund__c=fund.Id,Units__c=10,MarketValue__c=123.4,NAV__c=12.34,SIPAmount__c=5000);insert as system position;
         insert as system new Inv_HoldingValuation__c(Key__c='research-test:holding-value',Name='Synthetic researched valuation',Holding__c=position.Id,
             Portfolio__c=portfolio.Id,Fund__c=fund.Id,Run__c=runId,AsOf__c=asOf,Units__c=10,NAV__c=12.34,NAVDate__c=asOf,
-            Cost__c=100,MarketValue__c=123.4,UnrealizedGain__c=23.4,Weight__c=1,Status__c='Active',Coverage__c='complete',Published__c=true);
+            Cost__c=100,MarketValue__c=123.4,UnrealizedGain__c=23.4,Coverage__c='complete',Published__c=true);
+        Inv_Holding__c closedPosition=new Inv_Holding__c(Key__c='research-test:closed-holding',Name='Synthetic closed holding',Portfolio__c=portfolio.Id,
+            Account__c=account.Id,Fund__c=fund.Id,Units__c=0,MarketValue__c=0,NAV__c=12.34);insert as system closedPosition;
+        insert as system new Inv_HoldingValuation__c(Key__c='research-test:closed-holding-value',Name='Synthetic closed valuation',Holding__c=closedPosition.Id,
+            Portfolio__c=portfolio.Id,Fund__c=fund.Id,Run__c=runId,AsOf__c=asOf,Units__c=0,NAV__c=12.34,NAVDate__c=asOf,
+            Cost__c=0,MarketValue__c=0,UnrealizedGain__c=0,Coverage__c='complete',Published__c=true);
         insert as system new Inv_Exposure__c(Key__c='research-test:exposure',Portfolio__c=portfolio.Id,Run__c=runId,Fund__c=fund.Id,
             Dimension__c='Sector',Member__c='Technology',MemberKey__c='Technology',Value__c=50,Weight__c=0.5,DisclosureDate__c=asOf,Coverage__c='complete',Published__c=true);
         insert as system new Inv_FundPeerAssignments__c(Key__c='research-test:peer-assignment',Fund__c=fund.Id,PeerFund__c=peerFund.Id,
@@ -52,8 +57,13 @@
         Assert.areEqual(0,summary.marketValue);
         Assert.isNotNull(summary.baselineFingerprint);
         Assert.areEqual(1,summary.sips.size());Assert.areEqual(5000,summary.sips[0].amount);
-        Assert.areEqual(1,summary.holdings.size());Assert.areEqual(123.4,summary.holdings[0].marketValue);
+        Assert.areEqual(2,summary.holdings.size());Assert.areEqual(123.4,summary.holdings[0].marketValue);
         Assert.areEqual(1,summary.exposures.size());
+
+        Inv_PortfolioValuation__c total=[SELECT Id,MarketValue__c FROM Inv_PortfolioValuation__c WHERE Portfolio__c=:portfolio.Id AND Run__c=:runId AND Published__c=true LIMIT 1];
+        total.MarketValue__c=1234;update as system total;
+        summary=InvResearchService.getPortfolioResearch(portfolio.Id);
+        Assert.areEqual(0.1,summary.holdings[0].weight,'Missing historical weight is reconstructed from the published total.');
 
         InvResearchService.FundData fundData=InvResearchService.getFundResearch(fund.Id);
         Assert.areEqual(fund.Id,fundData.fundId);
@@ -62,7 +72,10 @@
         Assert.isTrue(fundData.mappingVerified);
         Assert.areEqual(5000,fundData.monthlySip);Assert.areEqual('Research AMC',fundData.amc);Assert.areEqual('Flexi Cap',fundData.category);
         Assert.areEqual(0.5,fundData.ter);Assert.areEqual(0.7,fundData.ber);Assert.areEqual(1,fundData.peers.size());Assert.areEqual(peerFund.Id,fundData.peers[0].fundId);
-        Assert.areEqual(1,fundData.metrics.size());Assert.isTrue(fundData.composition.size()>=4);Assert.areEqual(1,fundData.positions.size());
+        Assert.areEqual(1,fundData.metrics.size());Assert.isTrue(fundData.composition.size()>=4);Assert.areEqual(2,fundData.positions.size());
+        Set<String> positionStatuses=new Set<String>();for(InvResearchService.HoldingRow row:fundData.positions)positionStatuses.add(row.status);
+        Assert.isTrue(positionStatuses.contains('Active'));Assert.isTrue(positionStatuses.contains('Closed'));
+        for(InvResearchService.HoldingRow row:fundData.positions)if(row.status=='Active')Assert.areEqual(0.1,row.weight);
         Assert.areEqual(1,fundData.navHistory.size());
     }
 

@@ -121,7 +121,10 @@ public with sharing class InvResearchService {
             Category__c,AMC__c,Status__c,UnitCoverage__c,BasisCoverage__c,RedemptionCoverage__c,PersonalReturnCoverage__c,
             NAVCoverage__c,CompositionCoverage__c,PolicyCoverage__c,Coverage__c,Warnings__c
             FROM Inv_HoldingValuation__c WHERE Portfolio__c=:portfolio.Id AND Run__c=:run.Id WITH USER_MODE ORDER BY MarketValue__c DESC NULLS LAST LIMIT 2000]) {
-            HoldingRow row=holding(h);out.holdings.add(row);if(row.fundId!=null)funds.add(row.fundId);
+            HoldingRow row=holding(h);
+            if((row.weight==null || row.weight==0) && row.marketValue!=null && row.marketValue>0 && out.marketValue!=null && out.marketValue>0)
+                row.weight=row.marketValue/out.marketValue;
+            out.holdings.add(row);if(row.fundId!=null)funds.add(row.fundId);
             if(row.status=='Active' && row.units!=null && row.units>0 && row.fundId!=null)activeFunds.add(row.fundId);
             if(row.reconciledThrough!=null && (out.reconciledThrough==null || row.reconciledThrough>out.reconciledThrough))out.reconciledThrough=row.reconciledThrough;
         }
@@ -242,14 +245,23 @@ public with sharing class InvResearchService {
         }
         Set<Id> currentRunIds=new Set<Id>();
         for(Inv_PortfolioPortfolios__c p:[SELECT PublishedRun__c FROM Inv_PortfolioPortfolios__c WHERE PublishedRun__c!=null WITH USER_MODE])currentRunIds.add(p.PublishedRun__c);
+        Map<String,Decimal> portfolioTotals=new Map<String,Decimal>();
+        for(Inv_PortfolioValuation__c total:[SELECT Portfolio__c,Run__c,MarketValue__c FROM Inv_PortfolioValuation__c
+            WHERE Run__c IN :currentRunIds AND Published__c=true WITH USER_MODE])
+            portfolioTotals.put(String.valueOf(total.Portfolio__c)+':'+String.valueOf(total.Run__c),total.MarketValue__c);
         for(Inv_HoldingValuation__c h:[SELECT Id,Holding__c,Holding__r.Account__c,Holding__r.Account__r.MaskedReference__c,
-                Portfolio__c,Portfolio__r.Name__c,Fund__c,Fund__r.MappingVerified__c,Units__c,NAV__c,NAVDate__c,NAVProvider__c,
+                Portfolio__c,Run__c,Portfolio__r.Name__c,Fund__c,Fund__r.MappingVerified__c,Units__c,NAV__c,NAVDate__c,NAVProvider__c,
                 ReconciledThrough__c,Cost__c,MarketValue__c,UnrealizedGain__c,RealizedGain__c,Weight__c,XIRR__c,SIPAmount__c,Category__c,AMC__c,
                 Status__c,UnitCoverage__c,BasisCoverage__c,RedemptionCoverage__c,PersonalReturnCoverage__c,NAVCoverage__c,
                 CompositionCoverage__c,PolicyCoverage__c,Coverage__c,Warnings__c FROM Inv_HoldingValuation__c
-                WHERE Run__c IN :currentRunIds AND Fund__c=:fund.Id WITH USER_MODE])out.positions.add(holding(h));
+                WHERE Run__c IN :currentRunIds AND Fund__c=:fund.Id WITH USER_MODE]) {
+            HoldingRow position=holding(h);Decimal total=portfolioTotals.get(String.valueOf(h.Portfolio__c)+':'+String.valueOf(h.Run__c));
+            if((position.weight==null || position.weight==0) && position.marketValue!=null && position.marketValue>0 && total!=null && total>0)
+                position.weight=position.marketValue/total;
+            out.positions.add(position);
+        }
         for(HoldingRow position:out.positions)position.fundName=out.fundName;
-        out.statusMessage=out.peers.isEmpty()?'No dated peer assignments are set for this fund. Add selected peers on the Fund Peer Assignments related list.':null;
+        out.statusMessage=out.peers.isEmpty()?'No dated peer assignments yet. Use Peer Assignments in the Investments navigation to add only the comparable funds you want to review.':null;
         return out;
     }
 
@@ -261,7 +273,8 @@ public with sharing class InvResearchService {
             SObject parent=h.getSObject('Holding__r');row.accountId=(Id)parent.get('Account__c');
             SObject account=parent.getSObject('Account__r');if(account!=null)row.accountLabel=(String)account.get('MaskedReference__c');
         }
-        row.category=h.Category__c;row.amc=h.AMC__c;row.status=h.Status__c;row.units=h.Units__c;row.nav=h.NAV__c;row.navDate=h.NAVDate__c;
+        row.category=h.Category__c;row.amc=h.AMC__c;row.status=String.isBlank(h.Status__c)?(h.Units__c==null?'Unknown':h.Units__c==0?'Closed':'Active'):h.Status__c;
+        row.units=h.Units__c;row.nav=h.NAV__c;row.navDate=h.NAVDate__c;
         row.navProvider=h.NAVProvider__c;row.cost=h.Cost__c;row.marketValue=h.MarketValue__c;row.unrealizedGain=h.UnrealizedGain__c;
         row.realizedGain=h.RealizedGain__c;row.weight=h.Weight__c;row.xirr=h.XIRR__c;row.monthlySip=h.SIPAmount__c;
         row.reconciledThrough=h.ReconciledThrough__c;row.unitCoverage=h.UnitCoverage__c;row.basisCoverage=h.BasisCoverage__c;

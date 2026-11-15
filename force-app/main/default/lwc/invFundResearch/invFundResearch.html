@@ -37,7 +37,7 @@
                             <template if:false={hasPeerComparisonRows}><div class="notice">Peer assignments exist, but the published NAV metric runs do not yet contain identical measurement start and end dates. No mismatched-period return is shown.</div></template>
                             <lightning-datatable class="slds-m-top_medium" key-field="fundId" data={peerRows} columns={peerAssignmentColumns} hide-checkbox-column></lightning-datatable>
                         </template>
-                        <template if:false={hasPeers}><div class="notice">No dated peer assignments are available. Add selected comparable funds to the Fund Peer Assignments related list.</div></template>
+                        <template if:false={hasPeers}><div class="notice">No dated peer assignments yet. Use Peer Assignments in the Investments navigation to add only the comparable funds you want to review.</div></template>
                     </lightning-tab>
                     <lightning-tab label="Composition">
                         <div class="slds-text-body_small slds-m-bottom_small">Coverage and disclosure dates remain visible. Cash, negative items and unmapped securities are preserved as reported; weights are not normalized.</div>

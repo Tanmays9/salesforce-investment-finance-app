@@ -9,7 +9,7 @@
     <chartType>VerticalColumn</chartType>
     <enableHoverLabels>true</enableHoverLabels>
     <expandOthers>true</expandOthers>
-    <groupingColumn>Inv_FundMetric__c$Fund__c.DisplayName__c</groupingColumn>
+    <groupingColumn>Inv_FundMetric__c$Fund__c</groupingColumn>
     <location>CHART_TOP</location>
     <showAxisLabels>true</showAxisLabels>
     <showPercentage>false</showPercentage>
@@ -52,7 +52,7 @@
   <format>Summary</format>
   <groupingsDown>
     <dateGranularity>Day</dateGranularity>
-    <field>Inv_FundMetric__c$Fund__c.DisplayName__c</field>
+    <field>Inv_FundMetric__c$Fund__c</field>
     <sortOrder>Asc</sortOrder>
   </groupingsDown>
   <name>12-month CAGR by tracked fund</name>

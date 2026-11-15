@@ -17,6 +17,7 @@
     <members>Inv_PortfolioPortfolios__c</members>
     <members>Inv_Holding__c</members>
     <members>Inv_WatchlistItems__c</members>
+    <members>Inv_FundPeerAssignments__c</members>
     <members>Inv_PortfolioSipVersions__c</members>
     <members>Inv_PlanningPlans__c</members>
     <members>Inv_OpsImportRuns__c</members>

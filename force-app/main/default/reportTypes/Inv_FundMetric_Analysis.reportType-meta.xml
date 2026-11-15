@@ -28,6 +28,11 @@
     </columns>
     <columns>
       <checkedByDefault>true</checkedByDefault>
+      <field>FundDisplayName__c</field>
+      <table>Inv_FundMetric__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
       <field>Run__c</field>
       <table>Inv_FundMetric__c</table>
     </columns>
@@ -69,6 +74,11 @@
     <columns>
       <checkedByDefault>true</checkedByDefault>
       <field>CounterpartyFund__c</field>
+      <table>Inv_FundMetric__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>CounterpartyFundDisplayName__c</field>
       <table>Inv_FundMetric__c</table>
     </columns>
     <columns>

@@ -64,15 +64,15 @@ def main():
    temp=DEST/'layouts/_temporary.layout-meta.xml';xml(temp,'Layout',{'layoutSections':value});root.insert(0,ET.parse(temp).getroot()[0]);temp.unlink()
   ET.indent(root,space='  ');ET.ElementTree(root).write(path,encoding='UTF-8',xml_declaration=True);add('Layout',api+'-'+original)
   if fund:
-   for child,field,columns in [('Inv_Holding__c','Fund__c',['NAME','Units__c','CostDisplay__c','MarketValueDisplay__c','XIRRDisplay__c','NAVDate__c']),('Inv_FundMetric__c','Fund__c',['NAME','CounterpartyFund__c','ValuePercent__c','PeriodEnd__c','Coverage__c'])]:
+   for child,field,columns in [('Inv_Holding__c','Fund__c',['NAME','Units__c','CostDisplay__c','MarketValueDisplay__c','XIRRDisplay__c','NAVDate__c']),('Inv_FundMetric__c','Fund__c',['NAME','CounterpartyFund__c','ValuePercent__c','PeriodEnd__c','Coverage__c']),('Inv_FundPeerAssignments__c','Fund__c',['PeerFund__c','Category__c','ShareClassRule__c','EffectiveFrom__c','EffectiveTo__c','AssignmentStatus__c','Rationale__c'])]:
     name=child+'.'+field
     if not any(n.find('{'+NS+'}relatedList').text==name for n in root.findall('{'+NS+'}relatedLists')):
      node=ET.SubElement(root,'{'+NS+'}relatedLists')
      for column in columns:ET.SubElement(node,'{'+NS+'}fields').text=column
      ET.SubElement(node,'{'+NS+'}relatedList').text=name
    root[:]=sorted(root,key=lambda n:n.tag);ET.indent(root,space='  ');ET.ElementTree(root).write(path,encoding='UTF-8',xml_declaration=True)
- tabs=['Inv_Overview','Inv_PortfolioPortfolios__c','Inv_Holding__c','Inv_MutualFunds','Inv_PortfolioSipVersions__c','Inv_PlanningPlans__c','Inv_PlanComparison','Inv_RedemptionReview','Inv_WatchlistItems__c','Inv_OpsImportRuns__c','Inv_OpsDataIssues__c','standard-report','standard-Dashboard']
- labels={'Inv_MutualFunds':'Funds','Inv_PortfolioPortfolios__c':'Portfolios','Inv_Holding__c':'Holdings','Inv_WatchlistItems__c':'Watchlist',
+ tabs=['Inv_Overview','Inv_PortfolioPortfolios__c','Inv_Holding__c','Inv_MutualFunds','Inv_PortfolioSipVersions__c','Inv_PlanningPlans__c','Inv_PlanComparison','Inv_RedemptionReview','Inv_WatchlistItems__c','Inv_FundPeerAssignments__c','Inv_OpsImportRuns__c','Inv_OpsDataIssues__c','standard-report','standard-Dashboard']
+ labels={'Inv_MutualFunds':'Funds','Inv_PortfolioPortfolios__c':'Portfolios','Inv_Holding__c':'Holdings','Inv_WatchlistItems__c':'Watchlist','Inv_FundPeerAssignments__c':'Peer Assignments',
   'Inv_PortfolioSipVersions__c':'SIPs','Inv_PlanningPlans__c':'Plans','Inv_OpsImportRuns__c':'Imports','Inv_OpsDataIssues__c':'Data Health'}
  for tab,label in labels.items():
   path=DEST/'tabs'/(tab+'.tab-meta.xml')

@@ -16,23 +16,27 @@
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>Run__c</field>
+        <field>FundDisplayName__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>PeriodStart__c</field>
+        <field>Metric__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>Value__c</field>
+        <field>PeriodEnd__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>Benchmark__c</field>
+        <field>Coverage__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>CounterpartyFund__c</field>
+        <field>Published__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>CounterpartyFundDisplayName__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
@@ -74,19 +78,23 @@
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>Metric__c</field>
+        <field>Run__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>PeriodEnd__c</field>
+        <field>PeriodStart__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>Coverage__c</field>
+        <field>Value__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>Published__c</field>
+        <field>Benchmark__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>CounterpartyFund__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>

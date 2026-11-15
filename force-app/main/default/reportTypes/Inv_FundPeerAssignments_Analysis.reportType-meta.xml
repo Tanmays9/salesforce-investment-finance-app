@@ -4,7 +4,7 @@
   <category>other</category>
   <deployed>true</deployed>
   <description>Operational investment analysis with portfolio and fund context.</description>
-  <label>Fund peer assignments Analysis</label>
+  <label>Peer assignments Analysis</label>
   <sections>
     <columns>
       <checkedByDefault>true</checkedByDefault>
@@ -76,6 +76,6 @@
       <field>SchemeVersion__c.Id</field>
       <table>Inv_FundPeerAssignments__c</table>
     </columns>
-    <masterLabel>Fund peer assignments</masterLabel>
+    <masterLabel>Peer assignments</masterLabel>
   </sections>
 </ReportType>
