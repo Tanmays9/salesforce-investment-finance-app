@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>Action__c</fullName>
+  <deleteConstraint>Restrict</deleteConstraint>
+  <label>Plan action</label>
+  <referenceTo>Inv_PlanningActions__c</referenceTo>
+  <relationshipLabel>RedemptionEstimates</relationshipLabel>
+  <relationshipName>RedemptionEstimatesAction</relationshipName>
+  <type>Lookup</type>
+</CustomField>

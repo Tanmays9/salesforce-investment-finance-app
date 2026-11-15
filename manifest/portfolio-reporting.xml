@@ -7,6 +7,9 @@
     <members>Inv_Exposure_Analysis</members>
     <members>Inv_FundMetric_Analysis</members>
     <members>Inv_PlanImpact_Analysis</members>
+    <members>Inv_FundPeerAssignments_Analysis</members>
+    <members>Inv_RedemptionEstimates_Analysis</members>
+    <members>Inv_RedemptionLotAllocations_Analysis</members>
     <members>Inv_WatchlistItems_Analysis</members>
     <members>Inv_MarketPriceObservations_Analysis</members>
     <name>ReportType</name>

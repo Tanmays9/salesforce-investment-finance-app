@@ -5,6 +5,6 @@
   <label>Destination portfolio</label>
   <referenceTo>Inv_PortfolioPortfolios__c</referenceTo>
   <relationshipLabel>StatementImports</relationshipLabel>
-  <relationshipName>OpsImportRunsPortfolio</relationshipName>
+  <relationshipName>StatementImports</relationshipName>
   <type>Lookup</type>
 </CustomField>

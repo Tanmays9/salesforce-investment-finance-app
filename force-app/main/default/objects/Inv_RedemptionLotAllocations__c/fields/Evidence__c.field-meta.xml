@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>Evidence__c</fullName>
+  <deleteConstraint>Restrict</deleteConstraint>
+  <label>Eligibility evidence</label>
+  <referenceTo>Inv_MarketEligibilityPolicies__c</referenceTo>
+  <relationshipLabel>RedemptionLotAllocations</relationshipLabel>
+  <relationshipName>RedemptionLotAllocationsEvidence</relationshipName>
+  <type>Lookup</type>
+</CustomField>

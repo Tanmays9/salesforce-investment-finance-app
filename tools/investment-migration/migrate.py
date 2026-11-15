@@ -108,6 +108,9 @@ def records(table,rows,spec,run_id,links=False,id_map=None):
                 record[fld['field']]=preserve_long_text(value)
                 if fld.get('numberField'):record[fld['numberField']]=number_projection(row['data'].get(col),fld['numberScale'])
                 if fld.get('knownField'):record[fld['knownField']]='true' if row['data'].get(col) is not None else 'false'
+            for projection in spec.get('derivedFields',[]):
+                value=row['data'].get(projection['sourceColumn'])
+                record[projection['field']]=str(value) if value is not None else '#N/A'
         result.append(record)
     return result
 
@@ -156,7 +159,7 @@ def bulk(sf,run,table,spec,rows,phase):
 def verify(sf,run,mapping,canonical):
     report={};id_map={}
     for table,spec in mapping.items():
-        fields=['Id','MigrationKey__c','SourceHash__c','SourceJson__c']+[f['field'] for f in spec['fields'].values()]+[f['numberField'] for f in spec['fields'].values() if f.get('numberField')]+[f['knownField'] for f in spec['fields'].values() if f.get('knownField')]+[r['field'] for r in spec['relationships']]
+        fields=['Id','MigrationKey__c','SourceHash__c','SourceJson__c']+[f['field'] for f in spec['fields'].values()]+[f['numberField'] for f in spec['fields'].values() if f.get('numberField')]+[f['knownField'] for f in spec['fields'].values() if f.get('knownField')]+[r['field'] for r in spec['relationships']]+[d['field'] for d in spec.get('derivedFields',[])]
         actual=sf.query('SELECT '+','.join(fields)+' FROM '+spec['object'])
         by_key={r['MigrationKey__c']:r for r in actual}
         for row in canonical[table]:
@@ -178,6 +181,10 @@ def verify(sf,run,mapping,canonical):
                     projected=number_projection(row['data'].get(col),fld['numberScale'])
                     if normalize(target.get(fld['numberField']))!=normalize(None if projected=='#N/A' else projected):raise ValueError('Numeric projection mismatch '+ident+':'+col)
                 if fld.get('knownField') and target.get(fld['knownField'])!=(row['data'].get(col) is not None):raise ValueError('Boolean known-state mismatch '+ident+':'+col)
+            for projection in spec.get('derivedFields',[]):
+                expected=row['data'].get(projection['sourceColumn'])
+                if target.get(projection['field'])!=(None if expected is None else str(expected)):
+                    raise ValueError('Derived filter mismatch '+ident+':'+projection['field'])
             id_map[ident]=target['Id']
         report[table]={'expected':len(canonical[table]),'matched':len(canonical[table]),'existingTotal':len(actual)}
         print('Read-back verified',table,len(canonical[table]),flush=True)

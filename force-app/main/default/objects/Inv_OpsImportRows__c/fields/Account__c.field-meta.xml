@@ -5,6 +5,6 @@
   <label>Mapped account</label>
   <referenceTo>Inv_PortfolioAccounts__c</referenceTo>
   <relationshipLabel>StatementRows</relationshipLabel>
-  <relationshipName>OpsImportRowsAccount</relationshipName>
+  <relationshipName>StatementRows</relationshipName>
   <type>Lookup</type>
 </CustomField>

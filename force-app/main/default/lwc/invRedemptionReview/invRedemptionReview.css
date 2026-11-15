@@ -1,0 +1,10 @@
+.baseline { padding: .75rem .9rem; background: #f3f6f8; border-left: .25rem solid #176b87; color: #334d5c; font-size: .8rem; }
+.summary { margin-top: .25rem; }
+.tile { border: 1px solid #dddbda; border-radius: .4rem; padding: .7rem; min-height: 5rem; background: #fff; }
+.tile strong { display: block; color: #5c5c5c; font-size: .72rem; }
+.tile div { margin-top: .35rem; font-weight: 650; color: #163b54; font-size: .92rem; }
+.tile small { display: block; color: #5c6870; font-size: .68rem; }
+.coverage { display: flex; flex-wrap: wrap; gap: .4rem; }
+.evidence { border: 1px solid #dddbda; padding: .75rem; border-radius: .35rem; color: #465862; }
+.evidence pre { white-space: pre-wrap; font: inherit; font-size: .75rem; margin-top: .35rem; }
+.footnote { color: #58666f; font-size: .78rem; }

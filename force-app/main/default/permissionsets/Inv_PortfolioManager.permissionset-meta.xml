@@ -5,6 +5,14 @@
     <enabled>true</enabled>
   </classAccesses>
   <classAccesses>
+    <apexClass>InvPlanScenarioService</apexClass>
+    <enabled>true</enabled>
+  </classAccesses>
+  <classAccesses>
+    <apexClass>InvRedemptionService</apexClass>
+    <enabled>true</enabled>
+  </classAccesses>
+  <classAccesses>
     <apexClass>InvImportActions</apexClass>
     <enabled>true</enabled>
   </classAccesses>
@@ -17,6 +25,51 @@
     <name>Inv_ManagePortfolio</name>
   </customPermissions>
   <description>Controlled plan actions and reviewed account import confirmation. Assign together with Inv_Viewer.</description>
+  <fieldPermissions>
+    <editable>true</editable>
+    <field>Inv_WatchlistItems__c.AssetType__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
+  <fieldPermissions>
+    <editable>true</editable>
+    <field>Inv_WatchlistItems__c.Symbol__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
+  <fieldPermissions>
+    <editable>true</editable>
+    <field>Inv_WatchlistItems__c.Exchange__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
+  <fieldPermissions>
+    <editable>true</editable>
+    <field>Inv_WatchlistItems__c.ISIN__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
+  <fieldPermissions>
+    <editable>true</editable>
+    <field>Inv_WatchlistItems__c.SchemeCode__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
+  <fieldPermissions>
+    <editable>true</editable>
+    <field>Inv_WatchlistItems__c.Fund__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
+  <fieldPermissions>
+    <editable>true</editable>
+    <field>Inv_WatchlistItems__c.Active__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
+  <fieldPermissions>
+    <editable>true</editable>
+    <field>Inv_WatchlistItems__c.AddedOn__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
+  <fieldPermissions>
+    <editable>true</editable>
+    <field>Inv_WatchlistItems__c.Notes__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
   <flowAccesses>
     <enabled>true</enabled>
     <flow>Inv_AddPlanAction</flow>
@@ -70,10 +123,6 @@
     <flow>Inv_TrackFund</flow>
   </flowAccesses>
   <label>Investment Portfolio Manager</label>
-  <userPermissions>
-    <enabled>true</enabled>
-    <name>RunReports</name>
-  </userPermissions>
   <objectPermissions>
     <allowCreate>true</allowCreate>
     <allowDelete>true</allowDelete>
@@ -83,49 +132,52 @@
     <object>Inv_WatchlistItems__c</object>
     <viewAllRecords>false</viewAllRecords>
   </objectPermissions>
-  <fieldPermissions>
-    <editable>true</editable>
-    <field>Inv_WatchlistItems__c.AssetType__c</field>
-    <readable>true</readable>
-  </fieldPermissions>
-  <fieldPermissions>
-    <editable>true</editable>
-    <field>Inv_WatchlistItems__c.Symbol__c</field>
-    <readable>true</readable>
-  </fieldPermissions>
-  <fieldPermissions>
-    <editable>true</editable>
-    <field>Inv_WatchlistItems__c.Exchange__c</field>
-    <readable>true</readable>
-  </fieldPermissions>
-  <fieldPermissions>
-    <editable>true</editable>
-    <field>Inv_WatchlistItems__c.ISIN__c</field>
-    <readable>true</readable>
-  </fieldPermissions>
-  <fieldPermissions>
-    <editable>true</editable>
-    <field>Inv_WatchlistItems__c.SchemeCode__c</field>
-    <readable>true</readable>
-  </fieldPermissions>
-  <fieldPermissions>
-    <editable>true</editable>
-    <field>Inv_WatchlistItems__c.Fund__c</field>
-    <readable>true</readable>
-  </fieldPermissions>
-  <fieldPermissions>
-    <editable>true</editable>
-    <field>Inv_WatchlistItems__c.Active__c</field>
-    <readable>true</readable>
-  </fieldPermissions>
-  <fieldPermissions>
-    <editable>true</editable>
-    <field>Inv_WatchlistItems__c.AddedOn__c</field>
-    <readable>true</readable>
-  </fieldPermissions>
-  <fieldPermissions>
-    <editable>true</editable>
-    <field>Inv_WatchlistItems__c.Notes__c</field>
-    <readable>true</readable>
-  </fieldPermissions>
+  <tabSettings>
+    <tab>Inv_Overview</tab>
+    <visibility>Visible</visibility>
+  </tabSettings>
+  <tabSettings>
+    <tab>Inv_PortfolioPortfolios__c</tab>
+    <visibility>Visible</visibility>
+  </tabSettings>
+  <tabSettings>
+    <tab>Inv_Holding__c</tab>
+    <visibility>Visible</visibility>
+  </tabSettings>
+  <tabSettings>
+    <tab>Inv_MutualFunds</tab>
+    <visibility>Visible</visibility>
+  </tabSettings>
+  <tabSettings>
+    <tab>Inv_PortfolioSipVersions__c</tab>
+    <visibility>Visible</visibility>
+  </tabSettings>
+  <tabSettings>
+    <tab>Inv_PlanningPlans__c</tab>
+    <visibility>Visible</visibility>
+  </tabSettings>
+  <tabSettings>
+    <tab>Inv_PlanComparison</tab>
+    <visibility>Visible</visibility>
+  </tabSettings>
+  <tabSettings>
+    <tab>Inv_RedemptionReview</tab>
+    <visibility>Visible</visibility>
+  </tabSettings>
+  <tabSettings>
+    <tab>Inv_WatchlistItems__c</tab>
+    <visibility>Visible</visibility>
+  </tabSettings>
+  <tabSettings>
+    <tab>Inv_OpsImportRuns__c</tab>
+    <visibility>Visible</visibility>
+  </tabSettings>
+  <tabSettings>
+    <tab>Inv_OpsDataIssues__c</tab>
+    <visibility>Visible</visibility>
+  </tabSettings>
+  <userPermissions>
+    <enabled>true</enabled>
+    <name>RunReports</name>
+  </userPermissions>
 </PermissionSet>

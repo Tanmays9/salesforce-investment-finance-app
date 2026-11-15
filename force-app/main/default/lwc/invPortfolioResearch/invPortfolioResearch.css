@@ -1,0 +1,7 @@
+.metrics { margin: 1rem 0; }
+.metric { border: 1px solid #dddbda; border-radius: .45rem; padding: .85rem; min-height: 5.25rem; background: #fff; }
+.metric-label { color: #5c5c5c; font-size: .75rem; }
+.metric-value { color: #163b54; font-size: 1.15rem; font-weight: 650; margin-top: .35rem; }
+.freshness { display: flex; flex-wrap: wrap; gap: .6rem 1.5rem; background: #f3f6f8; border-radius: .35rem; padding: .7rem .85rem; color: #3e4e59; font-size: .78rem; }
+.chart-box { min-height: 18rem; padding-bottom: 1.5rem; }
+.dimension { max-width: 20rem; padding-bottom: .75rem; }

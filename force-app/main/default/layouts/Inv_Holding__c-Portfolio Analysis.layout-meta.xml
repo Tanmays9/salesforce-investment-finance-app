@@ -36,31 +36,31 @@
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>MarketValueDisplay__c</field>
+        <field>ReconciledThrough__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>RealizedGainDisplay__c</field>
+        <field>UnrealizedGainDisplay__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>Weight__c</field>
+        <field>XIRR__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>XIRRDisplay__c</field>
+        <field>SIPAmountDisplay__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>Status__c</field>
+        <field>WeightDisplay__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>Warnings__c</field>
+        <field>Coverage__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>ReturnPercent__c</field>
+        <field>Run__c</field>
       </layoutItems>
     </layoutColumns>
     <layoutColumns>
@@ -90,31 +90,35 @@
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>ReconciledThrough__c</field>
+        <field>NAVProvider__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>UnrealizedGainDisplay__c</field>
+        <field>MarketValueDisplay__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>XIRR__c</field>
+        <field>RealizedGainDisplay__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>SIPAmountDisplay__c</field>
+        <field>Weight__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>WeightDisplay__c</field>
+        <field>XIRRDisplay__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>Coverage__c</field>
+        <field>Status__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
-        <field>Run__c</field>
+        <field>Warnings__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>ReturnPercent__c</field>
       </layoutItems>
     </layoutColumns>
     <style>TwoColumnsTopToBottom</style>

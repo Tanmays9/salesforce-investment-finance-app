@@ -28,11 +28,47 @@
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
+        <field>ReconciledThrough__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
         <field>NAVDisplay__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
         <field>MarketValueDisplay__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>RealizedGain__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>XIRRDisplay__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>AMC__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>WeightDisplay__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>Warnings__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>BasisCoverage__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>PersonalReturnCoverage__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>CompositionCoverage__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
@@ -58,6 +94,10 @@
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
+        <field>NAVProvider__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
         <field>Units__c</field>
       </layoutItems>
       <layoutItems>
@@ -67,6 +107,38 @@
       <layoutItems>
         <behavior>Readonly</behavior>
         <field>UnrealizedGainDisplay__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>SIPAmountDisplay__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>Category__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>FundDisplayName__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>Status__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>UnitCoverage__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>RedemptionCoverage__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>NAVCoverage__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>PolicyCoverage__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>

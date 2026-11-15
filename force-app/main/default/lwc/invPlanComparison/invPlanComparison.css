@@ -1,0 +1,10 @@
+.baseline { padding: .75rem .9rem; background: #f3f6f8; border-left: .25rem solid #176b87; color: #334d5c; font-size: .8rem; }
+.form-grid { max-width: 75rem; }
+.target-table { border-top: 1px solid #dddbda; }
+.target-row { display: grid; grid-template-columns: minmax(16rem, 1fr) minmax(13rem, 17rem); gap: 1rem; align-items: center; padding: .55rem .2rem; border-bottom: 1px solid #e7e7e7; }
+.target-row small { display: block; color: #5c6870; margin-top: .15rem; }
+.variant-list { display: grid; grid-template-columns: repeat(auto-fit,minmax(15rem,1fr)); gap: .75rem; }
+.variant { border: 1px solid #dddbda; padding: .7rem; border-radius: .4rem; display: grid; gap: .4rem; align-content: start; }
+.variant small { color: #58666f; white-space: pre-wrap; }
+.footer-note { color: #58666f; font-size: .78rem; }
+@media (max-width: 600px) { .target-row { grid-template-columns: 1fr; } }

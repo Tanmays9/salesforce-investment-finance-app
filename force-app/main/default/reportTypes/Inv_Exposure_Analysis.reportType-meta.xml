@@ -48,6 +48,11 @@
     </columns>
     <columns>
       <checkedByDefault>true</checkedByDefault>
+      <field>MemberKey__c</field>
+      <table>Inv_Exposure__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
       <field>Value__c</field>
       <table>Inv_Exposure__c</table>
     </columns>

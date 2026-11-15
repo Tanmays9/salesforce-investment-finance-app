@@ -5,6 +5,6 @@
   <label>Target fund</label>
   <referenceTo>Inv_MarketInstruments__c</referenceTo>
   <relationshipLabel>AllocationTargets</relationshipLabel>
-  <relationshipName>PlanningTargetsFund</relationshipName>
+  <relationshipName>AllocationTargets</relationshipName>
   <type>Lookup</type>
 </CustomField>

@@ -2,10 +2,25 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
   <types>
     <members>Inv_Overview</members>
+    <members>Inv_PlanComparison</members>
+    <members>Inv_RedemptionReview</members>
+    <members>Inv_MutualFunds</members>
+    <members>Inv_MutualFundRecord</members>
+    <members>Inv_HoldingRecord</members>
     <name>FlexiPage</name>
   </types>
   <types>
     <members>Inv_Overview</members>
+    <members>Inv_PlanComparison</members>
+    <members>Inv_RedemptionReview</members>
+    <members>Inv_MutualFunds</members>
+    <members>Inv_PortfolioPortfolios__c</members>
+    <members>Inv_Holding__c</members>
+    <members>Inv_WatchlistItems__c</members>
+    <members>Inv_PortfolioSipVersions__c</members>
+    <members>Inv_PlanningPlans__c</members>
+    <members>Inv_OpsImportRuns__c</members>
+    <members>Inv_OpsDataIssues__c</members>
     <name>CustomTab</name>
   </types>
   <types>
@@ -47,7 +62,16 @@
   </types>
   <types>
     <members>invWatchlistCard</members>
+    <members>invPortfolioResearch</members>
+    <members>invFundResearch</members>
+    <members>invHoldingSummary</members>
+    <members>invPlanComparison</members>
+    <members>invRedemptionReview</members>
     <name>LightningComponentBundle</name>
+  </types>
+  <types>
+    <members>chartjs</members>
+    <name>StaticResource</name>
   </types>
   <version>68.0</version>
 </Package>

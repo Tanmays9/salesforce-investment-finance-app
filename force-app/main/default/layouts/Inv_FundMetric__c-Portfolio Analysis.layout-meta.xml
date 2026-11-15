@@ -38,6 +38,30 @@
         <behavior>Readonly</behavior>
         <field>ComparedDisclosure__c</field>
       </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>SampleCount__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>LowerQuartile__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>UpperQuartile__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>AnnualizedVolatility__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>DrawdownTrough__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>RecoveryDays__c</field>
+      </layoutItems>
     </layoutColumns>
     <layoutColumns>
       <layoutItems>
@@ -71,6 +95,30 @@
       <layoutItems>
         <behavior>Readonly</behavior>
         <field>ValuePercent__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>Minimum__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>Median__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>Maximum__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>DrawdownPeak__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>RecoveredOn__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>Methodology__c</field>
       </layoutItems>
     </layoutColumns>
     <style>TwoColumnsTopToBottom</style>

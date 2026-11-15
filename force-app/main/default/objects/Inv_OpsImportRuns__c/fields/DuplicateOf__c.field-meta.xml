@@ -5,6 +5,6 @@
   <label>Existing import</label>
   <referenceTo>Inv_OpsImportRuns__c</referenceTo>
   <relationshipLabel>DuplicateUploads</relationshipLabel>
-  <relationshipName>OpsImportRunsDuplicateOf</relationshipName>
+  <relationshipName>DuplicateUploads</relationshipName>
   <type>Lookup</type>
 </CustomField>

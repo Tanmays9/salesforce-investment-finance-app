@@ -1,0 +1,53 @@
+<template>
+    <lightning-card title="Plan comparison" icon-name="standard:strategy">
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <template if:true={loading}><lightning-spinner alternative-text="Loading plan comparison"></lightning-spinner></template>
+            <template if:true={errorMessage}><div class="slds-text-color_error slds-p-vertical_medium" role="alert">{errorMessage}</div></template>
+            <template if:true={research}>
+                <div class="baseline slds-m-bottom_medium"><strong>Baseline:</strong> {research.portfolioName} · dated {research.valuationDate} · {research.calculationVersion}<br/>Transactions reconciled through {research.reconciledThrough}. Draft comparisons use this saved baseline and do not execute transactions or change holdings.</div>
+                <div class="form-grid slds-grid slds-wrap slds-gutters_small">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3"><lightning-input type="number" label="Monthly SIP budget (INR)" min="0" step="0.01" value={monthlyBudget} onchange={handleBudget}></lightning-input></div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3"><lightning-input type="number" label="Cash required for spending (INR)" min="0" step="0.01" value={cashNeed} onchange={handleCashNeed}></lightning-input></div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3"><lightning-input type="number" label="Cash hold (calendar days)" min="0" step="1" value={cashHoldDays} onchange={handleCashHold}></lightning-input></div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3"><lightning-input type="number" label="Maximum fund count (optional)" min="1" step="1" value={maximumFundCount} onchange={handleMaximumFunds}></lightning-input></div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3"><lightning-input type="text" label="Review objective" value={objective} onchange={handleObjective}></lightning-input></div>
+                </div>
+                <div class="slds-grid slds-wrap slds-gutters_medium slds-m-top_medium">
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
+                        <lightning-dual-listbox name="retained" label="Funds to retain" source-label="Available" selected-label="Retain" options={fundOptions} value={retainedFundIds} onchange={handleRetain}></lightning-dual-listbox>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
+                        <lightning-dual-listbox name="exits" label="Funds to consider exiting" source-label="Available" selected-label="Consider exit" options={fundOptions} value={exitCandidateFundIds} onchange={handleExit}></lightning-dual-listbox>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-m-top_medium">
+                        <lightning-dual-listbox name="no-new-contributions" label="Funds excluded from new SIPs and purchases" source-label="Available" selected-label="No new contributions" options={fundOptions} value={excludedNewPurchaseFundIds} onchange={handleExcludedNewPurchase}></lightning-dual-listbox>
+                    </div>
+                </div>
+                <div class="slds-m-top_medium">
+                    <h3 class="slds-text-heading_small slds-m-bottom_x-small">Target allocation alternative</h3>
+                    <p class="slds-text-body_small slds-m-bottom_small">Enter a target for every fund you want to own. Omitted holdings receive a zero target and are treated as proposed exits in this alternative. Entering less than 100% leaves the remainder as cash.</p>
+                    <template if:true={targetReadinessMessage}><div class="slds-text-color_error slds-m-bottom_small">{targetReadinessMessage}</div></template>
+                    <div class="target-table">
+                        <template for:each={fundRows} for:item="fund">
+                            <div class="target-row" key={fund.fundId}>
+                                <div><strong>{fund.fundName}</strong><small>Current: {fund.currentValue} · SIP: {fund.currentSip}</small></div>
+                                <lightning-input type="number" label="Target weight percent" min="0" max="100" step="0.01" value={fund.targetPercent} data-fund-id={fund.fundId} onchange={handleTarget}></lightning-input>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <lightning-button class="slds-m-top_medium" label="Generate three draft alternatives" variant="brand" onclick={generate} disabled={generateDisabled}></lightning-button>
+                <template if:true={generating}><span class="slds-m-left_small">Saving draft versions and comparing against the baseline…</span></template>
+                <template if:true={comparison}>
+                    <div class="slds-m-top_large">
+                        <h3 class="slds-text-heading_medium">Alternatives on the same baseline</h3>
+                        <div class="variant-list slds-m-vertical_small"><template for:each={comparison.alternatives} for:item="item"><div class="variant" key={item.versionId}><strong>{item.title}</strong><lightning-badge label={item.status}></lightning-badge><small>{item.message}</small></div></template></div>
+                        <template if:true={hasImpacts}><lightning-datatable key-field="key" data={comparisonRows} columns={comparisonColumns} hide-checkbox-column></lightning-datatable></template>
+                        <template if:false={hasImpacts}><div class="baseline">No comparisons were published. Review the alternative status and resolve its stated constraints, then create a new draft.</div></template>
+                    </div>
+                </template>
+                <div class="footer-note slds-m-top_medium">Generated proposals are drafts. Redemptions may be blocked by missing eligibility or policy evidence. Taxes and settlement cash are not forecast; estimated amounts remain incomplete until reviewed.</div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

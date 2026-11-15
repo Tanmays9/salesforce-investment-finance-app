@@ -12,6 +12,9 @@
     <members>Inv_Exposure__c</members>
     <members>Inv_FundMetric__c</members>
     <members>Inv_PlanImpact__c</members>
+    <members>Inv_FundPeerAssignments__c</members>
+    <members>Inv_RedemptionEstimates__c</members>
+    <members>Inv_RedemptionLotAllocations__c</members>
     <members>Inv_WatchlistItems__c</members>
     <name>CustomObject</name>
   </types>
@@ -22,6 +25,9 @@
     <members>Inv_Exposure__c</members>
     <members>Inv_FundMetric__c</members>
     <members>Inv_PlanImpact__c</members>
+    <members>Inv_FundPeerAssignments__c</members>
+    <members>Inv_RedemptionEstimates__c</members>
+    <members>Inv_RedemptionLotAllocations__c</members>
     <members>Inv_WatchlistItems__c</members>
     <name>CustomTab</name>
   </types>
@@ -32,6 +38,9 @@
     <members>Inv_Exposure__c-Portfolio Analysis</members>
     <members>Inv_FundMetric__c-Portfolio Analysis</members>
     <members>Inv_PlanImpact__c-Portfolio Analysis</members>
+    <members>Inv_FundPeerAssignments__c-Portfolio Analysis</members>
+    <members>Inv_RedemptionEstimates__c-Portfolio Analysis</members>
+    <members>Inv_RedemptionLotAllocations__c-Portfolio Analysis</members>
     <members>Inv_WatchlistItems__c-Watchlist</members>
     <name>Layout</name>
   </types>
@@ -42,6 +51,9 @@
     <members>Inv_Exposure__c.All</members>
     <members>Inv_FundMetric__c.All</members>
     <members>Inv_PlanImpact__c.All</members>
+    <members>Inv_FundPeerAssignments__c.All</members>
+    <members>Inv_RedemptionEstimates__c.All</members>
+    <members>Inv_RedemptionLotAllocations__c.All</members>
     <members>Inv_WatchlistItems__c.All</members>
     <members>Inv_WatchlistItems__c.Active</members>
     <members>Inv_Holding__c.Current</members>
@@ -57,6 +69,8 @@
     <members>Inv_PortfolioPortfolios__c.PublishedRun__c</members>
     <members>Inv_MarketInstruments__c.DisplayName__c</members>
     <members>Inv_MarketInstruments__c.Tracked__c</members>
+    <members>Inv_MarketInstruments__c.PortfolioRole__c</members>
+    <members>Inv_MarketInstruments__c.ResearchNote__c</members>
     <members>Inv_MarketInstruments__c.NAVAttemptAt__c</members>
     <members>Inv_MarketInstruments__c.NAVRefreshStatus__c</members>
     <members>Inv_MarketInstruments__c.AMFICode__c</members>
@@ -69,6 +83,11 @@
     <members>Inv_MarketInstruments__c.BERPercent__c</members>
     <members>Inv_AnalyticsRuns__c.OperationalStatus__c</members>
     <members>Inv_AnalyticsRuns__c.Failure__c</members>
+    <members>Inv_AnalyticsRuns__c.PortfolioStageStatus__c</members>
+    <members>Inv_AnalyticsRuns__c.FundMetricsStageStatus__c</members>
+    <members>Inv_AnalyticsRuns__c.ExposureStageStatus__c</members>
+    <members>Inv_AnalyticsRuns__c.PipelineStage__c</members>
+    <members>Inv_AnalyticsRuns__c.PipelineRef__c</members>
     <members>Inv_MarketPriceObservations__c.ObservationKey__c</members>
     <members>Inv_MarketPriceObservations__c.RecentChartDate__c</members>
     <members>Inv_MarketPriceObservations__c.RetrievedAt__c</members>
@@ -116,8 +135,27 @@
     <members>Inv_PortfolioEventCharges__c.AmountCurrency__c</members>
     <members>Inv_PortfolioCashEntries__c.AmountDeltaCurrency__c</members>
     <members>Inv_PlanningReviewItems__c.AmountCurrency__c</members>
+    <members>Inv_Holding__c.UnitCoverage__c</members>
+    <members>Inv_Holding__c.BasisCoverage__c</members>
+    <members>Inv_Holding__c.RedemptionCoverage__c</members>
+    <members>Inv_Holding__c.PersonalReturnCoverage__c</members>
+    <members>Inv_Holding__c.NAVCoverage__c</members>
+    <members>Inv_Holding__c.CompositionCoverage__c</members>
+    <members>Inv_Holding__c.PolicyCoverage__c</members>
     <members>Inv_PlanningPlanVersions__c.MonthlyBudgetCurrency__c</members>
+    <members>Inv_PlanningPlanVersions__c.BaselineInputFingerprint__c</members>
+    <members>Inv_PlanningPlanVersions__c.EvaluationFingerprint__c</members>
+    <members>Inv_PlanningPlanVersions__c.ConstraintsJson__c</members>
+    <members>Inv_PlanningPlanVersions__c.GenerationRationale__c</members>
+    <members>Inv_PlanningPlanVersions__c.ApprovalReadiness__c</members>
+    <members>Inv_PlanningPlanVersions__c.TaxAssumptionAcknowledged__c</members>
     <members>Inv_PlanningActions__c.RequestedAmountCurrency__c</members>
+    <members>Inv_PlanningActions__c.ExecutionStatus__c</members>
+    <members>Inv_PlanningActions__c.ExecutionDifference__c</members>
+    <members>Inv_PlanningExecutionRecords__c.ActionRef__c</members>
+    <members>Inv_PlanningExecutionRecords__c.ExecutionStatus__c</members>
+    <members>Inv_PlanningExecutionRecords__c.MatchedImportRowRef__c</members>
+    <members>Inv_PlanningExecutionRecords__c.DifferenceSummary__c</members>
     <members>Inv_OpsReconciliations__c.CalculatedCashCurrency__c</members>
     <members>Inv_OpsReconciliations__c.ReportedCashCurrency__c</members>
     <name>CustomField</name>
@@ -147,16 +185,23 @@
     <members>InvImportEndpoint</members>
     <members>InvMath</members>
     <members>InvMathTest</members>
+    <members>InvMovementService</members>
+    <members>InvNAVPolicy</members>
     <members>InvNAVRefresh</members>
     <members>InvPlanExposure</members>
     <members>InvPlanGuardTest</members>
     <members>InvPlanRules</members>
+    <members>InvPlanScenarioService</members>
     <members>InvPlanService</members>
     <members>InvPlanServiceTest</members>
     <members>InvPortfolioEngine</members>
     <members>InvPortfolioEngineTest</members>
     <members>InvRecalculate</members>
+    <members>InvRedemptionService</members>
     <members>InvRefreshTest</members>
+    <members>InvResearchPipeline</members>
+    <members>InvResearchService</members>
+    <members>InvResearchServicesTest</members>
     <name>ApexClass</name>
   </types>
   <types>

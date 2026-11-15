@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>PipelineRef__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <label>Parent refresh pipeline</label>
+  <referenceTo>Inv_AnalyticsRuns__c</referenceTo>
+  <relationshipLabel>CalculationStages</relationshipLabel>
+  <relationshipName>CalculationStages</relationshipName>
+  <type>Lookup</type>
+</CustomField>

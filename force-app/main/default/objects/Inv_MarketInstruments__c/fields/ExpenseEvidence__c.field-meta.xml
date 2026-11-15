@@ -5,6 +5,6 @@
   <label>Expense evidence</label>
   <referenceTo>Inv_MarketExpenseObservations__c</referenceTo>
   <relationshipLabel>FundExpenseSummaries</relationshipLabel>
-  <relationshipName>MarketInstrumentsExpenseEvidence</relationshipName>
+  <relationshipName>FundExpenseSummaries</relationshipName>
   <type>Lookup</type>
 </CustomField>

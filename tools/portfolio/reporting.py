@@ -12,7 +12,9 @@ MODELS={**OBJECTS,**AUX_OBJECTS,'Inv_MarketPriceObservations__c':('Price observa
 
 def main():
  members={}
- def add(kind,name):members.setdefault(kind,[]).append(name)
+ def add(kind,name):
+  values=members.setdefault(kind,[])
+  if name not in values:values.append(name)
  for api,(singular,plural,fields) in MODELS.items():
   name=api.removesuffix('__c')+'_Analysis'
   columns=[{'checkedByDefault':True,'field':f,'table':api} for f in ['Id','Name','CreatedDate',*fields] if fields.get(f,{}).get('type')!='LongTextArea']

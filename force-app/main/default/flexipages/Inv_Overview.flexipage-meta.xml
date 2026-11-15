@@ -22,40 +22,14 @@
     </itemInstances>
     <itemInstances>
       <componentInstance>
-        <componentInstanceProperties>
-          <name>entityName</name>
-          <value>Inv_Holding__c</value>
-        </componentInstanceProperties>
-        <componentInstanceProperties>
-          <name>filterName</name>
-          <value>Current</value>
-        </componentInstanceProperties>
-        <componentInstanceProperties>
-          <name>pageSize</name>
-          <value>8</value>
-        </componentInstanceProperties>
-        <componentName>flexipage:filterListCard</componentName>
-        <identifier>currentHoldings</identifier>
+        <componentName>c:invPortfolioResearch</componentName>
+        <identifier>portfolioResearch</identifier>
       </componentInstance>
     </itemInstances>
     <itemInstances>
       <componentInstance>
         <componentName>c:invWatchlistCard</componentName>
         <identifier>watchlist</identifier>
-      </componentInstance>
-    </itemInstances>
-    <itemInstances>
-      <componentInstance>
-        <componentInstanceProperties>
-          <name>reportName</name>
-          <value>ValuationHistory</value>
-        </componentInstanceProperties>
-        <componentInstanceProperties>
-          <name>showRefreshButton</name>
-          <value>true</value>
-        </componentInstanceProperties>
-        <componentName>flexipage:reportChart</componentName>
-        <identifier>valueHistory</identifier>
       </componentInstance>
     </itemInstances>
     <itemInstances>

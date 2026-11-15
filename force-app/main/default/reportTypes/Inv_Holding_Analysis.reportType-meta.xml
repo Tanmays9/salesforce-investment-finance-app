@@ -83,6 +83,11 @@
     </columns>
     <columns>
       <checkedByDefault>true</checkedByDefault>
+      <field>NAVProvider__c</field>
+      <table>Inv_Holding__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
       <field>ReconciledThrough__c</field>
       <table>Inv_Holding__c</table>
     </columns>

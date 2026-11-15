@@ -82,6 +82,11 @@
           "label": "NAV date",
           "type": "Date"
         },
+        "NAVProvider__c": {
+          "label": "NAV provider",
+          "length": 80,
+          "type": "Text"
+        },
         "ReconciledThrough__c": {
           "label": "Transactions reconciled through",
           "type": "Date"
@@ -248,6 +253,15 @@
           "label": "NAV date",
           "type": "Date"
         },
+        "NAVProvider__c": {
+          "label": "NAV provider",
+          "length": 80,
+          "type": "Text"
+        },
+        "ReconciledThrough__c": {
+          "label": "Transactions reconciled through",
+          "type": "Date"
+        },
         "Units__c": {
           "label": "Units",
           "precision": 18,
@@ -309,6 +323,116 @@
           "precision": 18,
           "scale": 2,
           "type": "Currency"
+        },
+        "RealizedGain__c": {
+          "label": "Realized gain INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "SIPAmount__c": {
+          "label": "Monthly SIP INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "SIPAmountDisplay__c": {
+          "formula": "IF(ISBLANK(SIPAmount__c), NULL, ROUND(SIPAmount__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Monthly SIP (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
+        },
+        "XIRR__c": {
+          "label": "Personal XIRR",
+          "precision": 18,
+          "scale": 10,
+          "type": "Number"
+        },
+        "XIRRDisplay__c": {
+          "formula": "IF(ISBLANK(XIRR__c), NULL, XIRR__c)",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Personal XIRR percent",
+          "precision": 18,
+          "scale": 2,
+          "type": "Percent"
+        },
+        "Category__c": {
+          "label": "Fund category",
+          "length": 255,
+          "type": "Text"
+        },
+        "AMC__c": {
+          "label": "AMC",
+          "length": 255,
+          "type": "Text"
+        },
+        "FundDisplayName__c": {
+          "formula": "IF(ISBLANK(Fund__r.DisplayName__c), Fund__r.Name, Fund__r.DisplayName__c)",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Fund name",
+          "type": "Text"
+        },
+        "Weight__c": {
+          "label": "Portfolio weight",
+          "precision": 18,
+          "scale": 10,
+          "type": "Number"
+        },
+        "WeightDisplay__c": {
+          "formula": "IF(ISBLANK(Weight__c), NULL, Weight__c)",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Portfolio weight percent",
+          "precision": 18,
+          "scale": 2,
+          "type": "Percent"
+        },
+        "Status__c": {
+          "label": "Position status",
+          "length": 40,
+          "type": "Text"
+        },
+        "Warnings__c": {
+          "label": "Review notes",
+          "length": 32768,
+          "visibleLines": 3,
+          "type": "LongTextArea"
+        },
+        "UnitCoverage__c": {
+          "label": "Unit reconciliation",
+          "length": 40,
+          "type": "Text"
+        },
+        "BasisCoverage__c": {
+          "label": "Acquisition-basis coverage",
+          "length": 40,
+          "type": "Text"
+        },
+        "RedemptionCoverage__c": {
+          "label": "Redemption-proceeds coverage",
+          "length": 40,
+          "type": "Text"
+        },
+        "PersonalReturnCoverage__c": {
+          "label": "Personal-return coverage",
+          "length": 40,
+          "type": "Text"
+        },
+        "NAVCoverage__c": {
+          "label": "NAV freshness",
+          "length": 40,
+          "type": "Text"
+        },
+        "CompositionCoverage__c": {
+          "label": "Composition coverage",
+          "length": 40,
+          "type": "Text"
+        },
+        "PolicyCoverage__c": {
+          "label": "Policy coverage",
+          "length": 40,
+          "type": "Text"
         },
         "Coverage__c": {
           "label": "Coverage",
@@ -505,6 +629,17 @@
           "length": 255,
           "type": "Text"
         },
+        "MemberKey__c": {
+          "label": "Canonical member identity",
+          "length": 255,
+          "type": "Text"
+        },
+        "SourceLabels__c": {
+          "label": "Observed source labels",
+          "length": 32768,
+          "visibleLines": 3,
+          "type": "LongTextArea"
+        },
         "Value__c": {
           "label": "Attributed value INR",
           "precision": 18,
@@ -629,6 +764,71 @@
           "precision": 18,
           "scale": 2,
           "type": "Percent"
+        },
+        "SampleCount__c": {
+          "label": "Observation count",
+          "precision": 18,
+          "scale": 0,
+          "type": "Number"
+        },
+        "Minimum__c": {
+          "label": "Minimum observed value",
+          "precision": 18,
+          "scale": 10,
+          "type": "Number"
+        },
+        "LowerQuartile__c": {
+          "label": "25th percentile",
+          "precision": 18,
+          "scale": 10,
+          "type": "Number"
+        },
+        "Median__c": {
+          "label": "Median",
+          "precision": 18,
+          "scale": 10,
+          "type": "Number"
+        },
+        "UpperQuartile__c": {
+          "label": "75th percentile",
+          "precision": 18,
+          "scale": 10,
+          "type": "Number"
+        },
+        "Maximum__c": {
+          "label": "Maximum observed value",
+          "precision": 18,
+          "scale": 10,
+          "type": "Number"
+        },
+        "AnnualizedVolatility__c": {
+          "label": "Annualized volatility",
+          "precision": 18,
+          "scale": 10,
+          "type": "Number"
+        },
+        "DrawdownPeak__c": {
+          "label": "Drawdown peak date",
+          "type": "Date"
+        },
+        "DrawdownTrough__c": {
+          "label": "Drawdown trough date",
+          "type": "Date"
+        },
+        "RecoveredOn__c": {
+          "label": "Drawdown recovery date",
+          "type": "Date"
+        },
+        "RecoveryDays__c": {
+          "label": "Recovery days",
+          "precision": 18,
+          "scale": 0,
+          "type": "Number"
+        },
+        "Methodology__c": {
+          "label": "Metric methodology",
+          "length": 255,
+          "type": "Text"
         }
       }
     ],
@@ -725,6 +925,345 @@
           "type": "Checkbox"
         }
       }
+    ],
+    "Inv_FundPeerAssignments__c": [
+      "Fund peer assignment",
+      "Fund peer assignments",
+      {
+        "Fund__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Fund",
+          "referenceTo": "Inv_MarketInstruments__c",
+          "relationshipLabel": "OperationalHoldings",
+          "relationshipName": "OperationalHoldings",
+          "type": "Lookup"
+        },
+        "PeerFund__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Peer fund",
+          "referenceTo": "Inv_MarketInstruments__c",
+          "relationshipLabel": "PeerAssignments",
+          "relationshipName": "PeerAssignments",
+          "type": "Lookup"
+        },
+        "SchemeVersion__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Category evidence",
+          "referenceTo": "Inv_MarketSchemeVersions__c",
+          "relationshipLabel": "PeerAssignments",
+          "relationshipName": "PeerAssignments",
+          "type": "Lookup"
+        },
+        "EffectiveFrom__c": {
+          "label": "Effective from",
+          "type": "Date"
+        },
+        "EffectiveTo__c": {
+          "label": "Effective to",
+          "type": "Date"
+        },
+        "AssignmentStatus__c": {
+          "label": "Assignment status",
+          "length": 40,
+          "type": "Text"
+        },
+        "Category__c": {
+          "label": "Peer category",
+          "length": 255,
+          "type": "Text"
+        },
+        "ShareClassRule__c": {
+          "label": "Share-class comparison rule",
+          "length": 80,
+          "type": "Text"
+        },
+        "Rationale__c": {
+          "label": "Selection rationale",
+          "length": 32768,
+          "visibleLines": 3,
+          "type": "LongTextArea"
+        }
+      }
+    ],
+    "Inv_RedemptionEstimates__c": [
+      "Redemption estimate",
+      "Redemption estimates",
+      {
+        "Portfolio__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Portfolio",
+          "referenceTo": "Inv_PortfolioPortfolios__c",
+          "relationshipLabel": "OperationalHoldings",
+          "relationshipName": "OperationalHoldings",
+          "type": "Lookup"
+        },
+        "PlanVersion__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Plan version",
+          "referenceTo": "Inv_PlanningPlanVersions__c",
+          "relationshipLabel": "RedemptionEstimates",
+          "relationshipName": "RedemptionEstimates",
+          "type": "Lookup"
+        },
+        "AnalysisRun__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Analysis run",
+          "referenceTo": "Inv_AnalyticsRuns__c",
+          "relationshipLabel": "OperationalResults",
+          "relationshipName": "OperationalResults",
+          "type": "Lookup"
+        },
+        "Action__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Plan action",
+          "referenceTo": "Inv_PlanningActions__c",
+          "relationshipLabel": "RedemptionEstimates",
+          "relationshipName": "RedemptionEstimates",
+          "type": "Lookup"
+        },
+        "Account__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Investment account",
+          "referenceTo": "Inv_PortfolioAccounts__c",
+          "relationshipLabel": "RedemptionEstimates",
+          "relationshipName": "RedemptionEstimates",
+          "type": "Lookup"
+        },
+        "Fund__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Fund",
+          "referenceTo": "Inv_MarketInstruments__c",
+          "relationshipLabel": "OperationalHoldings",
+          "relationshipName": "OperationalHoldings",
+          "type": "Lookup"
+        },
+        "ValuationAsOf__c": {
+          "label": "Valuation date",
+          "type": "Date"
+        },
+        "RequestedUnits__c": {
+          "label": "Requested units",
+          "precision": 18,
+          "scale": 8,
+          "type": "Number"
+        },
+        "GrossProceeds__c": {
+          "label": "Estimated gross proceeds INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "GrossProceedsDisplay__c": {
+          "formula": "IF(ISBLANK(GrossProceeds__c), NULL, ROUND(GrossProceeds__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Estimated gross proceeds (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
+        },
+        "CostBasis__c": {
+          "label": "Estimated cost basis INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "CostBasisDisplay__c": {
+          "formula": "IF(ISBLANK(CostBasis__c), NULL, ROUND(CostBasis__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Estimated cost basis (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
+        },
+        "ExitLoad__c": {
+          "label": "Estimated exit load INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "ExitLoadDisplay__c": {
+          "formula": "IF(ISBLANK(ExitLoad__c), NULL, ROUND(ExitLoad__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Estimated exit load (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
+        },
+        "RealizedGain__c": {
+          "label": "Estimated realized gain INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "RealizedGainDisplay__c": {
+          "formula": "IF(ISBLANK(RealizedGain__c), NULL, ROUND(RealizedGain__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Estimated realized gain (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
+        },
+        "EstimatedTax__c": {
+          "label": "Estimated tax INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "EstimatedTaxDisplay__c": {
+          "formula": "IF(ISBLANK(EstimatedTax__c), NULL, ROUND(EstimatedTax__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Estimated tax (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
+        },
+        "NetProceeds__c": {
+          "label": "Estimated net proceeds INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "NetProceedsDisplay__c": {
+          "formula": "IF(ISBLANK(NetProceeds__c), NULL, ROUND(NetProceeds__c, 2))",
+          "formulaTreatBlanksAs": "BlankAsBlank",
+          "label": "Estimated net proceeds (INR)",
+          "precision": 18,
+          "scale": 2,
+          "type": "Currency"
+        },
+        "EligibilityCoverage__c": {
+          "label": "Eligibility coverage",
+          "length": 40,
+          "type": "Text"
+        },
+        "BasisCoverage__c": {
+          "label": "Cost-basis coverage",
+          "length": 40,
+          "type": "Text"
+        },
+        "ProceedsCoverage__c": {
+          "label": "Proceeds coverage",
+          "length": 40,
+          "type": "Text"
+        },
+        "LoadCoverage__c": {
+          "label": "Exit-load coverage",
+          "length": 40,
+          "type": "Text"
+        },
+        "TaxCoverage__c": {
+          "label": "Tax coverage",
+          "length": 40,
+          "type": "Text"
+        },
+        "SettlementDate__c": {
+          "label": "Assumed settlement date",
+          "type": "Date"
+        },
+        "Assumptions__c": {
+          "label": "Assumptions and evidence",
+          "length": 32768,
+          "visibleLines": 3,
+          "type": "LongTextArea"
+        },
+        "Published__c": {
+          "defaultValue": false,
+          "label": "Published",
+          "type": "Checkbox"
+        }
+      }
+    ],
+    "Inv_RedemptionLotAllocations__c": [
+      "Redemption lot allocation",
+      "Redemption lot allocations",
+      {
+        "Estimate__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Redemption estimate",
+          "referenceTo": "Inv_RedemptionEstimates__c",
+          "relationshipLabel": "LotAllocations",
+          "relationshipName": "LotAllocations",
+          "type": "Lookup"
+        },
+        "Account__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Investment account",
+          "referenceTo": "Inv_PortfolioAccounts__c",
+          "relationshipLabel": "RedemptionLotAllocations",
+          "relationshipName": "RedemptionLotAllocations",
+          "type": "Lookup"
+        },
+        "Fund__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Fund",
+          "referenceTo": "Inv_MarketInstruments__c",
+          "relationshipLabel": "OperationalHoldings",
+          "relationshipName": "OperationalHoldings",
+          "type": "Lookup"
+        },
+        "AcquiredOn__c": {
+          "label": "Acquisition date",
+          "type": "Date"
+        },
+        "EligibleOn__c": {
+          "label": "Eligible date",
+          "type": "Date"
+        },
+        "RequestedUnits__c": {
+          "label": "Allocated units",
+          "precision": 18,
+          "scale": 8,
+          "type": "Number"
+        },
+        "UnitCost__c": {
+          "label": "Acquisition cost per unit INR",
+          "precision": 18,
+          "scale": 10,
+          "type": "Number"
+        },
+        "CostBasis__c": {
+          "label": "Allocated cost basis INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "GrossProceeds__c": {
+          "label": "Allocated gross proceeds INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "ExitLoad__c": {
+          "label": "Allocated exit load INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "RealizedGain__c": {
+          "label": "Allocated realized gain INR",
+          "precision": 18,
+          "scale": 6,
+          "type": "Number"
+        },
+        "Eligibility__c": {
+          "label": "Eligibility status",
+          "length": 40,
+          "type": "Text"
+        },
+        "Coverage__c": {
+          "label": "Coverage",
+          "length": 40,
+          "type": "Text"
+        },
+        "Evidence__c": {
+          "deleteConstraint": "Restrict",
+          "label": "Eligibility evidence",
+          "referenceTo": "Inv_MarketEligibilityPolicies__c",
+          "relationshipLabel": "RedemptionLotAllocations",
+          "relationshipName": "RedemptionLotAllocations",
+          "type": "Lookup"
+        }
+      }
     ]
   },
   "extensions": {
@@ -767,6 +1306,17 @@
         "defaultValue": false,
         "label": "Track NAV",
         "type": "Checkbox"
+      },
+      "PortfolioRole__c": {
+        "label": "Portfolio role",
+        "length": 120,
+        "type": "Text"
+      },
+      "ResearchNote__c": {
+        "label": "Portfolio research note",
+        "length": 32768,
+        "visibleLines": 3,
+        "type": "LongTextArea"
       },
       "NAVAttemptAt__c": {
         "label": "NAV refresh attempted at",
@@ -839,6 +1389,34 @@
         "length": 32768,
         "visibleLines": 3,
         "type": "LongTextArea"
+      },
+      "PortfolioStageStatus__c": {
+        "label": "Portfolio stage",
+        "length": 40,
+        "type": "Text"
+      },
+      "FundMetricsStageStatus__c": {
+        "label": "Fund metrics stage",
+        "length": 40,
+        "type": "Text"
+      },
+      "ExposureStageStatus__c": {
+        "label": "Exposure stage",
+        "length": 40,
+        "type": "Text"
+      },
+      "PipelineStage__c": {
+        "label": "Pipeline stage",
+        "length": 40,
+        "type": "Text"
+      },
+      "PipelineRef__c": {
+        "deleteConstraint": "SetNull",
+        "label": "Parent refresh pipeline",
+        "referenceTo": "Inv_AnalyticsRuns__c",
+        "relationshipLabel": "CalculationStages",
+        "relationshipName": "CalculationStages",
+        "type": "Lookup"
       }
     },
     "Inv_MarketPriceObservations__c": {
@@ -1153,6 +1731,43 @@
         "type": "Currency"
       }
     },
+    "Inv_Holding__c": {
+      "UnitCoverage__c": {
+        "label": "Unit reconciliation",
+        "length": 40,
+        "type": "Text"
+      },
+      "BasisCoverage__c": {
+        "label": "Acquisition-basis coverage",
+        "length": 40,
+        "type": "Text"
+      },
+      "RedemptionCoverage__c": {
+        "label": "Redemption-proceeds coverage",
+        "length": 40,
+        "type": "Text"
+      },
+      "PersonalReturnCoverage__c": {
+        "label": "Personal-return coverage",
+        "length": 40,
+        "type": "Text"
+      },
+      "NAVCoverage__c": {
+        "label": "NAV freshness",
+        "length": 40,
+        "type": "Text"
+      },
+      "CompositionCoverage__c": {
+        "label": "Composition coverage",
+        "length": 40,
+        "type": "Text"
+      },
+      "PolicyCoverage__c": {
+        "label": "Policy coverage",
+        "length": 40,
+        "type": "Text"
+      }
+    },
     "Inv_PlanningPlanVersions__c": {
       "MonthlyBudgetCurrency__c": {
         "formula": "IF(ISBLANK(MonthlyBudgetNumber__c), NULL, ROUND(MonthlyBudgetNumber__c, 2))",
@@ -1161,6 +1776,38 @@
         "precision": 18,
         "scale": 2,
         "type": "Currency"
+      },
+      "BaselineInputFingerprint__c": {
+        "label": "Baseline input fingerprint",
+        "length": 64,
+        "type": "Text"
+      },
+      "EvaluationFingerprint__c": {
+        "label": "Last evaluation fingerprint",
+        "length": 64,
+        "type": "Text"
+      },
+      "ConstraintsJson__c": {
+        "label": "Review constraints",
+        "length": 32768,
+        "visibleLines": 3,
+        "type": "LongTextArea"
+      },
+      "GenerationRationale__c": {
+        "label": "Alternative generation rationale",
+        "length": 32768,
+        "visibleLines": 3,
+        "type": "LongTextArea"
+      },
+      "ApprovalReadiness__c": {
+        "label": "Approval readiness",
+        "length": 40,
+        "type": "Text"
+      },
+      "TaxAssumptionAcknowledged__c": {
+        "defaultValue": false,
+        "label": "Tax estimate acknowledged",
+        "type": "Checkbox"
       }
     },
     "Inv_PlanningActions__c": {
@@ -1171,6 +1818,46 @@
         "precision": 18,
         "scale": 2,
         "type": "Currency"
+      },
+      "ExecutionStatus__c": {
+        "label": "Execution status",
+        "length": 40,
+        "type": "Text"
+      },
+      "ExecutionDifference__c": {
+        "label": "Execution difference and review",
+        "length": 32768,
+        "visibleLines": 3,
+        "type": "LongTextArea"
+      }
+    },
+    "Inv_PlanningExecutionRecords__c": {
+      "ActionRef__c": {
+        "deleteConstraint": "Restrict",
+        "label": "Plan action",
+        "referenceTo": "Inv_PlanningActions__c",
+        "relationshipLabel": "ExecutionEvidence",
+        "relationshipName": "ExecutionEvidence",
+        "type": "Lookup"
+      },
+      "ExecutionStatus__c": {
+        "label": "Execution status",
+        "length": 40,
+        "type": "Text"
+      },
+      "MatchedImportRowRef__c": {
+        "deleteConstraint": "Restrict",
+        "label": "Matched statement row",
+        "referenceTo": "Inv_OpsImportRows__c",
+        "relationshipLabel": "ExecutionEvidence",
+        "relationshipName": "ExecutionImportRows",
+        "type": "Lookup"
+      },
+      "DifferenceSummary__c": {
+        "label": "Difference summary",
+        "length": 32768,
+        "visibleLines": 3,
+        "type": "LongTextArea"
       }
     },
     "Inv_OpsReconciliations__c": {

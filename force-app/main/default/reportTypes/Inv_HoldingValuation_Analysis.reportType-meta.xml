@@ -53,6 +53,16 @@
     </columns>
     <columns>
       <checkedByDefault>true</checkedByDefault>
+      <field>NAVProvider__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>ReconciledThrough__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
       <field>Units__c</field>
       <table>Inv_HoldingValuation__c</table>
     </columns>
@@ -94,6 +104,96 @@
     <columns>
       <checkedByDefault>true</checkedByDefault>
       <field>UnrealizedGainDisplay__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>RealizedGain__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>SIPAmount__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>SIPAmountDisplay__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>XIRR__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>XIRRDisplay__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>Category__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>AMC__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>FundDisplayName__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>Weight__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>WeightDisplay__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>Status__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>UnitCoverage__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>BasisCoverage__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>RedemptionCoverage__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>PersonalReturnCoverage__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>NAVCoverage__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>CompositionCoverage__c</field>
+      <table>Inv_HoldingValuation__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>PolicyCoverage__c</field>
       <table>Inv_HoldingValuation__c</table>
     </columns>
     <columns>

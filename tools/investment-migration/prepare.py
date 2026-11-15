@@ -207,6 +207,9 @@ def generate(mapping,columns):
     dest=ROOT/'force-app/main/default'; manifest={}
     for table,o in mapping.items():
         api='Inv_'+sfname(table.replace('.','_'))+'__c';manifest[table]={'object':api,'fields':{},'relationships':[]}
+        if table=='market.price_observations':
+            manifest[table]['derivedFields']=[{'field':'KindFilter__c','sourceColumn':'price_kind'},
+                {'field':'QualityFilter__c','sourceColumn':'quality_status'}]
         folder=dest/'objects'/api
         xml(folder/(api+'.object-meta.xml'),'CustomObject',{'deploymentStatus':'Deployed','description':'Preserved investment data. Historical calculations are dated snapshots.','enableActivities':False,'enableReports':True,**object_presentation(table),'sharingModel':'Private'})
         fields={

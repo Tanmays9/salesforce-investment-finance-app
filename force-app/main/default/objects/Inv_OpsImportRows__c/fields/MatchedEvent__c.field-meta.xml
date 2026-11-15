@@ -5,6 +5,6 @@
   <label>Existing economic event</label>
   <referenceTo>Inv_PortfolioEvents__c</referenceTo>
   <relationshipLabel>ImportEvidence</relationshipLabel>
-  <relationshipName>OpsImportRowsMatchedEvent</relationshipName>
+  <relationshipName>ImportEvidence</relationshipName>
   <type>Lookup</type>
 </CustomField>

@@ -68,6 +68,13 @@ class MigrationTests(unittest.TestCase):
         self.assertEqual(unknown['Flag__c'],known_false['Flag__c'])
         self.assertEqual(unknown['FlagKnown__c'],'false')
         self.assertEqual(known_false['FlagKnown__c'],'true')
+    def test_queryable_market_price_filters_follow_exact_source_values(self):
+        spec={'fields':{},'derivedFields':[{'field':'KindFilter__c','sourceColumn':'price_kind'},
+            {'field':'QualityFilter__c','sourceColumn':'quality_status'}],'relationships':[]}
+        row={'key':'1','data':{'price_kind':'NAV','quality_status':'accepted'},'sourceRecord':{},'neon':None,'twentyId':None}
+        result=records('market.price_observations',[row],spec,'test')[0]
+        self.assertEqual(result['KindFilter__c'],'NAV')
+        self.assertEqual(result['QualityFilter__c'],'accepted')
     def test_timestamp_projection_matches_bulk_precision(self):
         self.assertEqual(timestamp_projection('2026-11-13T10:20:30.123456+00:00'),timestamp_projection('2026-11-13T10:20:30.000Z'))
     def test_production_freeze_guard_rejects_inactive_stale_or_released_source(self):

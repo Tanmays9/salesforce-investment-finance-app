@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>Estimate__c</fullName>
+  <deleteConstraint>Restrict</deleteConstraint>
+  <label>Redemption estimate</label>
+  <referenceTo>Inv_RedemptionEstimates__c</referenceTo>
+  <relationshipLabel>LotAllocations</relationshipLabel>
+  <relationshipName>RedemptionLotAllocationsEstimate</relationshipName>
+  <type>Lookup</type>
+</CustomField>

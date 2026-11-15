@@ -30,7 +30,7 @@ OBJECTS={
   'Fund__c':FUND,'FundDisplayName__c':{'formula':'IF(ISBLANK(Fund__r.DisplayName__c), Fund__r.Name, Fund__r.DisplayName__c)','formulaTreatBlanksAs':'BlankAsBlank','label':'Fund name','type':'Text'},
   'Category__c':text('Fund category'),'AMC__c':text('AMC'),
   'Units__c':number('Remaining units',8),'Cost__c':number('Remaining cost INR'),'CostDisplay__c':currency('Remaining cost (INR)','Cost__c'),
-  'NAV__c':number('Selected NAV',10),'NAVDisplay__c':currency('Selected NAV (INR per unit)','NAV__c'),'NAVDate__c':date('NAV date'),'ReconciledThrough__c':date('Transactions reconciled through'),
+  'NAV__c':number('Selected NAV',10),'NAVDisplay__c':currency('Selected NAV (INR per unit)','NAV__c'),'NAVDate__c':date('NAV date'),'NAVProvider__c':text('NAV provider',80),'ReconciledThrough__c':date('Transactions reconciled through'),
   'MarketValue__c':number('Market value INR'),'MarketValueDisplay__c':currency('Market value (INR)','MarketValue__c'),
   'UnrealizedGain__c':number('Unrealized gain INR'),'UnrealizedGainDisplay__c':currency('Unrealized gain (INR)','UnrealizedGain__c'),
   'RealizedGain__c':number('Realized gain INR'),'RealizedGainDisplay__c':currency('Realized gain (INR)','RealizedGain__c'),'XIRR__c':number('Personal XIRR',10),
@@ -42,11 +42,20 @@ OBJECTS={
  }),
  'Inv_HoldingValuation__c':('Holding valuation','Holding Valuations',{
   'Holding__c':lookup('Holding','Inv_Holding__c','Valuations'),'Portfolio__c':PORT,'Fund__c':FUND,'Run__c':RUN,
-  'AsOf__c':date('Valuation date'),'NAVDate__c':date('NAV date'),'Units__c':number('Units',8),
+  'AsOf__c':date('Valuation date'),'NAVDate__c':date('NAV date'),'NAVProvider__c':text('NAV provider',80),'ReconciledThrough__c':date('Transactions reconciled through'),'Units__c':number('Units',8),
   'NAV__c':number('NAV',10),'NAVDisplay__c':currency('NAV (INR per unit)','NAV__c'),'Cost__c':number('Remaining cost INR'),
   'CostDisplay__c':currency('Remaining cost (INR)','Cost__c'),'MarketValue__c':number('Market value INR'),
   'MarketValueDisplay__c':currency('Market value (INR)','MarketValue__c'),'UnrealizedGain__c':number('Unrealized gain INR'),
-  'UnrealizedGainDisplay__c':currency('Unrealized gain (INR)','UnrealizedGain__c'),'Coverage__c':text('Coverage'),'Published__c':check('Published'),
+  'UnrealizedGainDisplay__c':currency('Unrealized gain (INR)','UnrealizedGain__c'),'RealizedGain__c':number('Realized gain INR'),
+  'SIPAmount__c':number('Monthly SIP INR'),'SIPAmountDisplay__c':currency('Monthly SIP (INR)','SIPAmount__c'),
+  'XIRR__c':number('Personal XIRR',10),'XIRRDisplay__c':percent('Personal XIRR percent','XIRR__c'),
+  'Category__c':text('Fund category'),'AMC__c':text('AMC'),'FundDisplayName__c':{'formula':'IF(ISBLANK(Fund__r.DisplayName__c), Fund__r.Name, Fund__r.DisplayName__c)','formulaTreatBlanksAs':'BlankAsBlank','label':'Fund name','type':'Text'},
+  'Weight__c':number('Portfolio weight',10),'WeightDisplay__c':percent('Portfolio weight percent','Weight__c'),
+  'Status__c':text('Position status',40),'Warnings__c':long('Review notes'),
+  'UnitCoverage__c':text('Unit reconciliation',40),'BasisCoverage__c':text('Acquisition-basis coverage',40),
+  'RedemptionCoverage__c':text('Redemption-proceeds coverage',40),'PersonalReturnCoverage__c':text('Personal-return coverage',40),
+  'NAVCoverage__c':text('NAV freshness',40),'CompositionCoverage__c':text('Composition coverage',40),'PolicyCoverage__c':text('Policy coverage',40),
+  'Coverage__c':text('Coverage'),'Published__c':check('Published'),
  }),
  'Inv_PortfolioValuation__c':('Portfolio valuation','Portfolio Valuations',{
   'Portfolio__c':PORT,'Run__c':RUN,'AsOf__c':date('Valuation date'),'EarliestNAV__c':date('Earliest NAV date'),
@@ -61,7 +70,8 @@ OBJECTS={
  }),
  'Inv_Exposure__c':('Exposure','Exposures',{
   'Portfolio__c':PORT,'Fund__c':FUND,'Run__c':RUN,'Dimension__c':text('Dimension',60),
-  'Member__c':text('Exposure member'),'Value__c':number('Attributed value INR'),'ValueDisplay__c':currency('Attributed value (INR)','Value__c'),
+  'Member__c':text('Exposure member'),'MemberKey__c':text('Canonical member identity',255),'SourceLabels__c':long('Observed source labels'),
+  'Value__c':number('Attributed value INR'),'ValueDisplay__c':currency('Attributed value (INR)','Value__c'),
   'Weight__c':number('Portfolio weight',10),'DisclosureDate__c':date('Disclosure date'),
   'Coverage__c':text('Coverage'),'Published__c':check('Published'),
  }),
@@ -72,7 +82,12 @@ OBJECTS={
   'CounterpartyFund__c':lookup('Compared fund','Inv_MarketInstruments__c','OverlapComparisons'),
   'Disclosure__c':lookup('Fund disclosure','Inv_MarketFundPortfolioSnapshots__c','FundMetricEvidence'),
   'ComparedDisclosure__c':lookup('Compared disclosure','Inv_MarketFundPortfolioSnapshots__c','ComparedMetricEvidence'),
-  'ValuePercent__c':percent('Metric percent','Value__c'),
+  'ValuePercent__c':percent('Metric percent','Value__c'),'SampleCount__c':number('Observation count',0),
+  'Minimum__c':number('Minimum observed value',10),'LowerQuartile__c':number('25th percentile',10),
+  'Median__c':number('Median',10),'UpperQuartile__c':number('75th percentile',10),'Maximum__c':number('Maximum observed value',10),
+  'AnnualizedVolatility__c':number('Annualized volatility',10),'DrawdownPeak__c':date('Drawdown peak date'),
+  'DrawdownTrough__c':date('Drawdown trough date'),'RecoveredOn__c':date('Drawdown recovery date'),
+  'RecoveryDays__c':number('Recovery days',0),'Methodology__c':text('Metric methodology',255),
  }),
  'Inv_PlanImpact__c':('Plan impact','Plan Impacts',{
   'PlanVersion__c':lookup('Plan version','Inv_PlanningPlanVersions__c','Impacts'),'Run__c':RUN,'Fund__c':FUND,
@@ -81,6 +96,38 @@ OBJECTS={
   'Dimension__c':text('Exposure dimension',60),'Member__c':text('Exposure member'),
   'Proposed__c':number('Proposed'),'ProposedCurrencyDisplay__c':currency('Proposed amount (INR)','Proposed__c'),
   'Coverage__c':text('Coverage'),'Notes__c':long('Assumptions and warnings'),'Published__c':check('Published'),
+ }),
+ 'Inv_FundPeerAssignments__c':('Fund peer assignment','Fund peer assignments',{
+  'Fund__c':FUND,'PeerFund__c':lookup('Peer fund','Inv_MarketInstruments__c','PeerAssignments'),
+  'SchemeVersion__c':lookup('Category evidence','Inv_MarketSchemeVersions__c','PeerAssignments'),
+  'EffectiveFrom__c':date('Effective from'),'EffectiveTo__c':date('Effective to'),
+  'AssignmentStatus__c':text('Assignment status',40),'Category__c':text('Peer category'),
+  'ShareClassRule__c':text('Share-class comparison rule',80),'Rationale__c':long('Selection rationale'),
+ }),
+ 'Inv_RedemptionEstimates__c':('Redemption estimate','Redemption estimates',{
+  'Portfolio__c':PORT,'PlanVersion__c':lookup('Plan version','Inv_PlanningPlanVersions__c','RedemptionEstimates'),
+  'AnalysisRun__c':RUN,'Action__c':lookup('Plan action','Inv_PlanningActions__c','RedemptionEstimates'),
+  'Account__c':lookup('Investment account','Inv_PortfolioAccounts__c','RedemptionEstimates'),'Fund__c':FUND,
+  'ValuationAsOf__c':date('Valuation date'),'RequestedUnits__c':number('Requested units',8),
+  'GrossProceeds__c':number('Estimated gross proceeds INR'),'GrossProceedsDisplay__c':currency('Estimated gross proceeds (INR)','GrossProceeds__c'),
+  'CostBasis__c':number('Estimated cost basis INR'),'CostBasisDisplay__c':currency('Estimated cost basis (INR)','CostBasis__c'),
+  'ExitLoad__c':number('Estimated exit load INR'),'ExitLoadDisplay__c':currency('Estimated exit load (INR)','ExitLoad__c'),
+  'RealizedGain__c':number('Estimated realized gain INR'),'RealizedGainDisplay__c':currency('Estimated realized gain (INR)','RealizedGain__c'),
+  'EstimatedTax__c':number('Estimated tax INR'),'EstimatedTaxDisplay__c':currency('Estimated tax (INR)','EstimatedTax__c'),
+  'NetProceeds__c':number('Estimated net proceeds INR'),'NetProceedsDisplay__c':currency('Estimated net proceeds (INR)','NetProceeds__c'),
+  'EligibilityCoverage__c':text('Eligibility coverage',40),'BasisCoverage__c':text('Cost-basis coverage',40),
+  'ProceedsCoverage__c':text('Proceeds coverage',40),'LoadCoverage__c':text('Exit-load coverage',40),
+  'TaxCoverage__c':text('Tax coverage',40),'SettlementDate__c':date('Assumed settlement date'),
+  'Assumptions__c':long('Assumptions and evidence'),'Published__c':check('Published'),
+ }),
+ 'Inv_RedemptionLotAllocations__c':('Redemption lot allocation','Redemption lot allocations',{
+  'Estimate__c':lookup('Redemption estimate','Inv_RedemptionEstimates__c','LotAllocations'),
+  'Account__c':lookup('Investment account','Inv_PortfolioAccounts__c','RedemptionLotAllocations'),'Fund__c':FUND,
+  'AcquiredOn__c':date('Acquisition date'),'EligibleOn__c':date('Eligible date'),'RequestedUnits__c':number('Allocated units',8),
+  'UnitCost__c':number('Acquisition cost per unit INR',10),'CostBasis__c':number('Allocated cost basis INR'),
+  'GrossProceeds__c':number('Allocated gross proceeds INR'),'ExitLoad__c':number('Allocated exit load INR'),
+  'RealizedGain__c':number('Allocated realized gain INR'),'Eligibility__c':text('Eligibility status',40),
+  'Coverage__c':text('Coverage',40),'Evidence__c':lookup('Eligibility evidence','Inv_MarketEligibilityPolicies__c','RedemptionLotAllocations'),
  }),
 }
 
@@ -97,7 +144,7 @@ AUX_OBJECTS={
 
 DISPLAY_FIELDS={
  'Inv_Holding__c':{'Cost__c':'CostDisplay__c','NAV__c':'NAVDisplay__c','MarketValue__c':'MarketValueDisplay__c','UnrealizedGain__c':'UnrealizedGainDisplay__c','RealizedGain__c':'RealizedGainDisplay__c','SIPAmount__c':'SIPAmountDisplay__c'},
- 'Inv_HoldingValuation__c':{'NAV__c':'NAVDisplay__c','Cost__c':'CostDisplay__c','MarketValue__c':'MarketValueDisplay__c','UnrealizedGain__c':'UnrealizedGainDisplay__c'},
+ 'Inv_HoldingValuation__c':{'NAV__c':'NAVDisplay__c','Cost__c':'CostDisplay__c','MarketValue__c':'MarketValueDisplay__c','UnrealizedGain__c':'UnrealizedGainDisplay__c','SIPAmount__c':'SIPAmountDisplay__c','XIRR__c':'XIRRDisplay__c','Weight__c':'WeightDisplay__c'},
  'Inv_PortfolioValuation__c':{'MarketValue__c':'MarketValueDisplay__c','Cost__c':'CostDisplay__c','UnrealizedGain__c':'UnrealizedGainDisplay__c','RealizedGain__c':'RealizedGainDisplay__c','MonthlySIP__c':'MonthlySIPDisplay__c'},
  'Inv_Exposure__c':{'Value__c':'ValueDisplay__c'},
  'Inv_PortfolioUnitEntries__c':{'AcquisitionCostNumber__c':'AcquisitionCostCurrency__c','ConsiderationAmountNumber__c':'ConsiderationCurrency__c'},
@@ -115,12 +162,16 @@ EXTENSIONS={
  'Inv_PortfolioAccounts__c':{'CASScopeKey__c':{**text('Verified CAS account scope',64),'externalId':True,'unique':True}},
  'Inv_PortfolioPortfolios__c':{'PublishedRun__c':lookup('Published analysis run','Inv_AnalyticsRuns__c','PublishedPortfolios')},
  'Inv_MarketInstruments__c':{'DisplayName__c':text('Fund or security name'),'Tracked__c':check('Track NAV'),
+  'PortfolioRole__c':text('Portfolio role',120),'ResearchNote__c':long('Portfolio research note'),
   'NAVAttemptAt__c':{'label':'NAV refresh attempted at','type':'DateTime'},'NAVRefreshStatus__c':text('NAV refresh status',40),
   'AMFICode__c':text('Verified AMFI scheme code',20),'MappingVerified__c':check('Share-class mapping verified'),
   'LatestTER__c':number('Latest disclosed TER ratio',10),'LatestBER__c':number('Latest disclosed BER ratio',10),
   'ExpenseDate__c':date('Expense disclosure date'),'ExpenseEvidence__c':lookup('Expense evidence','Inv_MarketExpenseObservations__c','FundExpenseSummaries'),
   'TERPercent__c':percent('Latest disclosed TER','LatestTER__c'),'BERPercent__c':percent('Latest disclosed BER','LatestBER__c')},
- 'Inv_AnalyticsRuns__c':{'OperationalStatus__c':text('Operational status',40),'Failure__c':long('Failure summary')},
+ 'Inv_AnalyticsRuns__c':{'OperationalStatus__c':text('Operational status',40),'Failure__c':long('Failure summary'),
+  'PortfolioStageStatus__c':text('Portfolio stage',40),'FundMetricsStageStatus__c':text('Fund metrics stage',40),
+  'ExposureStageStatus__c':text('Exposure stage',40),'PipelineStage__c':text('Pipeline stage',40),
+  'PipelineRef__c':{**lookup('Parent refresh pipeline','Inv_AnalyticsRuns__c','CalculationStages'),'deleteConstraint':'SetNull'}},
  'Inv_MarketPriceObservations__c':{'ObservationKey__c':{**text('Observation identity',200),'externalId':True,'unique':True},
   'RecentChartDate__c':{'formula':'AND(NOT(ISBLANK(ObservedOn__c)), ObservedOn__c >= ADDMONTHS(TODAY(), -60))','label':'Within five year chart window','type':'Checkbox'},
   'RetrievedAt__c':{'label':'Retrieved at','type':'DateTime'},'KindFilter__c':text('Price type',30),'QualityFilter__c':text('Observation quality',40),'SelectedNAV__c':check('Selected NAV for this date')},
@@ -150,8 +201,18 @@ EXTENSIONS={
  'Inv_PortfolioEventCharges__c':{'AmountCurrency__c':currency('Charge amount (INR)','AmountNumber__c')},
  'Inv_PortfolioCashEntries__c':{'AmountDeltaCurrency__c':currency('Cash movement (INR)','AmountDeltaNumber__c')},
  'Inv_PlanningReviewItems__c':{'AmountCurrency__c':currency('Monthly or transaction amount (INR)','MonthlyOrTransactionAmountNumber__c')},
- 'Inv_PlanningPlanVersions__c':{'MonthlyBudgetCurrency__c':currency('Monthly budget (INR)','MonthlyBudgetNumber__c')},
- 'Inv_PlanningActions__c':{'RequestedAmountCurrency__c':currency('Requested amount (INR)','RequestedAmountNumber__c')},
+ 'Inv_Holding__c':{'UnitCoverage__c':text('Unit reconciliation',40),'BasisCoverage__c':text('Acquisition-basis coverage',40),
+  'RedemptionCoverage__c':text('Redemption-proceeds coverage',40),'PersonalReturnCoverage__c':text('Personal-return coverage',40),
+  'NAVCoverage__c':text('NAV freshness',40),'CompositionCoverage__c':text('Composition coverage',40),'PolicyCoverage__c':text('Policy coverage',40)},
+ 'Inv_PlanningPlanVersions__c':{'MonthlyBudgetCurrency__c':currency('Monthly budget (INR)','MonthlyBudgetNumber__c'),
+  'BaselineInputFingerprint__c':text('Baseline input fingerprint',64),'EvaluationFingerprint__c':text('Last evaluation fingerprint',64),
+  'ConstraintsJson__c':long('Review constraints'),'GenerationRationale__c':long('Alternative generation rationale'),
+  'ApprovalReadiness__c':text('Approval readiness',40),'TaxAssumptionAcknowledged__c':check('Tax estimate acknowledged')},
+ 'Inv_PlanningActions__c':{'RequestedAmountCurrency__c':currency('Requested amount (INR)','RequestedAmountNumber__c'),
+  'ExecutionStatus__c':text('Execution status',40),'ExecutionDifference__c':long('Execution difference and review')},
+ 'Inv_PlanningExecutionRecords__c':{'ActionRef__c':lookup('Plan action','Inv_PlanningActions__c','ExecutionEvidence'),
+  'ExecutionStatus__c':text('Execution status',40),'MatchedImportRowRef__c':{**lookup('Matched statement row','Inv_OpsImportRows__c','ExecutionEvidence'),'relationshipName':'ExecutionImportRows'},
+  'DifferenceSummary__c':long('Difference summary')},
  'Inv_OpsReconciliations__c':{'CalculatedCashCurrency__c':currency('Calculated cash (INR)','CalculatedCashNumber__c'),
   'ReportedCashCurrency__c':currency('Reported cash (INR)','ReportedCashNumber__c')},
 }
@@ -169,7 +230,9 @@ def main():
   original={f['field'] for f in source['fields'].values()}
   collision=original.intersection(EXTENSIONS.get(source['object'],{}))
   if collision:raise ValueError('Operational fields collide with preserved source fields: '+str(collision))
- def add(kind,name):members.setdefault(kind,[]).append(name)
+ def add(kind,name):
+  values=members.setdefault(kind,[])
+  if name not in values:values.append(name)
  for name,label in [('Inv_ManagePortfolio','Manage investment plans and confirm statement imports'),('Inv_ParseStatements','Submit extracted CAS data to staging')]:
   xml(DEST/'customPermissions'/(name+'.customPermission-meta.xml'),'CustomPermission',{'isLicensed':False,'label':label});add('CustomPermission',name)
  for api,(singular,plural,fields) in OBJECTS.items():
@@ -181,7 +244,7 @@ def main():
   for name,spec in fields.items():
    if spec.get('type')=='Lookup':spec={**spec,'relationshipName':api.removeprefix('Inv_').removesuffix('__c')+name.removesuffix('__c')}
    xml(DEST/'objects'/api/'fields'/(name+'.field-meta.xml'),'CustomField',{'fullName':name,**spec})
-  xml(DEST/'tabs'/(api+'.tab-meta.xml'),'CustomTab',{'customObject':True,'motif':'Custom17: Sack'});add('CustomTab',api)
+  xml(DEST/'tabs'/(api+'.tab-meta.xml'),'CustomTab',{'customObject':True,'label':plural,'motif':'Custom17: Sack'});add('CustomTab',api)
   visible=DISPLAY_FIELDS.get(api,{})
   display_values=set(visible.values())
   hidden=HIDDEN_LAYOUT_FIELDS.get(api,set())
@@ -193,7 +256,8 @@ def main():
  for api,fields in EXTENSIONS.items():
   allfields[api]=fields
   for name,spec in fields.items():
-   if spec.get('type')=='Lookup':spec={**spec,'relationshipName':api.removeprefix('Inv_').removesuffix('__c')+name.removesuffix('__c')}
+   if spec.get('type')=='Lookup' and not spec.get('relationshipName'):
+    spec={**spec,'relationshipName':api.removeprefix('Inv_').removesuffix('__c')+name.removesuffix('__c')}
    xml(DEST/'objects'/api/'fields'/(name+'.field-meta.xml'),'CustomField',{'fullName':name,**spec});add('CustomField',api+'.'+name)
  for api,(singular,plural,fields) in AUX_OBJECTS.items():
   allfields[api]=fields
@@ -204,7 +268,7 @@ def main():
   for name,spec in fields.items():
    if spec.get('type')=='Lookup':spec={**spec,'relationshipName':'WatchlistItems'+name.removesuffix('__c')}
    xml(DEST/'objects'/api/'fields'/(name+'.field-meta.xml'),'CustomField',{'fullName':name,**spec})
-  xml(DEST/'tabs'/(api+'.tab-meta.xml'),'CustomTab',{'customObject':True,'motif':'Custom18: Form'});add('CustomTab',api)
+  xml(DEST/'tabs'/(api+'.tab-meta.xml'),'CustomTab',{'customObject':True,'label':'Watchlist','motif':'Custom18: Form'});add('CustomTab',api)
   xml(DEST/'layouts'/(api+'-Watchlist.layout-meta.xml'),'Layout',{'layoutSections':[section('Watchlist item',['Name',*fields])],
    'relatedLists':{'relatedList':'RelatedFileList'},'showHighlightsPanel':True});add('Layout',api+'-Watchlist')
   xml(DEST/'objects'/api/'listViews/All.listView-meta.xml','ListView',{'fullName':'All',
@@ -225,7 +289,7 @@ def main():
   for api,fields in allfields.items():
    if (api in OBJECTS or api in AUX_OBJECTS) and not any(x.find('{'+NS+'}object').text==api for x in root.findall('{'+NS+'}objectPermissions')):
     obj=ET.SubElement(root,'{'+NS+'}objectPermissions')
-    for k,v in {'allowCreate':False,'allowDelete':False,'allowEdit':False,'allowRead':True,'modifyAllRecords':False,'object':api,'viewAllRecords':api in OBJECTS}.items(): ET.SubElement(obj,'{'+NS+'}'+k).text=str(v).lower() if isinstance(v,bool) else v
+    for k,v in {'allowCreate':False,'allowDelete':False,'allowEdit':False,'allowRead':True,'modifyAllRecords':False,'object':api,'viewAllRecords':False}.items(): ET.SubElement(obj,'{'+NS+'}'+k).text=str(v).lower() if isinstance(v,bool) else v
    for field,spec in fields.items():
     if spec.get('required'):continue
     full=api+'.'+field
@@ -235,6 +299,12 @@ def main():
   for api in [*OBJECTS,*AUX_OBJECTS]:
    if not any(x.find('{'+NS+'}tab').text==api for x in root.findall('{'+NS+'}tabSettings')):
     node=ET.SubElement(root,'{'+NS+'}tabSettings');ET.SubElement(node,'{'+NS+'}tab').text=api;ET.SubElement(node,'{'+NS+'}visibility').text='Visible'
+  if role=='Inv_Viewer':
+   class_names=['InvResearchService','InvMovementService','InvPlanScenarioService','InvRedemptionService']
+   existing={x.find('{'+NS+'}apexClass').text for x in root.findall('{'+NS+'}classAccesses')}
+   for class_name in class_names:
+    if (DEST/'classes'/(class_name+'.cls')).exists() and class_name not in existing:
+     node=ET.SubElement(root,'{'+NS+'}classAccesses');ET.SubElement(node,'{'+NS+'}apexClass').text=class_name;ET.SubElement(node,'{'+NS+'}enabled').text='true'
   # Metadata sequences fields by element name, then preserves entries within each group.
   root[:]=sorted(root,key=lambda x:x.tag)
   ET.indent(root,space='  ');ET.ElementTree(root).write(path,encoding='UTF-8',xml_declaration=True);add('PermissionSet',role)
@@ -244,7 +314,7 @@ def main():
  for p in (DEST/'triggers').glob('Inv*.trigger'):
   xml(p.with_suffix('.trigger-meta.xml'),'ApexTrigger',{'apiVersion':'68.0','status':'Active'});add('ApexTrigger',p.stem)
  xml(DEST/'permissionsets/Inv_PortfolioManager.permissionset-meta.xml','PermissionSet',{
-  'classAccesses':[{'apexClass':name,'enabled':True} for name in ['InvPlanService','InvImportActions','InvFundActions'] if (DEST/'classes'/(name+'.cls')).exists()],
+  'classAccesses':[{'apexClass':name,'enabled':True} for name in ['InvPlanService','InvPlanScenarioService','InvRedemptionService','InvImportActions','InvFundActions'] if (DEST/'classes'/(name+'.cls')).exists()],
   'customPermissions':{'enabled':True,'name':'Inv_ManagePortfolio'},
   'description':'Controlled plan actions and reviewed account import confirmation. Assign together with Inv_Viewer.',
   'flowAccesses':[{'enabled':True,'flow':p.stem.removesuffix('.flow-meta')} for p in (DEST/'flows').glob('Inv_*.flow-meta.xml')],

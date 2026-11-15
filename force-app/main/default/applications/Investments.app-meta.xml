@@ -8,6 +8,13 @@
     <pageOrSobjectType>Inv_MarketInstruments__c</pageOrSobjectType>
     <type>Flexipage</type>
   </actionOverrides>
+  <actionOverrides>
+    <actionName>View</actionName>
+    <content>Inv_HoldingRecord</content>
+    <formFactor>Large</formFactor>
+    <pageOrSobjectType>Inv_Holding__c</pageOrSobjectType>
+    <type>Flexipage</type>
+  </actionOverrides>
   <formFactors>Large</formFactors>
   <formFactors>Small</formFactors>
   <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
@@ -15,13 +22,14 @@
   <label>Investments</label>
   <navType>Standard</navType>
   <tabs>Inv_Overview</tabs>
-  <tabs>Inv_MutualFunds</tabs>
   <tabs>Inv_PortfolioPortfolios__c</tabs>
   <tabs>Inv_Holding__c</tabs>
-  <tabs>Inv_WatchlistItems__c</tabs>
-  <tabs>Inv_MarketInstruments__c</tabs>
+  <tabs>Inv_MutualFunds</tabs>
   <tabs>Inv_PortfolioSipVersions__c</tabs>
   <tabs>Inv_PlanningPlans__c</tabs>
+  <tabs>Inv_PlanComparison</tabs>
+  <tabs>Inv_RedemptionReview</tabs>
+  <tabs>Inv_WatchlistItems__c</tabs>
   <tabs>Inv_OpsImportRuns__c</tabs>
   <tabs>Inv_OpsDataIssues__c</tabs>
   <tabs>standard-report</tabs>

@@ -87,13 +87,68 @@
       <table>Inv_FundMetric__c</table>
     </columns>
     <columns>
-      <checkedByDefault>false</checkedByDefault>
-      <field>Fund__c.Id</field>
+      <checkedByDefault>true</checkedByDefault>
+      <field>SampleCount__c</field>
+      <table>Inv_FundMetric__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>Minimum__c</field>
+      <table>Inv_FundMetric__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>LowerQuartile__c</field>
+      <table>Inv_FundMetric__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>Median__c</field>
+      <table>Inv_FundMetric__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>UpperQuartile__c</field>
+      <table>Inv_FundMetric__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>Maximum__c</field>
+      <table>Inv_FundMetric__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>AnnualizedVolatility__c</field>
+      <table>Inv_FundMetric__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>DrawdownPeak__c</field>
+      <table>Inv_FundMetric__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>DrawdownTrough__c</field>
+      <table>Inv_FundMetric__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>RecoveredOn__c</field>
+      <table>Inv_FundMetric__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>RecoveryDays__c</field>
+      <table>Inv_FundMetric__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>Methodology__c</field>
       <table>Inv_FundMetric__c</table>
     </columns>
     <columns>
       <checkedByDefault>false</checkedByDefault>
-      <field>Fund__c.DisplayName__c</field>
+      <field>Fund__c.Id</field>
       <table>Inv_FundMetric__c</table>
     </columns>
     <columns>
@@ -109,11 +164,6 @@
     <columns>
       <checkedByDefault>false</checkedByDefault>
       <field>CounterpartyFund__c.Id</field>
-      <table>Inv_FundMetric__c</table>
-    </columns>
-    <columns>
-      <checkedByDefault>false</checkedByDefault>
-      <field>CounterpartyFund__c.DisplayName__c</field>
       <table>Inv_FundMetric__c</table>
     </columns>
     <columns>

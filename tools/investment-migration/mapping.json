@@ -996,6 +996,16 @@
         "target": "market.price_observations",
         "targetColumn": "id"
       }
+    ],
+    "derivedFields": [
+      {
+        "field": "KindFilter__c",
+        "sourceColumn": "price_kind"
+      },
+      {
+        "field": "QualityFilter__c",
+        "sourceColumn": "quality_status"
+      }
     ]
   },
   "market.scheme_versions": {

@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>Account__c</fullName>
+  <deleteConstraint>Restrict</deleteConstraint>
+  <label>Investment account</label>
+  <referenceTo>Inv_PortfolioAccounts__c</referenceTo>
+  <relationshipLabel>RedemptionEstimates</relationshipLabel>
+  <relationshipName>RedemptionEstimatesAccount</relationshipName>
+  <type>Lookup</type>
+</CustomField>

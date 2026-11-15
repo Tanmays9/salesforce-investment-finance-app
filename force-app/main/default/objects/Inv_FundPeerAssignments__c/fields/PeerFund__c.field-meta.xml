@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>PeerFund__c</fullName>
+  <deleteConstraint>Restrict</deleteConstraint>
+  <label>Peer fund</label>
+  <referenceTo>Inv_MarketInstruments__c</referenceTo>
+  <relationshipLabel>PeerAssignments</relationshipLabel>
+  <relationshipName>FundPeerAssignmentsPeerFund</relationshipName>
+  <type>Lookup</type>
+</CustomField>

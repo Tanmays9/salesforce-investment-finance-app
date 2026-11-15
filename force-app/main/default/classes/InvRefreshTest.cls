@@ -1,5 +1,6 @@
 @IsTest private class InvRefreshTest {
-    private class Context implements QueueableContext { public Id getJobId(){return '707000000000001';} }
+    private static Integer jobSequence=0;
+    private class Context implements QueueableContext { public Id getJobId(){jobSequence++;return Id.valueOf('70700000000000'+String.valueOf(jobSequence));} }
     private class Feed implements HttpCalloutMock {
         public HttpResponse respond(HttpRequest request) {
             HttpResponse r=new HttpResponse();r.setStatusCode(200);
@@ -29,19 +30,26 @@
         Inv_MarketInstruments__c f=new Inv_MarketInstruments__c(MigrationKey__c='metric:fund');insert f;
         Date d=Date.newInstance(2020,1,1);List<Inv_MarketPriceObservations__c> prices=new List<Inv_MarketPriceObservations__c>();
         for(Integer i=0;i<3;i++)prices.add(new Inv_MarketPriceObservations__c(MigrationKey__c='metric:'+i,InstrumentRef__c=f.Id,ObservedOn__c=d.addYears(i),
-            Value__c=i==0?'100':i==1?'150':'120',PriceKind__c='NAV',QualityStatus__c='accepted'));
+            Value__c=i==0?'100':i==1?'150':'120',PriceKind__c='NAV',KindFilter__c='NAV',QualityStatus__c='accepted',QualityFilter__c='accepted'));
         insert prices;Id first=InvFundMetrics.calculate(f.Id,d.addYears(2));Id second=InvFundMetrics.calculate(f.Id,d.addYears(2));Assert.areEqual(first,second);
-        Assert.areEqual(8,[SELECT COUNT() FROM Inv_FundMetric__c]);
+        Assert.areEqual(11,[SELECT COUNT() FROM Inv_FundMetric__c]);
         Assert.areEqual(-0.2,[SELECT Value__c FROM Inv_FundMetric__c WHERE Metric__c='Historical maximum drawdown'].Value__c);
+        Assert.isTrue(InvNAVPolicy.daily(new List<Inv_MarketPriceObservations__c>()).isEmpty());
+        Assert.isTrue(InvNAVPolicy.latestByInstrument(new Set<Id>(),Date.today()).isEmpty());
         new InvFundMetrics(new List<Id>{f.Id}).execute(new Context());
         new InvFundMetrics(new List<Id>()).execute(new Context());
         new InvRecalculate().execute(new Context());
     }
     @IsTest static void fundMetricsContinueThroughScheduledHandoffs() {
         Inv_MarketInstruments__c a=new Inv_MarketInstruments__c(MigrationKey__c='handoff:a');Inv_MarketInstruments__c b=new Inv_MarketInstruments__c(MigrationKey__c='handoff:b');insert new List<Inv_MarketInstruments__c>{a,b};
-        Integer beforeCount=[SELECT COUNT() FROM CronTrigger WHERE CronJobDetail.Name LIKE 'Inv fund metrics continuation %'];
+        Integer beforeCount=Limits.getQueueableJobs();
         new InvFundMetrics(new List<Id>{a.Id,b.Id}).execute(new Context());
-        Assert.areEqual(beforeCount+1,[SELECT COUNT() FROM CronTrigger WHERE CronJobDetail.Name LIKE 'Inv fund metrics continuation %'],'Large metric runs leave the queue depth through a timed scheduled handoff');
+        Assert.areEqual(beforeCount+1,Limits.getQueueableJobs(),'Large metric runs queue only the next bounded fund batch');
+    }
+    @IsTest static void scheduledContinuationQueuesOneBoundedBatch() {
+        Test.startTest();Integer beforeCount=Limits.getQueueableJobs();
+        new InvFundMetricsContinuation(new List<Id>()).execute(null);
+        Assert.areEqual(beforeCount+1,Limits.getQueueableJobs());Test.stopTest();
     }
     @IsTest static void backgroundPublicationIsAtomic() {
         Inv_PortfolioPortfolios__c p=new Inv_PortfolioPortfolios__c(MigrationKey__c='background:p');insert p;
@@ -54,6 +62,6 @@
         insert new Inv_PortfolioUnitEntries__c(MigrationKey__c='background:u',EventRef__c=e.Id,AccountRef__c=a.Id,InstrumentRef__c=f.Id,UnitsDelta__c='1',Currency__c='USD');
         new InvRecalculate(new List<Id>{p.Id}).execute(new Context());
         Assert.areEqual(published,[SELECT PublishedRun__c FROM Inv_PortfolioPortfolios__c WHERE Id=:p.Id].PublishedRun__c);
-        Assert.areEqual(1,[SELECT COUNT() FROM Inv_AnalyticsRuns__c WHERE OperationalStatus__c='Failed']);
+        Assert.areEqual(1,[SELECT COUNT() FROM Inv_AnalyticsRuns__c WHERE PortfolioRef__c=:p.Id AND PipelineRef__c!=null AND OperationalStatus__c='Failed']);
     }
 }

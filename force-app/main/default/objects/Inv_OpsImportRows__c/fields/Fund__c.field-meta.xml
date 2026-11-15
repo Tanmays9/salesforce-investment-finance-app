@@ -5,6 +5,6 @@
   <label>Mapped share class</label>
   <referenceTo>Inv_MarketInstruments__c</referenceTo>
   <relationshipLabel>StatementRows</relationshipLabel>
-  <relationshipName>OpsImportRowsFund</relationshipName>
+  <relationshipName>StatementRows</relationshipName>
   <type>Lookup</type>
 </CustomField>

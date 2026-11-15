@@ -5,6 +5,6 @@
   <label>Published analysis run</label>
   <referenceTo>Inv_AnalyticsRuns__c</referenceTo>
   <relationshipLabel>PublishedPortfolios</relationshipLabel>
-  <relationshipName>PortfolioPortfoliosPublishedRun</relationshipName>
+  <relationshipName>PublishedPortfolios</relationshipName>
   <type>Lookup</type>
 </CustomField>

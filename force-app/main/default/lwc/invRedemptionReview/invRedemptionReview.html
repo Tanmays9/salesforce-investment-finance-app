@@ -1,0 +1,44 @@
+<template>
+    <lightning-card title="Redemption review" icon-name="standard:opportunity">
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <template if:true={loading}><lightning-spinner alternative-text="Loading redemption context"></lightning-spinner></template>
+            <template if:true={errorMessage}><div class="slds-text-color_error slds-p-vertical_medium" role="alert">{errorMessage}</div></template>
+            <template if:true={portfolioData}>
+                <div class="baseline slds-m-bottom_medium"><strong>Baseline valuation:</strong> {portfolioData.valuationDate} · NAV dates {portfolioData.earliestNavDate} – {portfolioData.latestNavDate}. This is a dated estimate, not settlement cash or a broker instruction.</div>
+                <div class="slds-grid slds-wrap slds-gutters_small">
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3"><lightning-combobox label="Draft redemption action" value={selectedActionId} options={actionOptions} onchange={handleAction}></lightning-combobox></div>
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3"><lightning-combobox label="Fund" value={selectedFundId} options={fundOptions} onchange={handleFund} disabled={actionLocked}></lightning-combobox></div>
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3"><lightning-combobox label="Account (required for a partial redemption)" value={selectedAccountId} options={accountOptions} onchange={handleAccount} disabled={fullScopeAction}></lightning-combobox></div>
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3"><lightning-input type="number" label="Units to redeem (blank means full selected scope)" min="0" step="0.00000001" value={requestedUnits} onchange={handleUnits} disabled={fullScopeAction}></lightning-input></div>
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3"><lightning-input type="date" label="Assumed settlement date" value={settlementDate} onchange={handleSettlement}></lightning-input></div>
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3"><lightning-input type="checkbox" label="Acknowledge that tax is unknown and has not been estimated" checked={taxAcknowledged} onchange={handleTaxAck}></lightning-input></div>
+                </div>
+                <div class="slds-m-top_medium">
+                    <lightning-button label="Preview FIFO lots" variant="brand-outline" onclick={previewRedemption} disabled={previewDisabled}></lightning-button>
+                    <lightning-button class="slds-m-left_small" label="Save review to draft action" variant="brand" onclick={saveReview} disabled={saveDisabled}></lightning-button>
+                </div>
+                <template if:true={previewData}>
+                    <div class="slds-grid slds-wrap slds-gutters_small summary slds-m-top_medium">
+                        <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-6"><div class="tile"><strong>Requested units</strong><div>{previewData.requestedUnits}</div></div></div>
+                        <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-6"><div class="tile"><strong>Selected NAV</strong><div>{formattedNav}</div><small>{previewData.navDate}</small></div></div>
+                        <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-6"><div class="tile"><strong>Gross proceeds</strong><div>{formattedGross}</div></div></div>
+                        <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-6"><div class="tile"><strong>Cost basis</strong><div>{formattedBasis}</div></div></div>
+                        <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-6"><div class="tile"><strong>Exit load</strong><div>{formattedLoad}</div></div></div>
+                        <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-6"><div class="tile"><strong>Realized gain</strong><div>{formattedGain}</div></div></div>
+                        <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-6"><div class="tile"><strong>Settlement cash before tax</strong><div>{formattedCashAfterLoad}</div></div></div>
+                        <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-6"><div class="tile"><strong>Estimated tax</strong><div>{formattedTax}</div></div></div>
+                        <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-6"><div class="tile"><strong>After-tax net proceeds</strong><div>{formattedNet}</div></div></div>
+                    </div>
+                    <div class="coverage slds-m-vertical_medium">
+                        <lightning-badge label={previewData.eligibilityCoverage}></lightning-badge><lightning-badge label={previewData.basisCoverage}></lightning-badge>
+                        <lightning-badge label={previewData.loadCoverage}></lightning-badge><lightning-badge label={previewData.taxCoverage}></lightning-badge>
+                        <lightning-badge label={previewData.readiness}></lightning-badge>
+                    </div>
+                    <lightning-datatable key-field="key" data={lotRows} columns={lotColumns} hide-checkbox-column></lightning-datatable>
+                    <div class="evidence slds-m-top_medium"><strong>Evidence and assumptions</strong><pre>{previewData.evidenceSummary}</pre></div>
+                    <p class="footnote slds-m-top_small">Unknown lock-in, exit-load, acquisition cost or tax data stays unknown. Saving this review does not execute a redemption.</p>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

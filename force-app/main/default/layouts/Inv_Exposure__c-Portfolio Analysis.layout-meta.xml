@@ -24,6 +24,10 @@
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>
+        <field>MemberKey__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
         <field>ValueDisplay__c</field>
       </layoutItems>
       <layoutItems>
@@ -51,6 +55,10 @@
       <layoutItems>
         <behavior>Readonly</behavior>
         <field>Member__c</field>
+      </layoutItems>
+      <layoutItems>
+        <behavior>Readonly</behavior>
+        <field>SourceLabels__c</field>
       </layoutItems>
       <layoutItems>
         <behavior>Readonly</behavior>

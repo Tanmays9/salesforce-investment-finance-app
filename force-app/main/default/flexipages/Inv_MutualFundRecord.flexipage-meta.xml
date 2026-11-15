@@ -54,6 +54,12 @@
         <identifier>fundReturnTrend</identifier>
       </componentInstance>
     </itemInstances>
+    <itemInstances>
+      <componentInstance>
+        <componentName>c:invFundResearch</componentName>
+        <identifier>fundResearch</identifier>
+      </componentInstance>
+    </itemInstances>
     <name>main</name>
     <type>Region</type>
   </flexiPageRegions>
