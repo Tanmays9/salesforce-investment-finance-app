@@ -1,31 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
-  <chart>
-    <chartSummaries>
-      <aggregate>Average</aggregate>
-      <column>Inv_MarketPriceObservations__c$ValueNumber__c</column>
-      <axisBinding>y</axisBinding>
-    </chartSummaries>
-    <chartType>Line</chartType>
-    <enableHoverLabels>true</enableHoverLabels>
-    <expandOthers>true</expandOthers>
-    <groupingColumn>Inv_MarketPriceObservations__c$ObservedOn__c</groupingColumn>
-    <location>CHART_TOP</location>
-    <showAxisLabels>true</showAxisLabels>
-    <showPercentage>false</showPercentage>
-    <showValues>true</showValues>
-    <size>Large</size>
-    <summaryAxisRange>Auto</summaryAxisRange>
-    <textSize>12</textSize>
-    <title>Fund NAV history (last five years)</title>
-    <titleSize>14</titleSize>
-  </chart>
   <columns>
-    <aggregateTypes>Average</aggregateTypes>
-    <field>Inv_MarketPriceObservations__c$ValueNumber__c</field>
+    <field>Inv_MarketPriceObservations__c$InstrumentDisplayName__c</field>
   </columns>
   <columns>
-    <field>Inv_MarketPriceObservations__c$InstrumentRef__c.Id</field>
+    <field>Inv_MarketPriceObservations__c$ObservedOn__c</field>
+  </columns>
+  <columns>
+    <field>Inv_MarketPriceObservations__c$ValueDisplay__c</field>
+  </columns>
+  <columns>
+    <field>Inv_MarketPriceObservations__c$ProviderDisplayName__c</field>
+  </columns>
+  <columns>
+    <field>Inv_MarketPriceObservations__c$RetrievedAt__c</field>
   </columns>
   <filter>
     <criteriaItems>
@@ -43,26 +31,18 @@
       <operator>equals</operator>
       <value>true</value>
     </criteriaItems>
-    <criteriaItems>
-      <column>Inv_MarketPriceObservations__c$RecentChartDate__c</column>
-      <operator>equals</operator>
-      <value>true</value>
-    </criteriaItems>
   </filter>
-  <format>Summary</format>
-  <groupingsDown>
-    <dateGranularity>Day</dateGranularity>
-    <field>Inv_MarketPriceObservations__c$ObservedOn__c</field>
-    <sortOrder>Asc</sortOrder>
-  </groupingsDown>
-  <name>Fund NAV history (last five years)</name>
+  <format>Tabular</format>
+  <name>Recent NAV observations (last 90 days)</name>
   <reportType>Inv_MarketPriceObservations_Analysis__c</reportType>
   <scope>organization</scope>
   <showDetails>true</showDetails>
-  <showGrandTotal>true</showGrandTotal>
-  <showSubTotals>true</showSubTotals>
+  <showGrandTotal>false</showGrandTotal>
+  <showSubTotals>false</showSubTotals>
+  <sortColumn>Inv_MarketPriceObservations__c$ObservedOn__c</sortColumn>
+  <sortOrder>Desc</sortOrder>
   <timeFrameFilter>
-    <dateColumn>Inv_MarketPriceObservations__c$CreatedDate</dateColumn>
-    <interval>INTERVAL_CUSTOM</interval>
+    <dateColumn>Inv_MarketPriceObservations__c$ObservedOn__c</dateColumn>
+    <interval>INTERVAL_LAST90</interval>
   </timeFrameFilter>
 </Report>

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>InstrumentDisplayName__c</fullName>
+  <formula>IF(ISBLANK(InstrumentRef__r.DisplayName__c), InstrumentRef__r.Name, InstrumentRef__r.DisplayName__c)</formula>
+  <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+  <label>Fund / instrument</label>
+  <type>Text</type>
+</CustomField>

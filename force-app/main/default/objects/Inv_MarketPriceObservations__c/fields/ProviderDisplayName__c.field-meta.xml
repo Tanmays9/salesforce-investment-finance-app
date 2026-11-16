@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>ProviderDisplayName__c</fullName>
+  <formula>CASE(ProviderRef__r.MigrationKey__c, "operational:provider:MFapi", "MFapi", "operational:provider:AMFI", "AMFI", "ops.providers:13", "AMFI", "ops.providers:15", "MFapi", "Other")</formula>
+  <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+  <label>Data source</label>
+  <type>Text</type>
+</CustomField>

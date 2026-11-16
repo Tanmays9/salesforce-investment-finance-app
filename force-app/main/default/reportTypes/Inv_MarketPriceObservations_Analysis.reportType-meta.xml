@@ -48,6 +48,26 @@
     </columns>
     <columns>
       <checkedByDefault>true</checkedByDefault>
+      <field>InstrumentDisplayName__c</field>
+      <table>Inv_MarketPriceObservations__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>ProviderDisplayName__c</field>
+      <table>Inv_MarketPriceObservations__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>ValueDisplay__c</field>
+      <table>Inv_MarketPriceObservations__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
+      <field>RetrievedAt__c</field>
+      <table>Inv_MarketPriceObservations__c</table>
+    </columns>
+    <columns>
+      <checkedByDefault>true</checkedByDefault>
       <field>ProviderRef__c</field>
       <table>Inv_MarketPriceObservations__c</table>
     </columns>

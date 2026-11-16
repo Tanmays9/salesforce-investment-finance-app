@@ -8,6 +8,8 @@ from build import DEST,OBJECTS,AUX_OBJECTS,section,text,number,date,lookup
 MODELS={**OBJECTS,**AUX_OBJECTS,'Inv_MarketPriceObservations__c':('Price observation','NAV history',{
  'InstrumentRef__c':lookup('Fund','Inv_MarketInstruments__c','Prices'),'ObservedOn__c':date('NAV date'),
  'ValueNumber__c':number('NAV',10),'KindFilter__c':text('Price type',30),'QualityFilter__c':text('Quality',40),
+ 'InstrumentDisplayName__c':text('Fund / instrument',255),'ProviderDisplayName__c':text('Data source',255),
+ 'ValueDisplay__c':number('NAV (₹, 2 d.p.)',2),'RetrievedAt__c':{'label':'Retrieved at','type':'DateTime'},
  'ProviderRef__c':lookup('Provider','Inv_OpsProviders__c','Prices'),'SelectedNAV__c':{'label':'Selected NAV','type':'Checkbox'},'RecentChartDate__c':{'label':'Within five year chart window','type':'Checkbox'}})}
 
 def main():
@@ -43,7 +45,9 @@ def main():
   ('FundPeerOverlap','Tracked fund equity overlap','Inv_FundMetric__c','CounterpartyFundDisplayName__c',
    ['FundDisplayName__c','ValuePercent__c','PeriodStart__c','PeriodEnd__c','Coverage__c'],
    [('Published__c','equals','true'),('Metric__c','equals','Mapped equity overlap')],'ValuePercent__c'),
-  ('NAVHistory','Fund NAV history (last five years)','Inv_MarketPriceObservations__c','ObservedOn__c',['ValueNumber__c'],[('KindFilter__c','equals','NAV'),('QualityFilter__c','equals','accepted'),('SelectedNAV__c','equals','true'),('RecentChartDate__c','equals','true')],'ValueNumber__c'),
+  ('NAVHistory','Recent NAV observations (last 90 days)','Inv_MarketPriceObservations__c',None,
+   ['InstrumentDisplayName__c','ObservedOn__c','ValueDisplay__c','ProviderDisplayName__c','RetrievedAt__c'],
+   [('KindFilter__c','equals','NAV'),('QualityFilter__c','equals','accepted'),('SelectedNAV__c','equals','true')],None),
   ('ValuationHistory','Portfolio value history','Inv_PortfolioValuation__c','AsOf__c',['Name','MarketValueDisplay__c','CostDisplay__c','EarliestNAV__c','LatestNAV__c'],[('LatestForDate__c','equals','true')],'MarketValueDisplay__c'),
   ('PlanComparison','Current versus proposed fund values','Inv_PlanImpact__c','Fund__c',['Name','BaselineCurrencyDisplay__c','ProposedCurrencyDisplay__c','Coverage__c'],[('Published__c','equals','true'),('Metric__c','equals','Market value INR')],'ProposedCurrencyDisplay__c'),
   ('PlanSIPs','Current versus proposed SIPs','Inv_PlanImpact__c','Fund__c',['Name','BaselineCurrencyDisplay__c','ProposedCurrencyDisplay__c','Coverage__c'],[('Published__c','equals','true'),('Metric__c','equals','Monthly SIP INR')],'ProposedCurrencyDisplay__c'),
@@ -58,11 +62,15 @@ def main():
   def col(f):return api+'$'+f
   values={
    'columns':[{'aggregateTypes':'Average' if name in ['NAVHistory','FundPeerOverlap'] else 'Sum','field':col(f)} if f==measure else {'field':col(f)} for f in cols if f!=group]+
-             [{'field':col(f+'.Id')} for f in ['Portfolio__c','Fund__c','InstrumentRef__c','PlanVersion__c'] if f in MODELS[api][2] and not (name in ['FundMetrics','FundPeerOverlap'] and f=='Fund__c')],
+             [{'field':col(f+'.Id')} for f in ['Portfolio__c','Fund__c','InstrumentRef__c','PlanVersion__c'] if f in MODELS[api][2] and not (name in ['FundMetrics','FundPeerOverlap'] and f=='Fund__c') and not (name=='NAVHistory' and f in ['InstrumentRef__c','ProviderRef__c'])],
    'format':'Summary' if group else 'Tabular','name':label[:40],'reportType':api.removesuffix('__c')+'_Analysis__c',
    'scope':'organization','showDetails':True,'showGrandTotal':True,'showSubTotals':True,
    'timeFrameFilter':{'dateColumn':api+'$CreatedDate','interval':'INTERVAL_CUSTOM'}}
   if filters:values['filter']={'criteriaItems':[{'column':col(f),'operator':op,'value':v} for f,op,v in filters]}
+  if name=='NAVHistory':
+   values.update(showGrandTotal=False,showSubTotals=False,
+    sortColumn=col('ObservedOn__c'),sortOrder='Desc',
+    timeFrameFilter={'dateColumn':col('ObservedOn__c'),'interval':'INTERVAL_LAST90'})
   if group:
    if name=='FundPeerOverlap':values.update(showGrandTotal=False,showSubTotals=False)
    values['groupingsDown']={'dateGranularity':'Day','field':col(group),'sortOrder':'Asc'}

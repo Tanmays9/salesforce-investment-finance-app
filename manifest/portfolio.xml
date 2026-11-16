@@ -89,6 +89,9 @@
     <members>Inv_AnalyticsRuns__c.PipelineStage__c</members>
     <members>Inv_AnalyticsRuns__c.PipelineRef__c</members>
     <members>Inv_MarketPriceObservations__c.ObservationKey__c</members>
+    <members>Inv_MarketPriceObservations__c.InstrumentDisplayName__c</members>
+    <members>Inv_MarketPriceObservations__c.ProviderDisplayName__c</members>
+    <members>Inv_MarketPriceObservations__c.ValueDisplay__c</members>
     <members>Inv_MarketPriceObservations__c.RecentChartDate__c</members>
     <members>Inv_MarketPriceObservations__c.RetrievedAt__c</members>
     <members>Inv_MarketPriceObservations__c.KindFilter__c</members>

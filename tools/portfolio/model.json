@@ -1439,6 +1439,26 @@
         "externalId": true,
         "unique": true
       },
+      "InstrumentDisplayName__c": {
+        "formula": "IF(ISBLANK(InstrumentRef__r.DisplayName__c), InstrumentRef__r.Name, InstrumentRef__r.DisplayName__c)",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "Fund / instrument",
+        "type": "Text"
+      },
+      "ProviderDisplayName__c": {
+        "formula": "CASE(ProviderRef__r.MigrationKey__c, \"operational:provider:MFapi\", \"MFapi\", \"operational:provider:AMFI\", \"AMFI\", \"ops.providers:13\", \"AMFI\", \"ops.providers:15\", \"MFapi\", \"Other\")",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "Data source",
+        "type": "Text"
+      },
+      "ValueDisplay__c": {
+        "formula": "IF(ISBLANK(ValueNumber__c), NULL, ROUND(ValueNumber__c, 2))",
+        "formulaTreatBlanksAs": "BlankAsBlank",
+        "label": "NAV (\u20b9, 2 d.p.)",
+        "precision": 18,
+        "scale": 2,
+        "type": "Number"
+      },
       "RecentChartDate__c": {
         "formula": "AND(NOT(ISBLANK(ObservedOn__c)), ObservedOn__c >= ADDMONTHS(TODAY(), -60))",
         "label": "Within five year chart window",

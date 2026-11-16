@@ -5551,6 +5551,21 @@
     <field>Inv_FundMetric__c.CounterpartyFundDisplayName__c</field>
     <readable>true</readable>
   </fieldPermissions>
+  <fieldPermissions>
+    <editable>false</editable>
+    <field>Inv_MarketPriceObservations__c.ValueDisplay__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
+  <fieldPermissions>
+    <editable>false</editable>
+    <field>Inv_MarketPriceObservations__c.InstrumentDisplayName__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
+  <fieldPermissions>
+    <editable>false</editable>
+    <field>Inv_MarketPriceObservations__c.ProviderDisplayName__c</field>
+    <readable>true</readable>
+  </fieldPermissions>
   <label>Inv Viewer</label>
   <objectPermissions>
     <allowCreate>false</allowCreate>
