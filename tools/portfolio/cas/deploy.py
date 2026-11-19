@@ -4,6 +4,7 @@ from pathlib import Path
 import boto3
 from infrastructure import template
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'investment-migration'))
+from org_config import aws_region, org_id_for_stage
 from migrate import Salesforce
 from prepare import PRIVATE,xml
 
@@ -16,12 +17,12 @@ def run(command,*,cwd=None,input=None,log=None):
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--stage',choices=['sandbox','production'],required=True);parser.add_argument('--target-org',required=True);args=parser.parse_args()
     s=Salesforce(args.target_org);org=s.query('SELECT Id FROM Organization')[0]['Id']
-    expected='LOCAL_SALESFORCE_SANDBOX_ORG_ID' if args.stage=='sandbox' else 'LOCAL_SALESFORCE_PRODUCTION_ORG_ID'
+    expected=org_id_for_stage(args.stage)
     if org!=expected:raise RuntimeError('Unexpected Salesforce deployment target')
     directory=PRIVATE/'parser-auth'/args.stage
     identity=json.loads((directory/'identity.json').read_text());secret=identity['secretArn']
     if not identity['authenticated']:raise RuntimeError('Salesforce parser identity has not passed authentication')
-    region='LOCAL_AWS_REGION';session=boto3.Session(region_name=region);ecr=session.client('ecr');cf=session.client('cloudformation');iam=session.client('iam')
+    region=aws_region();session=boto3.Session(region_name=region);ecr=session.client('ecr');cf=session.client('cloudformation');iam=session.client('iam')
     repository='investments-cas-parser'
     try:repo=ecr.create_repository(repositoryName=repository,imageScanningConfiguration={'scanOnPush':True},imageTagMutability='MUTABLE')['repository']
     except ecr.exceptions.RepositoryAlreadyExistsException:repo=ecr.describe_repositories(repositoryNames=[repository])['repositories'][0]

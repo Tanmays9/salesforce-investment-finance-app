@@ -7,10 +7,11 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'investment-migration'))
+from org_config import allowed_org_ids
 from migrate import Salesforce
 from prepare import PRIVATE
 
-ALLOWED_ORGS = {'LOCAL_SALESFORCE_SANDBOX_ORG_ID', 'LOCAL_SALESFORCE_PRODUCTION_ORG_ID'}
+ALLOWED_ORGS = allowed_org_ids()
 RUN = 'benchmark-bootstrap:2026-11-14'
 SCHEME_CODES = {
     '120828', '120492', '145206', '118551', '129046',

@@ -2,6 +2,7 @@
 import argparse,hashlib,json,sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'investment-migration'))
+from org_config import org_id_for_stage
 from migrate import Salesforce
 from prepare import PRIVATE
 
@@ -18,7 +19,7 @@ def ledger(s):
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--target-org',required=True);p.add_argument('--run',required=True);args=p.parse_args();s=Salesforce(args.target_org)
-    if s.query('SELECT Id FROM Organization')[0]['Id']!='LOCAL_SALESFORCE_SANDBOX_ORG_ID':raise RuntimeError('This acceptance rehearsal is sandbox-only')
+    if s.query('SELECT Id FROM Organization')[0]['Id']!=org_id_for_stage('sandbox'):raise RuntimeError('This acceptance rehearsal is sandbox-only')
     rows=s.query("SELECT Id,RowKind__c,MatchStatus__c FROM Inv_OpsImportRows__c WHERE RunRef__c='"+args.run+"'")
     summaries=[row for row in rows if row['RowKind__c']=='Account']
     if not summaries or any(row['MatchStatus__c'] not in ['Mapped','Confirmed'] if row['RowKind__c']=='Account' else row['MatchStatus__c']!='Existing' for row in rows):raise RuntimeError('Only fully reconciled, existing-only statements can use this rehearsal')

@@ -11,13 +11,14 @@ from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import hashes,serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'investment-migration'))
+from org_config import aws_region, cas_auth_secret_name, org_id_for_stage
 from migrate import Salesforce
 from prepare import PRIVATE,xml,NS
 
 def main():
  p=argparse.ArgumentParser();p.add_argument('--target-org',required=True);p.add_argument('--stage',choices=['sandbox','production'],required=True);args=p.parse_args()
  s=Salesforce(args.target_org);org=s.query('SELECT Id,IsSandbox FROM Organization')[0]
- expected='LOCAL_SALESFORCE_SANDBOX_ORG_ID' if args.stage=='sandbox' else 'LOCAL_SALESFORCE_PRODUCTION_ORG_ID'
+ expected=org_id_for_stage(args.stage)
  if org['Id']!=expected:raise RuntimeError('Wrong investment org for parser stage')
  directory=PRIVATE/'parser-auth'/args.stage;directory.mkdir(parents=True,exist_ok=True)
  key_path=directory/'signing-key.pem';cert_path=directory/'signing-certificate.pem'
@@ -74,7 +75,7 @@ def main():
   (directory/'oauth-error.json').write_text(json.dumps(safe));raise RuntimeError('Parser OAuth JWT test failed: '+str(safe)) from None
  if 'access_token' not in token:raise RuntimeError('OAuth response did not contain an access token')
  secret={'sf_base_url':s.base,'client_id':client.text,'username':username,'private_key':key_path.read_text(),'audience':s.base}
- secrets=boto3.client('secretsmanager',region_name='LOCAL_AWS_REGION');name='investments/cas/'+args.stage+'/salesforce-auth'
+ secrets=boto3.client('secretsmanager',region_name=aws_region());name=cas_auth_secret_name(args.stage)
  try:arn=secrets.create_secret(Name=name,Description='Certificate-based Salesforce CAS parser identity',SecretString=json.dumps(secret),Tags=[{'Key':'Project','Value':'Investments'}])['ARN']
  except secrets.exceptions.ResourceExistsException:arn=secrets.put_secret_value(SecretId=name,SecretString=json.dumps(secret))['ARN']
  (directory/'identity.json').write_text(json.dumps({'orgId':org['Id'],'username':username,'userId':user_id,'secretArn':arn,'authenticated':True},indent=2))

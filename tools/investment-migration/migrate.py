@@ -14,9 +14,10 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
+from org_config import org_id_for_stage
 from prepare import PRIVATE, ROOT, digest, dump, normalize
 
-PRODUCTION_ID='LOCAL_SALESFORCE_PRODUCTION_ORG_ID'
+PRODUCTION_ID=org_id_for_stage('production')
 
 class Salesforce:
     def __init__(self,alias):

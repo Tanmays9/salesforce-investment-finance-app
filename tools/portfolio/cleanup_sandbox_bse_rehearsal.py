@@ -6,10 +6,11 @@ from collections import defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'investment-migration'))
+from org_config import org_alias_for_stage, org_id_for_stage
 from migrate import Salesforce
 from prepare import PRIVATE
 
-EXPECTED_ORG = 'LOCAL_SALESFORCE_SANDBOX_ORG_ID'
+EXPECTED_ORG=org_id_for_stage('sandbox')
 EXPECTED_DATES = {'2026-11-02', '2026-11-03', '2026-11-04', '2026-11-05', '2026-11-06',
                   '2026-11-08', '2026-11-09', '2026-11-11', '2026-11-12', '2026-11-13'}
 EARLIER_CREATED = dt.datetime(2026, 11, 14, 8, 52, 48, tzinfo=dt.timezone.utc)
@@ -17,7 +18,7 @@ LATER_CREATED = dt.datetime(2026, 11, 14, 8, 53, 50, tzinfo=dt.timezone.utc)
 
 
 def main():
-    sf = Salesforce('LOCAL_SALESFORCE_SANDBOX_ORG_ALIAS')
+    sf = Salesforce(org_alias_for_stage('sandbox'))
     organization = sf.query('SELECT Id,IsSandbox FROM Organization')[0]
     if organization['Id'] != EXPECTED_ORG or not organization['IsSandbox']:
         raise RuntimeError('Sandbox guard failed; no rows were changed')

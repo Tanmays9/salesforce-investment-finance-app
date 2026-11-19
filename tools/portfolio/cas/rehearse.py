@@ -8,13 +8,14 @@ from pathlib import Path
 import casparser
 from normalise import normalise,exact
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'investment-migration'))
+from org_config import org_id_for_stage
 from migrate import Salesforce
 from prepare import PRIVATE
 
 def main():
  p=argparse.ArgumentParser();p.add_argument('--target-org',required=True);p.add_argument('--file',required=True);p.add_argument('--submit',action='store_true');args=p.parse_args()
  s=Salesforce(args.target_org);org=s.query('SELECT Id,IsSandbox FROM Organization')[0]
- if not org['IsSandbox'] or org['Id']!='LOCAL_SALESFORCE_SANDBOX_ORG_ID':raise RuntimeError('Rehearsal is restricted to the verified investment sandbox')
+ if not org['IsSandbox'] or org['Id']!=org_id_for_stage('sandbox'):raise RuntimeError('Rehearsal is restricted to the verified investment sandbox')
  path=Path(args.file);content=path.read_bytes();payload=normalise(json.loads(casparser.read_cas_pdf(str(path),'',output='json')),hashlib.sha256(content).hexdigest())
  portfolios=s.query('SELECT Id FROM Inv_PortfolioPortfolios__c')
  if len(portfolios)!=1:raise RuntimeError('Select a portfolio explicitly before running a multi-portfolio rehearsal')

@@ -3,13 +3,14 @@ import argparse,base64,collections,hashlib,json,subprocess,sys
 from pathlib import Path
 import casparser
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'investment-migration'))
+from org_config import org_alias_for_stage, org_id_for_stage
 from migrate import Salesforce
 from prepare import PRIVATE
 from normalise import normalise,exact
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--file',required=True);args=p.parse_args();s=Salesforce('LOCAL_SALESFORCE_PRODUCTION_ORG_ALIAS')
-    if s.query('SELECT Id,IsSandbox FROM Organization')[0]['Id']!='LOCAL_SALESFORCE_PRODUCTION_ORG_ID':raise RuntimeError('Production statement staging requires the verified production alias')
+    p=argparse.ArgumentParser();p.add_argument('--file',required=True);args=p.parse_args();s=Salesforce(org_alias_for_stage('production'))
+    if s.query('SELECT Id,IsSandbox FROM Organization')[0]['Id']!=org_id_for_stage('production'):raise RuntimeError('Production statement staging requires the verified production alias')
     path=Path(args.file);content=path.read_bytes();digest=hashlib.sha256(content).hexdigest()
     payload=normalise(json.loads(casparser.read_cas_pdf(str(path),'',output='json')),digest)
     portfolios=s.query('SELECT Id FROM Inv_PortfolioPortfolios__c')
@@ -48,7 +49,7 @@ def main():
     if not result[0]['isSuccess']:raise RuntimeError('Could not create production statement review')
     run=result[0]['outputValues']['runId'];(directory/'run.json').write_text(json.dumps({'runId':run,'sha256':digest,'scopes':len(scopes),'matchedEvents':len(event_keys),'baselineLedgerRows':len(ledger)},indent=2))
     apex=directory/'submit.apex';apex.write_text("System.debug(LoggingLevel.INFO, InvImportActions.submit('"+run+"',null));")
-    response=subprocess.run(['sf.cmd','apex','run','--file',str(apex),'--target-org','LOCAL_SALESFORCE_PRODUCTION_ORG_ALIAS','--json'],capture_output=True,text=True,encoding='utf-8')
+    response=subprocess.run(['sf.cmd','apex','run','--file',str(apex),'--target-org',org_alias_for_stage('production'),'--json'],capture_output=True,text=True,encoding='utf-8')
     (directory/'submit.json').write_text(response.stdout)
     if response.returncode:raise RuntimeError('Production parser submission failed; inspect protected report')
     print(json.dumps({'statementStaged':True,'scopesProvenExisting':len(scopes),'candidateExistingEvents':len(event_keys),'transactionsPosted':0,'runId':run}))

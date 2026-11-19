@@ -47,6 +47,10 @@ The investment ledger and valuation workflows focus on mutual funds. Stocks and 
 - Salesforce CLI
 - Access to a Salesforce sandbox with permissions to deploy the project metadata
 
+### Local org configuration
+
+Use `.env.example` as the template for your local configuration file. On Windows, place it at `%LOCALAPPDATA%\SalesforceInvestmentFinanceApp\.env`, outside synced folders; the loader also accepts `SALESFORCE_PORTFOLIO_ENV_FILE` to select another local path. Set the production and sandbox org IDs and CLI aliases there. Only the blank template is committed; Salesforce CLI authentication remains separate.
+
 ### Deploy to a sandbox
 
 ```bash

@@ -5,7 +5,7 @@
       "default": true
     }
   ],
-  "name": "REDACTED_ORG_NAME",
+  "name": "salesforce-investment-finance-app",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "68.0"

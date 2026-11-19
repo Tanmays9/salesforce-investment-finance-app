@@ -2,13 +2,14 @@
 import argparse,csv,hashlib,io,json,sys,time
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'investment-migration'))
+from org_config import allowed_org_ids
 from migrate import Salesforce
 from prepare import PRIVATE
 
 def main():
  p=argparse.ArgumentParser();p.add_argument('--target-org',required=True);args=p.parse_args();s=Salesforce(args.target_org)
  org=s.query('SELECT Id FROM Organization')[0]['Id']
- if org not in ['LOCAL_SALESFORCE_SANDBOX_ORG_ID','LOCAL_SALESFORCE_PRODUCTION_ORG_ID']:raise RuntimeError('Unexpected investment org')
+ if org not in allowed_org_ids():raise RuntimeError('Unexpected investment org')
  source=s.query('SELECT Id,InstrumentRef__c,ObservedOn__c,PriceKind__c,QualityStatus__c,ProviderRef__r.Name__c FROM Inv_MarketPriceObservations__c ORDER BY InstrumentRef__c,ObservedOn__c,ReceivedAt__c DESC,RevisionNoNumber__c DESC,Id DESC')
  selected={}
  for row in source:

@@ -78,7 +78,7 @@ def main():
             for name in ['columns.json','constraints.json','routines.json']:z.write(run/name,name)
             z.write(raw_twenty,'twenty-raw.ndjson')
         body=archive.read_bytes()
-        evidence.append({'targetTable':'workspace.documents','targetKey':'REDACTED_SOURCE_IDENTIFIER','name':'exact-neon-source.zip','path':str(archive),'bytes':len(body),'sha256':hashlib.sha256(body).hexdigest()})
+        evidence.append({'targetTable':'workspace.documents','targetKey':'investment-migration:exact-neon-source','name':'exact-neon-source.zip','path':str(archive),'bytes':len(body),'sha256':hashlib.sha256(body).hexdigest()})
     p.dump(run/'canonical-provisional.json',canonical);p.dump(run/'conflicts.json',conflicts);p.dump(run/'provenance.json',provenance);p.dump(run/'files.json',evidence)
     evidence_names={'neon.json','twenty.json','columns.json','constraints.json','routines.json','object-map.json','canonical-provisional.json','conflicts.json','provenance.json','files.json'}
     inventory={'run':args.run,'status':'BLOCKED_CONFLICTS' if conflicts else 'READY_FOR_REHEARSAL','conflicts':len(conflicts),'sourceCounts':{t:len(r) for t,r in neon.items()},'canonicalCounts':{t:len(r) for t,r in canonical.items()},'twentyCounts':{t:len(r) for t,r in twenty.items()},'fileBytes':sum(e['bytes'] for e in evidence),'fileCount':len(evidence),'files':{f.name:hashlib.sha256(f.read_bytes()).hexdigest() for f in run.glob('*.json') if f.name in evidence_names}}

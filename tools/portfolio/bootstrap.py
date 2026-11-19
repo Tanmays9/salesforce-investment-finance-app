@@ -2,13 +2,14 @@
 import argparse,json,sys,urllib.request,datetime,decimal
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'investment-migration'))
+from org_config import allowed_org_ids
 from migrate import Salesforce
 from prepare import PRIVATE
 
 def main():
  p=argparse.ArgumentParser();p.add_argument('--target-org',required=True);args=p.parse_args();s=Salesforce(args.target_org)
  org=s.query('SELECT Id,IsSandbox FROM Organization')[0]
- if org['Id'] not in ['LOCAL_SALESFORCE_SANDBOX_ORG_ID','LOCAL_SALESFORCE_PRODUCTION_ORG_ID']:raise RuntimeError('Unexpected investment org')
+ if org['Id'] not in allowed_org_ids():raise RuntimeError('Unexpected investment org')
  with urllib.request.urlopen('https://portal.amfiindia.com/spages/NAVAll.txt',timeout=60) as response:raw=response.read()
  source={}
  for line in raw.decode('utf-8-sig').splitlines():

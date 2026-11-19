@@ -8,12 +8,12 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+from org_config import local_path
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[2]
-PRIVATE = Path('LOCAL_PRIVATE_DATA_ROOT')
-SOURCE = Path('LOCAL_USER_PATH')
-OLD = Path('LOCAL_TWENTY_EXPORT_ROOT')
+PRIVATE = local_path("PRIVATE_DATA_ROOT")
+OLD = local_path("TWENTY_EXPORT_ROOT")
 NS = 'http://soap.sforce.com/2006/04/metadata'
 ET.register_namespace('', NS)
 

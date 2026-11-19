@@ -11,10 +11,11 @@ import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'investment-migration'))
+from org_config import allowed_org_ids
 from migrate import Salesforce
 from prepare import PRIVATE
 
-ALLOWED_ORGS = {'LOCAL_SALESFORCE_SANDBOX_ORG_ID', 'LOCAL_SALESFORCE_PRODUCTION_ORG_ID'}
+ALLOWED_ORGS = allowed_org_ids()
 INSTRUMENT_KEY = 'benchmark:instrument:bse500tri'
 PROVIDER_KEY = 'benchmark.provider.bse'
 INDEX_PAGE = 'https://www.bseindices.com/indices-details/code/17/'
