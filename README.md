@@ -1,58 +1,61 @@
-# Salesforce DX Project
+# Salesforce Investment Portfolio Manager
 
-Salesforce DX is a development approach that brings source-driven development, team collaboration, and continuous integration to the Salesforce Platform. Instead of working directly in an org through a web browser, you work with metadata as source files in a local DX project, track changes in version control, and deploy through automated processes.
+A Salesforce Lightning application for reviewing a mutual-fund portfolio, researching individual funds, and comparing consolidation and redemption scenarios. The project is built as a Salesforce DX source repository with Apex services, Lightning Web Components, custom objects, reports, and Screen Flows.
 
-This project template gets you started with the tools and structure you need to build Salesforce applications using source control, scratch orgs, and the Salesforce CLI.
+## Capabilities
 
-## Prerequisites
+- **Portfolio overview:** holdings, allocation, valuations, contribution activity, SIPs, freshness, and data-quality signals in one research workspace.
+- **Holding and fund research:** fund performance and NAV history, benchmark context, peer comparisons, expenses, disclosed composition, exposure, and account-level position details.
+- **Portfolio calculations:** position valuations, ledger reconciliation, cost basis and FIFO lots, cash-flow returns, benchmark metrics, and exposure analysis with dated analysis runs.
+- **NAV ingestion:** MFapi and AMFI integrations with verified scheme mapping, observation provenance, and AMFI preference when same-scheme, same-date values disagree.
+- **Statement import:** CAS import staging, file fingerprinting, duplicate review, account reconciliation, and explicit confirmation before ledger updates.
+- **Planning and redemptions:** versioned plans, scenario comparison, SIP changes, redemption previews, eligibility and exit-load checks, and evidence-linked readiness.
+- **Watchlist:** a home-page watchlist for funds, stocks, and ETFs.
 
-Before you start, make sure you have:
+## Technical design
 
-- **Salesforce CLI** - Download from [developer.salesforce.com/tools/salesforcecli](https://developer.salesforce.com/tools/salesforcecli). See [Install Salesforce CLI](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli.htm) for details.
-- **VS Code with Salesforce Extension Pack** - See [Installation Instructions](https://developer.salesforce.com/docs/platform/sfvscode-extensions/guide/install.html) for details. Includes the Agentforce Vibes extension.
-- **A development org** - Sign up for a free Developer Edition org [here](https://developer.salesforce.com/signup).
-- **Dev Hub enabled** (optional, required to create scratch orgs) - You can enable Dev Hub in your development org under Setup > Dev Hub.  See [Provide Developers Access to Salesforce DX Tools](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_setup_dx_tools.htm).
+- **Apex** implements financial calculations, ingestion, reconciliation, access checks, and plan workflows.
+- **Lightning Web Components** provide the portfolio research, fund research, holding detail, plan comparison, redemption review, statement import, and watchlist interfaces.
+- **Screen Flows** guide plan creation and approval, statement import and confirmation, and fund tracking.
+- **Salesforce records and reports** hold the investment model, dated observations, analysis snapshots, plans, import evidence, and operational issues.
 
-## Project Structure
+The calculation and research views preserve valuation dates, source coverage, and provenance. Scenario values use a chosen baseline and are estimates; they are not forecasts or broker instructions.
 
-Your DX project follows this structure:
+## Integrations and configuration
 
-- **`force-app/main/default/`** - Your metadata source files live in this default package directory. You can configure additional package directories in the `sfdx-project.json` file.
-- **`config/`** - Scratch org definitions and project settings
-- **`scripts/`** - Automation scripts for common tasks
-- **`sfdx-project.json`** - Project manifest that defines package directories, namespace, API version, and other project-level settings
+The source includes Named Credential metadata for MFapi, AMFI, BSE indices, and NSE indices. Configure and verify these connections in the target Salesforce org before enabling refresh jobs. Integration credentials and org-specific settings belong in Salesforce Setup or the deployment environment, not in Git.
 
-See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm).
+Portfolio-changing operations are permission-gated. Assign the portfolio manager permissions only to intended users and validate access in a sandbox before production use.
 
-## Get Started
+## Current scope
 
-Ready to start developing? The [Get Started with Salesforce DX](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_get_started_dx.htm) guide walks you through your first project, from creating a scratch org to creating a simple Apex class or LWC to deploying your code to a sandbox.
+The investment ledger and valuation workflows focus on mutual funds. Stocks and ETFs can be added to the watchlist; their full portfolio accounting and valuation are outside the current scope. The application supports research and planning, not trade execution.
 
-## Common Salesforce CLI Commands
+## Repository layout
 
-Here are common CLI commands that you'll use the most:
+- `force-app/main/default/classes/` — Apex calculation, integration, and workflow services with their tests
+- `force-app/main/default/lwc/` — Lightning Web Components
+- `force-app/main/default/flows/` — guided investment workflows
+- `force-app/main/default/objects/` — investment data model and field metadata
+- `force-app/main/default/reports/` and `dashboards/` — standard Salesforce reporting assets
+- `sfdx-project.json` — Salesforce DX project configuration (API version 68.0)
 
-- `sf org login web`: Authorize an org
-- `sf org open`: Open your org in a browser
-- `sf org create scratch`: Create a scratch org
-- `sf project deploy start`: Deploy metadata to your org
-- `sf project retrieve start`: Retrieve metadata from your org
-- `sf template generate <artifact>`: Scaffold new components, such as Apex classes and triggers, LWC components, Lightning apps, and more
-- `sf apex <command>`: Run Apex tests, run anonymous Apex blocks, and view logs
-- `sf data <command>`: Work with test data
-- `sf alias <command>`: Manage org aliases
-- `sf config <command>`: Configure CLI settings
+## Develop and deploy
 
-## Use Agentforce Vibes to Build Lightning Apps
+### Prerequisites
 
-Transform your ideas into custom Lightning apps that extend CRM workflows directly in Lightning Experience. Through natural conversations with Agentforce Vibes, implement custom objects and fields, complex business logic, and dynamic UI components. See [Build a Lightning App Using Agentforce Vibes](https://developer.salesforce.com/docs/platform/einstein-for-devs/guide/lexapp-overview.html).
+- Salesforce CLI
+- Access to a Salesforce sandbox with permissions to deploy the project metadata
 
-## Additional Resources
+### Deploy to a sandbox
 
-- [Agentforce Vibes Developer Guide](https://developer.salesforce.com/docs/platform/einstein-for-devs/guide/einstein-overview.html)
-- [Salesforce CLI Installation Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/)
-- [Salesforce CLI Plugin Development Guide](https://developer.salesforce.com/docs/platform/salesforce-cli-plugin/guide/conceptual-overview.html)
-- [Salesforce VS Code Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
+```bash
+sf org login web --alias investment-sandbox --instance-url https://test.salesforce.com
+sf project deploy start --source-dir force-app --target-org investment-sandbox
+```
 
+After deployment, configure the Named Credentials, review scheduled jobs and permission assignments, and use representative sandbox data to validate calculations and import workflows. The repository contains Apex unit tests alongside the implementation; run the relevant tests in a sandbox before promoting changes.
+
+## Project status
+
+This is an actively developed portfolio-management application. Production readiness depends on the target org's integration configuration, data quality, permissions, and successful sandbox validation.
