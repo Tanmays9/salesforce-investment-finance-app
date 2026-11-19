@@ -1,0 +1,220 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1120" role="img" aria-labelledby="title description">
+  <title id="title">Salesforce Investment Portfolio Manager architecture</title>
+  <desc id="description">Market data providers feed Salesforce Apex refresh and investment services. Salesforce custom records store market history, portfolio ledger, analysis, plans, imports and provenance. Investors use the Investments Lightning app, standard reports and Screen Flows. CAS statements follow a separate secure workflow through Salesforce Files, an IAM-protected AWS API Gateway and Lambda casparser worker, Apex staging, duplicate review and explicit confirmation.</desc>
+  <defs>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#4474A5"/></marker>
+    <marker id="arrow-teal" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#138A83"/></marker>
+    <style>
+      text { font-family: Inter, "Segoe UI", Arial, sans-serif; }
+      .title { fill: #132B45; font-size: 36px; font-weight: 700; }
+      .subtitle { fill: #61758A; font-size: 17px; }
+      .column-title { fill: #18334F; font-size: 16px; font-weight: 700; letter-spacing: 1px; }
+      .card-title { fill: #17324D; font-size: 18px; font-weight: 700; }
+      .body { fill: #496176; font-size: 15px; }
+      .small { fill: #647A8E; font-size: 13px; }
+      .lane-title { fill: #17324D; font-size: 20px; font-weight: 700; }
+      .lane-step { fill: #18334F; font-size: 15px; font-weight: 700; }
+      .lane-body { fill: #536A7F; font-size: 13px; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1120" fill="#F3F7FB"/>
+  <circle cx="1490" cy="55" r="160" fill="#E7F1FA"/>
+  <circle cx="1480" cy="55" r="110" fill="#ECF5F8"/>
+
+  <text x="64" y="74" class="title">Salesforce Investment Portfolio Manager</text>
+  <text x="66" y="108" class="subtitle">Runtime architecture · Lightning UX, Apex domain services, Salesforce records and external data pipelines</text>
+  <rect x="1260" y="94" width="272" height="34" rx="17" fill="#E2EBF5"/>
+  <text x="1396" y="116" text-anchor="middle" fill="#496176" font-size="13" font-weight="700" letter-spacing=".5">SALESFORCE DX · API 68.0</text>
+
+  <!-- Main architecture columns -->
+  <g>
+    <rect x="62" y="175" width="260" height="590" rx="20" fill="#FFFFFF" stroke="#DCE6EF" stroke-width="1.5"/>
+    <rect x="62" y="175" width="260" height="7" rx="3.5" fill="#3284C8"/>
+    <circle cx="89" cy="213" r="14" fill="#E7F2FB"/><text x="89" y="218" text-anchor="middle" fill="#2875B7" font-size="12" font-weight="700">01</text>
+    <text x="114" y="219" class="column-title">MARKET SOURCES</text>
+
+    <rect x="80" y="245" width="224" height="128" rx="14" fill="#F7FAFD" stroke="#E1EAF2"/>
+    <text x="98" y="275" class="card-title">NAV observations</text>
+    <text x="98" y="301" class="body">MFapi · current and history</text>
+    <text x="98" y="324" class="body">AMFI · official NAV file</text>
+    <text x="98" y="350" class="small">Scheme identity checked by share class</text>
+
+    <rect x="80" y="390" width="224" height="112" rx="14" fill="#F7FAFD" stroke="#E1EAF2"/>
+    <text x="98" y="420" class="card-title">Benchmarks</text>
+    <text x="98" y="447" class="body">BSE and NSE index data</text>
+    <text x="98" y="473" class="small">Dated return observations</text>
+
+    <rect x="80" y="519" width="224" height="145" rx="14" fill="#FFF9ED" stroke="#F4E4BF"/>
+    <text x="98" y="550" class="card-title">Fund disclosures</text>
+    <text x="98" y="577" class="body">Composition · expenses</text>
+    <text x="98" y="600" class="body">Eligibility · exit-load policies</text>
+    <text x="98" y="633" class="small">Reviewed evidence with as-of dates</text>
+
+    <rect x="80" y="682" width="224" height="58" rx="14" fill="#EEF5FB"/>
+    <text x="192" y="706" text-anchor="middle" fill="#3E607F" font-size="14" font-weight="700">Provider and date provenance</text>
+    <text x="192" y="727" text-anchor="middle" class="small">retained with imported observations</text>
+  </g>
+
+  <g>
+    <rect x="366" y="175" width="260" height="590" rx="20" fill="#FFFFFF" stroke="#DCE6EF" stroke-width="1.5"/>
+    <rect x="366" y="175" width="260" height="7" rx="3.5" fill="#20A39A"/>
+    <circle cx="393" cy="213" r="14" fill="#E5F5F3"/><text x="393" y="218" text-anchor="middle" fill="#16847D" font-size="12" font-weight="700">02</text>
+    <text x="418" y="219" class="column-title">INGESTION</text>
+
+    <rect x="384" y="245" width="224" height="194" rx="14" fill="#F0FAF8" stroke="#D4EEE9"/>
+    <text x="402" y="275" class="card-title">Market refresh</text>
+    <text x="402" y="303" class="body">Scheduled Apex starts work</text>
+    <text x="402" y="326" class="body">Queueables fetch via Named</text>
+    <text x="402" y="349" class="body">Credentials and validate identity</text>
+    <text x="402" y="380" class="small">MFapi + AMFI → NAV policy</text>
+    <text x="402" y="403" class="small">BSE / NSE → benchmark observations</text>
+    <text x="402" y="425" class="small">Bad or conflicting data raises an issue</text>
+
+    <rect x="384" y="457" width="224" height="166" rx="14" fill="#F0FAF8" stroke="#D4EEE9"/>
+    <text x="402" y="487" class="card-title">CAS intake</text>
+    <text x="402" y="515" class="body">Salesforce submits a job through</text>
+    <text x="402" y="538" class="body">IAM-protected API Gateway</text>
+    <text x="402" y="569" class="small">Lambda dispatcher invokes worker</text>
+    <text x="402" y="592" class="small">Password handoff is short lived</text>
+
+    <rect x="384" y="641" width="224" height="99" rx="14" fill="#E9F6F4" stroke="#D4EEE9"/>
+    <text x="402" y="670" class="card-title">Parser worker</text>
+    <text x="402" y="696" class="body">Containerized Lambda · casparser</text>
+    <text x="402" y="720" class="small">Fetches PDF; returns staged rows</text>
+  </g>
+
+  <g>
+    <rect x="670" y="175" width="260" height="590" rx="20" fill="#FFFFFF" stroke="#DCE6EF" stroke-width="1.5"/>
+    <rect x="670" y="175" width="260" height="7" rx="3.5" fill="#7A69D1"/>
+    <circle cx="697" cy="213" r="14" fill="#F0EDFC"/><text x="697" y="218" text-anchor="middle" fill="#6654BE" font-size="12" font-weight="700">03</text>
+    <text x="722" y="219" class="column-title">APEX SERVICES</text>
+
+    <rect x="688" y="245" width="224" height="112" rx="14" fill="#F7F5FE" stroke="#E5E0FA"/>
+    <text x="706" y="275" class="card-title">Portfolio engine</text>
+    <text x="706" y="303" class="body">Units · cost basis · FIFO lots</text>
+    <text x="706" y="327" class="body">Valuation · personal returns</text>
+    <text x="706" y="348" class="small">Dated, versioned analysis runs</text>
+
+    <rect x="688" y="375" width="224" height="112" rx="14" fill="#F7F5FE" stroke="#E5E0FA"/>
+    <text x="706" y="405" class="card-title">Research analytics</text>
+    <text x="706" y="433" class="body">Fund / benchmark metrics</text>
+    <text x="706" y="457" class="body">Composition and exposure</text>
+    <text x="706" y="478" class="small">Coverage and freshness retained</text>
+
+    <rect x="688" y="505" width="224" height="112" rx="14" fill="#F7F5FE" stroke="#E5E0FA"/>
+    <text x="706" y="535" class="card-title">Plans and redemptions</text>
+    <text x="706" y="563" class="body">Scenario comparison</text>
+    <text x="706" y="587" class="body">Eligibility · loads · tax coverage</text>
+    <text x="706" y="608" class="small">Drafts do not change holdings</text>
+
+    <rect x="688" y="635" width="224" height="105" rx="14" fill="#F7F5FE" stroke="#E5E0FA"/>
+    <text x="706" y="665" class="card-title">Import controls</text>
+    <text x="706" y="693" class="body">Dedupe · reconcile · confirm</text>
+    <text x="706" y="721" class="small">Manager-gated financial mutations</text>
+  </g>
+
+  <g>
+    <rect x="974" y="175" width="260" height="590" rx="20" fill="#FFFFFF" stroke="#DCE6EF" stroke-width="1.5"/>
+    <rect x="974" y="175" width="260" height="7" rx="3.5" fill="#E59A30"/>
+    <circle cx="1001" cy="213" r="14" fill="#FFF2DC"/><text x="1001" y="218" text-anchor="middle" fill="#B87315" font-size="12" font-weight="700">04</text>
+    <text x="1026" y="219" class="column-title">SALESFORCE DATA</text>
+
+    <rect x="992" y="245" width="224" height="101" rx="14" fill="#FFFAF1" stroke="#F1E5CF"/>
+    <text x="1010" y="275" class="card-title">Portfolio ledger</text>
+    <text x="1010" y="303" class="body">Portfolios · accounts · events</text>
+    <text x="1010" y="327" class="body">Units · cash · SIP versions</text>
+
+    <rect x="992" y="363" width="224" height="101" rx="14" fill="#FFFAF1" stroke="#F1E5CF"/>
+    <text x="1010" y="393" class="card-title">Market reference</text>
+    <text x="1010" y="421" class="body">Schemes · share classes · NAV</text>
+    <text x="1010" y="445" class="body">Benchmarks · costs · policies</text>
+
+    <rect x="992" y="481" width="224" height="101" rx="14" fill="#FFFAF1" stroke="#F1E5CF"/>
+    <text x="1010" y="511" class="card-title">Analysis and plans</text>
+    <text x="1010" y="539" class="body">Runs · holdings · valuations</text>
+    <text x="1010" y="563" class="body">Exposure · targets · actions</text>
+
+    <rect x="992" y="599" width="224" height="141" rx="14" fill="#FFFAF1" stroke="#F1E5CF"/>
+    <text x="1010" y="629" class="card-title">Evidence and operations</text>
+    <text x="1010" y="657" class="body">Salesforce Files · imports</text>
+    <text x="1010" y="681" class="body">Reconciliations · issues · sources</text>
+    <text x="1010" y="713" class="small">Watchlist items include stocks / ETFs</text>
+  </g>
+
+  <g>
+    <rect x="1278" y="175" width="260" height="590" rx="20" fill="#FFFFFF" stroke="#DCE6EF" stroke-width="1.5"/>
+    <rect x="1278" y="175" width="260" height="7" rx="3.5" fill="#D45D78"/>
+    <circle cx="1305" cy="213" r="14" fill="#FCECF0"/><text x="1305" y="218" text-anchor="middle" fill="#B94864" font-size="12" font-weight="700">05</text>
+    <text x="1330" y="219" class="column-title">INVESTOR EXPERIENCE</text>
+
+    <rect x="1296" y="245" width="224" height="75" rx="14" fill="#FFF5F7" stroke="#F4DCE3"/>
+    <text x="1408" y="276" text-anchor="middle" class="card-title">Investments Lightning App</text>
+    <text x="1408" y="301" text-anchor="middle" class="small">Standard navigation and record pages</text>
+
+    <rect x="1296" y="337" width="224" height="135" rx="14" fill="#FFF5F7" stroke="#F4DCE3"/>
+    <text x="1314" y="367" class="card-title">Lightning components</text>
+    <text x="1314" y="395" class="body">Portfolio · fund · holding</text>
+    <text x="1314" y="419" class="body">Plan comparison · redemption</text>
+    <text x="1314" y="443" class="body">Statement import · watchlist</text>
+    <text x="1314" y="464" class="small">Charts with accessible table views</text>
+
+    <rect x="1296" y="489" width="224" height="104" rx="14" fill="#FFF5F7" stroke="#F4DCE3"/>
+    <text x="1314" y="519" class="card-title">Screen Flows</text>
+    <text x="1314" y="547" class="body">Create / approve plans</text>
+    <text x="1314" y="571" class="body">Map and confirm CAS accounts</text>
+    <text x="1314" y="588" class="small">Track funds and review actions</text>
+
+    <rect x="1296" y="610" width="224" height="130" rx="14" fill="#FFF5F7" stroke="#F4DCE3"/>
+    <text x="1314" y="640" class="card-title">Standard Salesforce</text>
+    <text x="1314" y="668" class="body">Reports · dashboards</text>
+    <text x="1314" y="692" class="body">List views · related lists · Files</text>
+    <text x="1314" y="722" class="small">Role-based access to records</text>
+  </g>
+
+  <!-- Main flow connectors -->
+  <path d="M 324 475 H 358" fill="none" stroke="#4474A5" stroke-width="3" marker-end="url(#arrow-blue)"/>
+  <path d="M 628 475 H 662" fill="none" stroke="#4474A5" stroke-width="3" marker-end="url(#arrow-blue)"/>
+  <path d="M 932 475 H 966" fill="none" stroke="#4474A5" stroke-width="3" marker-end="url(#arrow-blue)"/>
+  <path d="M 1236 475 H 1270" fill="none" stroke="#4474A5" stroke-width="3" marker-end="url(#arrow-blue)"/>
+
+  <!-- Human-reviewed CAS workflow -->
+  <rect x="62" y="805" width="1476" height="244" rx="22" fill="#EAF4F6" stroke="#CFE2E6" stroke-width="1.5"/>
+  <text x="88" y="846" class="lane-title">CAS statement workflow</text>
+  <text x="88" y="872" class="small">Encrypted PDF parsing is asynchronous; transactions enter the ledger only after duplicate review, balance reconciliation and explicit confirmation.</text>
+
+  <g>
+    <rect x="88" y="898" width="242" height="108" rx="14" fill="#FFFFFF" stroke="#D4E4E8"/>
+    <text x="108" y="929" class="lane-step">1 · Salesforce Files</text>
+    <text x="108" y="955" class="lane-body">Upload CAS PDF</text>
+    <text x="108" y="977" class="lane-body">Create idempotent import run</text>
+
+    <rect x="374" y="898" width="242" height="108" rx="14" fill="#FFFFFF" stroke="#D4E4E8"/>
+    <text x="394" y="929" class="lane-step">2 · AWS API Gateway</text>
+    <text x="394" y="955" class="lane-body">IAM-authenticated job request</text>
+    <text x="394" y="977" class="lane-body">Short-lived password handoff</text>
+
+    <rect x="660" y="898" width="242" height="108" rx="14" fill="#FFFFFF" stroke="#D4E4E8"/>
+    <text x="680" y="929" class="lane-step">3 · Lambda worker</text>
+    <text x="680" y="955" class="lane-body">Container image · casparser</text>
+    <text x="680" y="977" class="lane-body">Reads file with restricted identity</text>
+
+    <rect x="946" y="898" width="242" height="108" rx="14" fill="#FFFFFF" stroke="#D4E4E8"/>
+    <text x="966" y="929" class="lane-step">4 · Apex staging</text>
+    <text x="966" y="955" class="lane-body">InvImportEndpoint + InvCASService</text>
+    <text x="966" y="977" class="lane-body">Classify matches and conflicts</text>
+
+    <rect x="1232" y="898" width="280" height="108" rx="14" fill="#FFFFFF" stroke="#D4E4E8"/>
+    <text x="1252" y="929" class="lane-step">5 · Review and confirm</text>
+    <text x="1252" y="955" class="lane-body">Screen Flow maps accounts and</text>
+    <text x="1252" y="977" class="lane-body">posts only reconciled new movements</text>
+  </g>
+
+  <path d="M 334 952 H 364" fill="none" stroke="#138A83" stroke-width="3" marker-end="url(#arrow-teal)"/>
+  <path d="M 620 952 H 650" fill="none" stroke="#138A83" stroke-width="3" marker-end="url(#arrow-teal)"/>
+  <path d="M 906 952 H 936" fill="none" stroke="#138A83" stroke-width="3" marker-end="url(#arrow-teal)"/>
+  <path d="M 1192 952 H 1222" fill="none" stroke="#138A83" stroke-width="3" marker-end="url(#arrow-teal)"/>
+
+  <text x="64" y="1090" fill="#647A8E" font-size="13">Scope: mutual fund ledger and valuation. Stocks and ETFs are watchlist items; trade execution is outside this application.</text>
+  <text x="1536" y="1090" text-anchor="end" fill="#8394A5" font-size="12">Architecture reflects checked-in Salesforce DX source</text>
+</svg>

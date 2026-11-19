@@ -21,6 +21,12 @@ A Salesforce Lightning application for reviewing a mutual-fund portfolio, resear
 
 The calculation and research views preserve valuation dates, source coverage, and provenance. Scenario values use a chosen baseline and are estimates; they are not forecasts or broker instructions.
 
+## Architecture
+
+The diagram shows how market data, Salesforce Apex services, investment records, and the Lightning experience fit together. CAS statements use a separate asynchronous parser path and require review and explicit confirmation before ledger updates.
+
+![Salesforce Investment Portfolio Manager architecture](docs/architecture.svg)
+
 ## Integrations and configuration
 
 The source includes Named Credential metadata for MFapi, AMFI, BSE indices, and NSE indices. Configure and verify these connections in the target Salesforce org before enabling refresh jobs. Integration credentials and org-specific settings belong in Salesforce Setup or the deployment environment, not in Git.
