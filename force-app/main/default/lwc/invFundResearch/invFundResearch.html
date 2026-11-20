@@ -1,58 +1,183 @@
 <template>
-    <lightning-card title={title} icon-name="standard:investment_fund">
-        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
-            <template if:true={loading}><lightning-spinner alternative-text="Loading fund research"></lightning-spinner></template>
-            <template if:true={errorMessage}><div class="slds-text-color_error slds-p-vertical_medium" role="alert">{errorMessage}</div></template>
-            <template if:true={data}>
-                <div class="identity slds-m-bottom_medium">
-                    <span>{data.category}</span><span>{data.amc}</span><span>ISIN {data.isin}</span>
-                    <lightning-badge label={mappingLabel}></lightning-badge>
-                    <span>Latest NAV {formattedNav} dated {data.navDate}</span>
-                </div>
-                <template if:true={data.statusMessage}><div class="notice slds-m-bottom_medium">{data.statusMessage}</div></template>
-                <lightning-tabset variant="scoped">
-                    <lightning-tab label="Summary">
-                        <div class="slds-grid slds-wrap slds-gutters_small summary-grid">
-                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3"><div class="tile"><strong>My invested value</strong><div>{formattedOwnedValue}</div></div></div>
-                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3"><div class="tile"><strong>Portfolio allocation</strong><div>{formattedAllocation}</div></div></div>
-                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3"><div class="tile"><strong>Confirmed monthly SIP</strong><div>{formattedSip}</div></div></div>
-                        </div>
-                        <div class="slds-grid slds-wrap slds-gutters_small summary-grid">
-                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3"><div class="tile"><strong>TER</strong><div>{formattedTer} <small>dated {data.expenseDate}</small></div></div></div>
-                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3"><div class="tile"><strong>BER</strong><div>{formattedBer}</div></div></div>
-                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3"><div class="tile"><strong>Benchmark variant</strong><div>{data.benchmarkVariant}</div></div></div>
-                        </div>
-                        <div class="notice"><strong>Portfolio role:</strong> {data.portfolioRole}<br/>{data.researchNote}</div>
-                        <p class="source-note slds-m-top_small">NAV provider: {data.navProvider}. Expense disclosure date: {data.expenseDate}. Personal return and scheme NAV return are separate measures.</p>
-                    </lightning-tab>
-                    <lightning-tab label="Performance">
-                        <div class="chart-wrap"><canvas class="navChart" role="img" aria-label="Monthly sampled mutual fund NAV history"></canvas></div>
-                        <lightning-datatable key-field="key" data={performanceRows} columns={metricColumns} hide-checkbox-column></lightning-datatable>
-                        <div class="source-note slds-m-top_small">The chart shows monthly sampled NAV observations. Returns are not forecasts; peer and benchmark comparisons require matching periods and verified variants.</div>
-                    </lightning-tab>
-                    <lightning-tab label="Similar funds">
-                        <template if:true={hasPeers}>
-                            <div class="slds-text-body_small slds-m-bottom_small">Only dated, explicitly assigned peers are shown. A metric appears as comparable only when both funds share the same start and end dates.</div>
-                            <template if:true={hasPeerComparisonRows}><lightning-datatable key-field="key" data={peerComparisonRows} columns={peerColumns} hide-checkbox-column></lightning-datatable></template>
-                            <template if:false={hasPeerComparisonRows}><div class="notice">Peer assignments exist, but the published NAV metric runs do not yet contain identical measurement start and end dates. No mismatched-period return is shown.</div></template>
-                            <lightning-datatable class="slds-m-top_medium" key-field="fundId" data={peerRows} columns={peerAssignmentColumns} hide-checkbox-column></lightning-datatable>
-                        </template>
-                        <template if:false={hasPeers}><div class="notice">No dated peer assignments yet. Use Peer Assignments in the Investments navigation to add only the comparable funds you want to review.</div></template>
-                    </lightning-tab>
-                    <lightning-tab label="Composition">
-                        <div class="slds-text-body_small slds-m-bottom_small">Coverage and disclosure dates remain visible. Cash, negative items and unmapped securities are preserved as reported; weights are not normalized.</div>
-                        <lightning-datatable key-field="key" data={compositionRows} columns={compositionColumns} hide-checkbox-column></lightning-datatable>
-                    </lightning-tab>
-                    <lightning-tab label="My investment">
-                        <div class="slds-grid slds-wrap slds-gutters_small summary-grid">
-                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3"><div class="tile"><strong>Position value</strong><div>{formattedOwnedValue}</div></div></div>
-                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3"><div class="tile"><strong>Remaining cost</strong><div>{formattedCost}</div></div></div>
-                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3"><div class="tile"><strong>Unrealized gain / loss</strong><div>{formattedGain}</div></div></div>
-                        </div>
-                        <lightning-datatable key-field="rowKey" data={positionRows} columns={positionColumns} hide-checkbox-column></lightning-datatable>
-                    </lightning-tab>
-                </lightning-tabset>
-            </template>
+  <lightning-card title={title} icon-name="standard:investment_fund">
+    <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+      <template if:true={loading}
+        ><lightning-spinner
+          alternative-text="Loading fund research"
+        ></lightning-spinner
+      ></template>
+      <template if:true={errorMessage}
+        ><div class="slds-text-color_error slds-p-vertical_medium" role="alert">
+          {errorMessage}
+        </div></template
+      >
+      <template if:true={data}>
+        <div class="identity slds-m-bottom_medium">
+          <span>{data.category}</span><span>{data.amc}</span
+          ><span>ISIN {data.isin}</span>
+          <lightning-badge label={mappingLabel}></lightning-badge>
+          <span>Latest NAV {formattedNav} dated {data.navDate}</span>
         </div>
-    </lightning-card>
+        <template if:true={data.statusMessage}
+          ><div class="notice slds-m-bottom_medium">
+            {data.statusMessage}
+          </div></template
+        >
+        <lightning-tabset variant="scoped">
+          <lightning-tab label="Summary">
+            <div class="slds-grid slds-wrap slds-gutters_small summary-grid">
+              <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3">
+                <div class="tile">
+                  <strong>My invested value</strong>
+                  <div>{formattedOwnedValue}</div>
+                </div>
+              </div>
+              <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3">
+                <div class="tile">
+                  <strong>Portfolio allocation</strong>
+                  <div>{formattedAllocation}</div>
+                </div>
+              </div>
+              <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3">
+                <div class="tile">
+                  <strong>Confirmed monthly SIP</strong>
+                  <div>{formattedSip}</div>
+                </div>
+              </div>
+            </div>
+            <div class="slds-grid slds-wrap slds-gutters_small summary-grid">
+              <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3">
+                <div class="tile">
+                  <strong>TER</strong>
+                  <div>
+                    {formattedTer} <small>dated {data.expenseDate}</small>
+                  </div>
+                </div>
+              </div>
+              <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3">
+                <div class="tile">
+                  <strong>BER</strong>
+                  <div>{formattedBer}</div>
+                </div>
+              </div>
+              <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3">
+                <div class="tile">
+                  <strong>Benchmark variant</strong>
+                  <div>{data.benchmarkVariant}</div>
+                </div>
+              </div>
+            </div>
+            <div class="notice">
+              <strong>Portfolio role:</strong>
+              {data.portfolioRole}<br />{data.researchNote}
+            </div>
+            <p class="source-note slds-m-top_small">
+              NAV provider: {data.navProvider}. Expense disclosure date:
+              {data.expenseDate}. Personal return and scheme NAV return are
+              separate measures.
+            </p>
+          </lightning-tab>
+          <lightning-tab label="Performance">
+            <div class="chart-wrap">
+              <canvas
+                class="navChart"
+                role="img"
+                aria-label="Monthly sampled mutual fund NAV history"
+              ></canvas>
+            </div>
+            <lightning-datatable
+              key-field="key"
+              data={performanceRows}
+              columns={metricColumns}
+              hide-checkbox-column
+            ></lightning-datatable>
+            <div class="source-note slds-m-top_small">
+              The chart shows monthly sampled NAV observations. Returns are not
+              forecasts; peer and benchmark comparisons require matching periods
+              and verified variants.
+            </div>
+          </lightning-tab>
+          <lightning-tab label="Similar funds">
+            <template if:true={hasPeers}>
+              <div class="slds-text-body_small slds-m-bottom_small">
+                Only dated, explicitly assigned peers are shown. A metric
+                appears as comparable only when both funds share the same start
+                and end dates.
+              </div>
+              <template if:true={hasPeerComparisonRows}
+                ><lightning-datatable
+                  key-field="key"
+                  data={peerComparisonRows}
+                  columns={peerColumns}
+                  hide-checkbox-column
+                ></lightning-datatable
+              ></template>
+              <template if:false={hasPeerComparisonRows}
+                ><div class="notice">
+                  Peer assignments exist, but the published NAV metric runs do
+                  not yet contain identical measurement start and end dates. No
+                  mismatched-period return is shown.
+                </div></template
+              >
+              <lightning-datatable
+                class="slds-m-top_medium"
+                key-field="fundId"
+                data={peerRows}
+                columns={peerAssignmentColumns}
+                hide-checkbox-column
+              ></lightning-datatable>
+            </template>
+            <template if:false={hasPeers}
+              ><div class="notice">
+                No dated peer assignments yet. Use Peer Assignments in the
+                Investments navigation to add only the comparable funds you want
+                to review.
+              </div></template
+            >
+          </lightning-tab>
+          <lightning-tab label="Composition">
+            <div class="slds-text-body_small slds-m-bottom_small">
+              Coverage and disclosure dates remain visible. Cash, negative items
+              and unmapped securities are preserved as reported; weights are not
+              normalized.
+            </div>
+            <lightning-datatable
+              key-field="key"
+              data={compositionRows}
+              columns={compositionColumns}
+              hide-checkbox-column
+            ></lightning-datatable>
+          </lightning-tab>
+          <lightning-tab label="My investment">
+            <div class="slds-grid slds-wrap slds-gutters_small summary-grid">
+              <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3">
+                <div class="tile">
+                  <strong>Position value</strong>
+                  <div>{formattedOwnedValue}</div>
+                </div>
+              </div>
+              <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3">
+                <div class="tile">
+                  <strong>Remaining cost</strong>
+                  <div>{formattedCost}</div>
+                </div>
+              </div>
+              <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3">
+                <div class="tile">
+                  <strong>Unrealized gain / loss</strong>
+                  <div>{formattedGain}</div>
+                </div>
+              </div>
+            </div>
+            <lightning-datatable
+              key-field="rowKey"
+              data={positionRows}
+              columns={positionColumns}
+              hide-checkbox-column
+            ></lightning-datatable>
+          </lightning-tab>
+        </lightning-tabset>
+      </template>
+    </div>
+  </lightning-card>
 </template>

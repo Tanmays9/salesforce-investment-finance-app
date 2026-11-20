@@ -1,10 +1,54 @@
-.fund-link { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: baseline; font-size: 1rem; }
-.fund-link a { font-size: 1.15rem; font-weight: 650; }
-.fund-link span, .footnote { color: #5c6870; font-size: .78rem; }
-.metric { border: 1px solid #dddbda; border-radius: .4rem; padding: .75rem; min-height: 5.4rem; background: #fff; }
-.metric strong { display: block; color: #5c5c5c; font-size: .75rem; }
-.metric div { color: #163b54; font-size: 1.05rem; font-weight: 650; margin-top: .3rem; }
-.metric small { color: #5c6870; font-size: .68rem; }
-.coverage { display: flex; flex-wrap: wrap; gap: .5rem; }
-.coverage span { background: #f3f6f8; border-radius: 1rem; padding: .3rem .65rem; font-size: .73rem; }
-.notice { padding: .7rem .85rem; border-left: .25rem solid #e5a000; background: #fff8e1; }
+.fund-link {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: baseline;
+  font-size: 1rem;
+}
+.fund-link a {
+  font-size: 1.15rem;
+  font-weight: 650;
+}
+.fund-link span,
+.footnote {
+  color: #5c6870;
+  font-size: 0.78rem;
+}
+.metric {
+  border: 1px solid #dddbda;
+  border-radius: 0.4rem;
+  padding: 0.75rem;
+  min-height: 5.4rem;
+  background: #fff;
+}
+.metric strong {
+  display: block;
+  color: #5c5c5c;
+  font-size: 0.75rem;
+}
+.metric div {
+  color: #163b54;
+  font-size: 1.05rem;
+  font-weight: 650;
+  margin-top: 0.3rem;
+}
+.metric small {
+  color: #5c6870;
+  font-size: 0.68rem;
+}
+.coverage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.coverage span {
+  background: #f3f6f8;
+  border-radius: 1rem;
+  padding: 0.3rem 0.65rem;
+  font-size: 0.73rem;
+}
+.notice {
+  padding: 0.7rem 0.85rem;
+  border-left: 0.25rem solid #e5a000;
+  background: #fff8e1;
+}

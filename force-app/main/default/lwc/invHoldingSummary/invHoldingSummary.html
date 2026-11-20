@@ -1,30 +1,101 @@
 <template>
-    <lightning-card title="My holding" icon-name="standard:investment_account">
-        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
-            <template if:true={loading}><lightning-spinner alternative-text="Loading holding detail"></lightning-spinner></template>
-            <template if:true={errorMessage}><div class="slds-text-color_error slds-p-vertical_medium" role="alert">{errorMessage}</div></template>
-            <template if:true={holding}>
-                <div class="fund-link slds-m-bottom_medium"><a href={fundUrl} onclick={openFund}>{holding.fundName}</a><span>{holding.portfolioName} · {holding.accountLabel}</span></div>
-                <div class="slds-grid slds-wrap slds-gutters_small">
-                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"><div class="metric"><strong>Units</strong><div>{holding.units}</div></div></div>
-                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"><div class="metric"><strong>Selected NAV</strong><div>{formattedNav}</div><small>{holding.navDate} · {holding.navProvider}</small></div></div>
-                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"><div class="metric"><strong>Remaining cost</strong><div>{formattedCost}</div></div></div>
-                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"><div class="metric"><strong>Market value</strong><div>{formattedValue}</div></div></div>
-                </div>
-                <div class="slds-grid slds-wrap slds-gutters_small slds-m-top_small">
-                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"><div class="metric"><strong>Unrealized gain / loss</strong><div>{formattedGain}</div></div></div>
-                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"><div class="metric"><strong>Personal XIRR</strong><div>{formattedXirr}</div></div></div>
-                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"><div class="metric"><strong>Portfolio allocation</strong><div>{formattedWeight}</div></div></div>
-                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"><div class="metric"><strong>Monthly SIP</strong><div>{formattedSip}</div></div></div>
-                </div>
-                <div class="coverage slds-m-top_medium">
-                    <span>Units: {holding.unitCoverage}</span><span>Cost basis: {holding.basisCoverage}</span><span>Redemption proceeds: {holding.redemptionCoverage}</span>
-                    <span>Personal return: {holding.returnCoverage}</span><span>NAV: {holding.navCoverage}</span><span>Composition: {holding.compositionCoverage}</span><span>Policy: {holding.policyCoverage}</span>
-                </div>
-                <template if:true={holding.warnings}><div class="notice slds-m-top_medium"><strong>Review details</strong><p>{holding.warnings}</p></div></template>
-                <p class="footnote slds-m-top_small">Valuation dated {valuationDate}. Reconciled through {holding.reconciledThrough}. The detailed fund history and selected peers are on the shared fund record.</p>
-                <lightning-button class="slds-m-top_small" label="Open fund research" variant="brand-outline" onclick={openFund}></lightning-button>
-            </template>
+  <lightning-card title="My holding" icon-name="standard:investment_account">
+    <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+      <template if:true={loading}
+        ><lightning-spinner
+          alternative-text="Loading holding detail"
+        ></lightning-spinner
+      ></template>
+      <template if:true={errorMessage}
+        ><div class="slds-text-color_error slds-p-vertical_medium" role="alert">
+          {errorMessage}
+        </div></template
+      >
+      <template if:true={holding}>
+        <div class="fund-link slds-m-bottom_medium">
+          <a href={fundUrl} onclick={openFund}>{holding.fundName}</a
+          ><span>{holding.portfolioName} · {holding.accountLabel}</span>
         </div>
-    </lightning-card>
+        <div class="slds-grid slds-wrap slds-gutters_small">
+          <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4">
+            <div class="metric">
+              <strong>Units</strong>
+              <div>{holding.units}</div>
+            </div>
+          </div>
+          <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4">
+            <div class="metric">
+              <strong>Selected NAV</strong>
+              <div>{formattedNav}</div>
+              <small>{holding.navDate} · {holding.navProvider}</small>
+            </div>
+          </div>
+          <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4">
+            <div class="metric">
+              <strong>Remaining cost</strong>
+              <div>{formattedCost}</div>
+            </div>
+          </div>
+          <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4">
+            <div class="metric">
+              <strong>Market value</strong>
+              <div>{formattedValue}</div>
+            </div>
+          </div>
+        </div>
+        <div class="slds-grid slds-wrap slds-gutters_small slds-m-top_small">
+          <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4">
+            <div class="metric">
+              <strong>Unrealized gain / loss</strong>
+              <div>{formattedGain}</div>
+            </div>
+          </div>
+          <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4">
+            <div class="metric">
+              <strong>Personal XIRR</strong>
+              <div>{formattedXirr}</div>
+            </div>
+          </div>
+          <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4">
+            <div class="metric">
+              <strong>Portfolio allocation</strong>
+              <div>{formattedWeight}</div>
+            </div>
+          </div>
+          <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4">
+            <div class="metric">
+              <strong>Monthly SIP</strong>
+              <div>{formattedSip}</div>
+            </div>
+          </div>
+        </div>
+        <div class="coverage slds-m-top_medium">
+          <span>Units: {holding.unitCoverage}</span
+          ><span>Cost basis: {holding.basisCoverage}</span
+          ><span>Redemption proceeds: {holding.redemptionCoverage}</span>
+          <span>Personal return: {holding.returnCoverage}</span
+          ><span>NAV: {holding.navCoverage}</span
+          ><span>Composition: {holding.compositionCoverage}</span
+          ><span>Policy: {holding.policyCoverage}</span>
+        </div>
+        <template if:true={holding.warnings}
+          ><div class="notice slds-m-top_medium">
+            <strong>Review details</strong>
+            <p>{holding.warnings}</p>
+          </div></template
+        >
+        <p class="footnote slds-m-top_small">
+          Valuation dated {valuationDate}. Reconciled through
+          {holding.reconciledThrough}. The detailed fund history and selected
+          peers are on the shared fund record.
+        </p>
+        <lightning-button
+          class="slds-m-top_small"
+          label="Open fund research"
+          variant="brand-outline"
+          onclick={openFund}
+        ></lightning-button>
+      </template>
+    </div>
+  </lightning-card>
 </template>

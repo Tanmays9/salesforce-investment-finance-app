@@ -1,142 +1,405 @@
 <template>
-    <lightning-card title="Portfolio 360" icon-name="standard:investment_account">
-        <div class="slds-p-horizontal_medium">
-            <template if:true={loading}><lightning-spinner alternative-text="Loading portfolio data"></lightning-spinner></template>
-            <template if:true={errorMessage}><div class="slds-text-color_error slds-p-vertical_medium" role="alert">{errorMessage}</div></template>
-            <template if:true={data}>
-                <header class="hero slds-grid slds-wrap slds-grid_align-spread slds-grid_vertical-align-center">
-                    <div>
-                        <div class="eyebrow">Investment overview</div>
-                        <h2 class="slds-text-heading_medium">{data.portfolioName}</h2>
-                        <p class="slds-text-body_small">Published valuation dated {data.valuationDate}</p>
-                    </div>
-                    <div class="quick-actions slds-grid slds-wrap slds-gutters_x-small">
-                        <lightning-button label="Compare plans" onclick={openPlanComparison}></lightning-button>
-                        <lightning-button label="Redemption review" onclick={openRedemptionReview}></lightning-button>
-                        <lightning-button label="Data health" onclick={openDataHealth}></lightning-button>
-                    </div>
-                </header>
+  <lightning-card title="Portfolio 360" icon-name="standard:investment_account">
+    <div class="slds-p-horizontal_medium">
+      <template if:true={loading}
+        ><lightning-spinner
+          alternative-text="Loading portfolio data"
+        ></lightning-spinner
+      ></template>
+      <template if:true={errorMessage}
+        ><div class="slds-text-color_error slds-p-vertical_medium" role="alert">
+          {errorMessage}
+        </div></template
+      >
+      <template if:true={data}>
+        <header
+          class="hero slds-grid slds-wrap slds-grid_align-spread slds-grid_vertical-align-center"
+        >
+          <div>
+            <div class="eyebrow">Investment overview</div>
+            <h2 class="slds-text-heading_medium">{data.portfolioName}</h2>
+            <p class="slds-text-body_small">
+              Published valuation dated {data.valuationDate}
+            </p>
+          </div>
+          <div class="quick-actions slds-grid slds-wrap slds-gutters_x-small">
+            <lightning-button
+              label="Compare plans"
+              onclick={openPlanComparison}
+            ></lightning-button>
+            <lightning-button
+              label="Redemption review"
+              onclick={openRedemptionReview}
+            ></lightning-button>
+            <lightning-button
+              label="Data health"
+              onclick={openDataHealth}
+            ></lightning-button>
+          </div>
+        </header>
 
-                <div class="slds-grid slds-wrap slds-gutters_small metrics">
-                    <template for:each={summaryCards} for:item="item">
-                        <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-3 slds-large-size_1-of-6" key={item.label}>
-                            <div class="metric"><div class="metric-label">{item.label}</div><div class="metric-value">{item.value}</div></div>
-                        </div>
-                    </template>
-                </div>
-
-                <div class="freshness slds-m-bottom_medium" aria-label="Data freshness and calculation status">
-                    <span>Valuation: {data.valuationDate}</span>
-                    <span>NAV dates: {data.earliestNavDate} – {data.latestNavDate}</span>
-                    <span>Transactions reconciled through: {data.reconciledThrough}</span>
-                    <span>Calculation: {data.calculationVersion}</span>
-                </div>
-                <div class="coverage-note slds-m-bottom_medium">
-                    <strong>Portfolio coverage:</strong> {data.statusMessage}
-                    <span class="slds-m-left_x-small">{data.pipelineMessage}</span>
-                </div>
-
-                <lightning-tabset variant="scoped">
-                    <lightning-tab label="Overview">
-                        <div class="slds-grid slds-wrap slds-gutters_medium">
-                            <section class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 panel">
-                                <h3 class="slds-text-heading_small slds-m-bottom_small">Portfolio value and remaining cost</h3>
-                                <canvas class="historyChart" role="img" aria-label="Portfolio market value compared with remaining cost by valuation date"></canvas>
-                                <lightning-datatable key-field="day" data={historyRows} columns={historyColumns} hide-checkbox-column></lightning-datatable>
-                            </section>
-                            <section class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 panel">
-                                <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
-                                    <h3 class="slds-text-heading_small">{allocationTitle}</h3>
-                                    <lightning-combobox label="Allocation view" variant="label-hidden" value={allocationDimension} options={allocationOptions} onchange={handleAllocationDimension}></lightning-combobox>
-                                </div>
-                                <canvas class="allocationChart" role="img" aria-label={allocationTitle}></canvas>
-                                <p class="slds-text-body_small slds-m-top_x-small">Select a chart segment to filter holdings or disclosed exposure. Negative and unclassified disclosures remain visible in the detailed table.</p>
-                                <lightning-datatable class="slds-m-top_small" key-field="key" data={allocationRows} columns={allocationColumns} hide-checkbox-column></lightning-datatable>
-                            </section>
-                        </div>
-
-                        <div class="slds-grid slds-wrap slds-gutters_medium slds-m-top_medium">
-                            <section class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 panel">
-                                <div class="panel-heading">
-                                    <h3 class="slds-text-heading_small">Largest active holdings</h3>
-                                    <lightning-button variant="base" label="View all holdings" onclick={openHoldings}></lightning-button>
-                                </div>
-                                <lightning-datatable key-field="holdingId" data={overviewHoldings} columns={overviewHoldingColumns} hide-checkbox-column></lightning-datatable>
-                            </section>
-                            <section class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 panel">
-                                <div class="panel-heading"><h3 class="slds-text-heading_small">Confirmed monthly SIPs</h3></div>
-                                <template if:true={hasSips}>
-                                    <lightning-datatable key-field="id" data={sipRows} columns={sipColumns} hide-checkbox-column></lightning-datatable>
-                                </template>
-                                <template if:false={hasSips}><p class="empty-state">No confirmed active monthly SIPs are recorded for this portfolio.</p></template>
-                            </section>
-                        </div>
-
-                        <div class="slds-grid slds-wrap slds-gutters_medium slds-m-top_medium">
-                            <section class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 panel">
-                                <div class="panel-heading">
-                                    <h3 class="slds-text-heading_small">Position review flags</h3>
-                                    <span class="count-badge">{reviewCount} to review</span>
-                                </div>
-                                <template if:true={hasReviewHoldings}>
-                                    <lightning-datatable key-field="holdingId" data={reviewHoldings} columns={reviewColumns} hide-checkbox-column></lightning-datatable>
-                                </template>
-                                <template if:false={hasReviewHoldings}><p class="empty-state">No holding-level review flags appear in this published snapshot. Open Data Health for portfolio-wide issues.</p></template>
-                            </section>
-                            <section class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
-                                <c-inv-watchlist-card></c-inv-watchlist-card>
-                                <p class="slds-text-body_small slds-m-top_x-small">Watchlist stocks and ETFs are not included in portfolio valuation; their price feed is not connected yet.</p>
-                            </section>
-                        </div>
-
-                        <div class="return-note slds-m-top_medium" role="note">
-                            Personal XIRR is shown by position where available. This page does not present a single portfolio XIRR; portfolio return depends on complete external cash-flow history.
-                        </div>
-                    </lightning-tab>
-
-                    <lightning-tab label="Holdings">
-                        <div class="slds-grid slds-wrap slds-gutters_small slds-m-bottom_small">
-                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4"><lightning-input type="search" label="Search funds" value={searchTerm} onchange={handleSearch}></lightning-input></div>
-                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3"><lightning-combobox label="Position" value={statusFilter} options={statusOptions} onchange={handleStatus}></lightning-combobox></div>
-                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3"><lightning-combobox label="Category" value={categoryFilter} options={categoryOptions} onchange={handleCategory}></lightning-combobox></div>
-                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3"><lightning-combobox label="AMC" value={amcFilter} options={amcOptions} onchange={handleAmc}></lightning-combobox></div>
-                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3"><lightning-combobox label="Review" value={reviewFilter} options={reviewOptions} onchange={handleReview}></lightning-combobox></div>
-                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3"><lightning-input type="checkbox" label="Only funds without active SIP" checked={withoutSip} onchange={handleWithoutSip}></lightning-input></div>
-                        </div>
-                        <template if:true={allocationFilterLabel}><lightning-badge label={allocationFilterLabel}></lightning-badge><lightning-button variant="base" label="Clear chart filter" onclick={clearAllocationFilter}></lightning-button></template>
-                        <lightning-datatable key-field="holdingId" data={visibleHoldings} columns={holdingColumns} onrowaction={handleRowAction} hide-checkbox-column></lightning-datatable>
-                    </lightning-tab>
-
-                    <lightning-tab label="Underlying exposure">
-                        <lightning-combobox class="dimension" label="Exposure dimension" value={exposureDimension} options={dimensionOptions} onchange={handleDimension}></lightning-combobox>
-                        <lightning-datatable key-field="key" data={visibleExposures} columns={exposureColumns} hide-checkbox-column></lightning-datatable>
-                    </lightning-tab>
-
-                    <lightning-tab label="SIP review">
-                        <div class="slds-text-body_small slds-m-bottom_small">Confirmed active monthly SIPs are shown even when a fund has no current holding. A missing SIP is a review filter, not an exit recommendation.</div>
-                        <lightning-datatable key-field="id" data={sipRows} columns={sipColumns} hide-checkbox-column></lightning-datatable>
-                    </lightning-tab>
-
-                    <lightning-tab label="Movement analysis">
-                        <p class="slds-text-body_small slds-m-bottom_small">Portfolio value change is not investment return. Market movement uses opening units and the two recorded NAVs; purchases, redemptions and other posted unit movements use the closing NAV. The reconciliation adjustment captures differences between posted ledger movements and saved position snapshots. Any remaining residual stays visible.</p>
-                        <div class="slds-grid slds-wrap slds-gutters_small slds-m-bottom_medium">
-                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3"><lightning-combobox label="Opening valuation" value={movementStartRunId} options={valuationOptions} onchange={handleMovementStart}></lightning-combobox></div>
-                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3"><lightning-combobox label="Closing valuation" value={movementEndRunId} options={valuationOptions} onchange={handleMovementEnd}></lightning-combobox></div>
-                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-align-bottom"><lightning-button label="Explain value change" variant="brand" onclick={loadMovement} disabled={movementDisabled}></lightning-button></div>
-                        </div>
-                        <template if:true={movementLoading}><lightning-spinner alternative-text="Calculating portfolio movement"></lightning-spinner></template>
-                        <template if:true={movementError}><div class="slds-text-color_error slds-p-vertical_small" role="alert">{movementError}</div></template>
-                        <template if:true={movementResult}>
-                            <div class="freshness slds-m-bottom_small">{movementResult.openingDate} to {movementResult.closingDate} · {movementResult.coverage}</div>
-                            <div class="slds-grid slds-wrap slds-gutters_small metrics">
-                                <template for:each={movementSummary} for:item="item"><div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4" key={item.label}><div class="metric"><div class="metric-label">{item.label}</div><div class="metric-value">{item.value}</div></div></div></template>
-                            </div>
-                            <lightning-datatable class="slds-m-top_medium" key-field="rowKey" data={movementResult.rows} columns={movementColumns} hide-checkbox-column></lightning-datatable>
-                        </template>
-                        <template if:false={movementResult}><template if:false={movementLoading}><div class="freshness">Select two different available valuation dates to explain their value change.</div></template></template>
-                    </lightning-tab>
-                </lightning-tabset>
-            </template>
+        <div class="slds-grid slds-wrap slds-gutters_small metrics">
+          <template for:each={summaryCards} for:item="item">
+            <div
+              class="slds-col slds-size_1-of-2 slds-medium-size_1-of-3 slds-large-size_1-of-6"
+              key={item.label}
+            >
+              <div class="metric">
+                <div class="metric-label">{item.label}</div>
+                <div class="metric-value">{item.value}</div>
+              </div>
+            </div>
+          </template>
         </div>
-    </lightning-card>
+
+        <div
+          class="freshness slds-m-bottom_medium"
+          aria-label="Data freshness and calculation status"
+        >
+          <span>Valuation: {data.valuationDate}</span>
+          <span>NAV dates: {data.earliestNavDate} – {data.latestNavDate}</span>
+          <span>Transactions reconciled through: {data.reconciledThrough}</span>
+          <span>Calculation: {data.calculationVersion}</span>
+        </div>
+        <div class="coverage-note slds-m-bottom_medium">
+          <strong>Portfolio coverage:</strong> {data.statusMessage}
+          <span class="slds-m-left_x-small">{data.pipelineMessage}</span>
+        </div>
+
+        <lightning-tabset variant="scoped">
+          <lightning-tab label="Overview">
+            <div class="slds-grid slds-wrap slds-gutters_medium">
+              <section
+                class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 panel"
+              >
+                <h3 class="slds-text-heading_small slds-m-bottom_small">
+                  Portfolio value and remaining cost
+                </h3>
+                <canvas
+                  class="historyChart"
+                  role="img"
+                  aria-label="Portfolio market value compared with remaining cost by valuation date"
+                ></canvas>
+                <lightning-datatable
+                  key-field="day"
+                  data={historyRows}
+                  columns={historyColumns}
+                  hide-checkbox-column
+                ></lightning-datatable>
+              </section>
+              <section
+                class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 panel"
+              >
+                <div
+                  class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center"
+                >
+                  <h3 class="slds-text-heading_small">{allocationTitle}</h3>
+                  <lightning-combobox
+                    label="Allocation view"
+                    variant="label-hidden"
+                    value={allocationDimension}
+                    options={allocationOptions}
+                    onchange={handleAllocationDimension}
+                  ></lightning-combobox>
+                </div>
+                <canvas
+                  class="allocationChart"
+                  role="img"
+                  aria-label={allocationTitle}
+                ></canvas>
+                <p class="slds-text-body_small slds-m-top_x-small">
+                  Select a chart segment to filter holdings or disclosed
+                  exposure. Negative and unclassified disclosures remain visible
+                  in the detailed table.
+                </p>
+                <lightning-datatable
+                  class="slds-m-top_small"
+                  key-field="key"
+                  data={allocationRows}
+                  columns={allocationColumns}
+                  hide-checkbox-column
+                ></lightning-datatable>
+              </section>
+            </div>
+
+            <div
+              class="slds-grid slds-wrap slds-gutters_medium slds-m-top_medium"
+            >
+              <section
+                class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 panel"
+              >
+                <div class="panel-heading">
+                  <h3 class="slds-text-heading_small">
+                    Largest active holdings
+                  </h3>
+                  <lightning-button
+                    variant="base"
+                    label="View all holdings"
+                    onclick={openHoldings}
+                  ></lightning-button>
+                </div>
+                <lightning-datatable
+                  key-field="holdingId"
+                  data={overviewHoldings}
+                  columns={overviewHoldingColumns}
+                  hide-checkbox-column
+                ></lightning-datatable>
+              </section>
+              <section
+                class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 panel"
+              >
+                <div class="panel-heading">
+                  <h3 class="slds-text-heading_small">
+                    Confirmed monthly SIPs
+                  </h3>
+                </div>
+                <template if:true={hasSips}>
+                  <lightning-datatable
+                    key-field="id"
+                    data={sipRows}
+                    columns={sipColumns}
+                    hide-checkbox-column
+                  ></lightning-datatable>
+                </template>
+                <template if:false={hasSips}
+                  ><p class="empty-state">
+                    No confirmed active monthly SIPs are recorded for this
+                    portfolio.
+                  </p></template
+                >
+              </section>
+            </div>
+
+            <div
+              class="slds-grid slds-wrap slds-gutters_medium slds-m-top_medium"
+            >
+              <section
+                class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 panel"
+              >
+                <div class="panel-heading">
+                  <h3 class="slds-text-heading_small">Position review flags</h3>
+                  <span class="count-badge">{reviewCount} to review</span>
+                </div>
+                <template if:true={hasReviewHoldings}>
+                  <lightning-datatable
+                    key-field="holdingId"
+                    data={reviewHoldings}
+                    columns={reviewColumns}
+                    hide-checkbox-column
+                  ></lightning-datatable>
+                </template>
+                <template if:false={hasReviewHoldings}
+                  ><p class="empty-state">
+                    No holding-level review flags appear in this published
+                    snapshot. Open Data Health for portfolio-wide issues.
+                  </p></template
+                >
+              </section>
+              <section class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
+                <c-inv-watchlist-card></c-inv-watchlist-card>
+                <p class="slds-text-body_small slds-m-top_x-small">
+                  Watchlist stocks and ETFs are not included in portfolio
+                  valuation; their price feed is not connected yet.
+                </p>
+              </section>
+            </div>
+
+            <div class="return-note slds-m-top_medium" role="note">
+              Personal XIRR is shown by position where available. This page does
+              not present a single portfolio XIRR; portfolio return depends on
+              complete external cash-flow history.
+            </div>
+          </lightning-tab>
+
+          <lightning-tab label="Holdings">
+            <div
+              class="slds-grid slds-wrap slds-gutters_small slds-m-bottom_small"
+            >
+              <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                <lightning-input
+                  type="search"
+                  label="Search funds"
+                  value={searchTerm}
+                  onchange={handleSearch}
+                ></lightning-input>
+              </div>
+              <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                <lightning-combobox
+                  label="Position"
+                  value={statusFilter}
+                  options={statusOptions}
+                  onchange={handleStatus}
+                ></lightning-combobox>
+              </div>
+              <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                <lightning-combobox
+                  label="Category"
+                  value={categoryFilter}
+                  options={categoryOptions}
+                  onchange={handleCategory}
+                ></lightning-combobox>
+              </div>
+              <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                <lightning-combobox
+                  label="AMC"
+                  value={amcFilter}
+                  options={amcOptions}
+                  onchange={handleAmc}
+                ></lightning-combobox>
+              </div>
+              <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                <lightning-combobox
+                  label="Review"
+                  value={reviewFilter}
+                  options={reviewOptions}
+                  onchange={handleReview}
+                ></lightning-combobox>
+              </div>
+              <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                <lightning-input
+                  type="checkbox"
+                  label="Only funds without active SIP"
+                  checked={withoutSip}
+                  onchange={handleWithoutSip}
+                ></lightning-input>
+              </div>
+            </div>
+            <template if:true={allocationFilterLabel}
+              ><lightning-badge label={allocationFilterLabel}></lightning-badge
+              ><lightning-button
+                variant="base"
+                label="Clear chart filter"
+                onclick={clearAllocationFilter}
+              ></lightning-button
+            ></template>
+            <lightning-datatable
+              key-field="holdingId"
+              data={visibleHoldings}
+              columns={holdingColumns}
+              onrowaction={handleRowAction}
+              hide-checkbox-column
+            ></lightning-datatable>
+          </lightning-tab>
+
+          <lightning-tab label="Underlying exposure">
+            <lightning-combobox
+              class="dimension"
+              label="Exposure dimension"
+              value={exposureDimension}
+              options={dimensionOptions}
+              onchange={handleDimension}
+            ></lightning-combobox>
+            <lightning-datatable
+              key-field="key"
+              data={visibleExposures}
+              columns={exposureColumns}
+              hide-checkbox-column
+            ></lightning-datatable>
+          </lightning-tab>
+
+          <lightning-tab label="SIP review">
+            <div class="slds-text-body_small slds-m-bottom_small">
+              Confirmed active monthly SIPs are shown even when a fund has no
+              current holding. A missing SIP is a review filter, not an exit
+              recommendation.
+            </div>
+            <lightning-datatable
+              key-field="id"
+              data={sipRows}
+              columns={sipColumns}
+              hide-checkbox-column
+            ></lightning-datatable>
+          </lightning-tab>
+
+          <lightning-tab label="Movement analysis">
+            <p class="slds-text-body_small slds-m-bottom_small">
+              Portfolio value change is not investment return. Market movement
+              uses opening units and the two recorded NAVs; purchases,
+              redemptions and other posted unit movements use the closing NAV.
+              The reconciliation adjustment captures differences between posted
+              ledger movements and saved position snapshots. Any remaining
+              residual stays visible.
+            </p>
+            <div
+              class="slds-grid slds-wrap slds-gutters_small slds-m-bottom_medium"
+            >
+              <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                <lightning-combobox
+                  label="Opening valuation"
+                  value={movementStartRunId}
+                  options={valuationOptions}
+                  onchange={handleMovementStart}
+                ></lightning-combobox>
+              </div>
+              <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                <lightning-combobox
+                  label="Closing valuation"
+                  value={movementEndRunId}
+                  options={valuationOptions}
+                  onchange={handleMovementEnd}
+                ></lightning-combobox>
+              </div>
+              <div
+                class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-align-bottom"
+              >
+                <lightning-button
+                  label="Explain value change"
+                  variant="brand"
+                  onclick={loadMovement}
+                  disabled={movementDisabled}
+                ></lightning-button>
+              </div>
+            </div>
+            <template if:true={movementLoading}
+              ><lightning-spinner
+                alternative-text="Calculating portfolio movement"
+              ></lightning-spinner
+            ></template>
+            <template if:true={movementError}
+              ><div
+                class="slds-text-color_error slds-p-vertical_small"
+                role="alert"
+              >
+                {movementError}
+              </div></template
+            >
+            <template if:true={movementResult}>
+              <div class="freshness slds-m-bottom_small">
+                {movementResult.openingDate} to {movementResult.closingDate} ·
+                {movementResult.coverage}
+              </div>
+              <div class="slds-grid slds-wrap slds-gutters_small metrics">
+                <template for:each={movementSummary} for:item="item"
+                  ><div
+                    class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"
+                    key={item.label}
+                  >
+                    <div class="metric">
+                      <div class="metric-label">{item.label}</div>
+                      <div class="metric-value">{item.value}</div>
+                    </div>
+                  </div></template
+                >
+              </div>
+              <lightning-datatable
+                class="slds-m-top_medium"
+                key-field="rowKey"
+                data={movementResult.rows}
+                columns={movementColumns}
+                hide-checkbox-column
+              ></lightning-datatable>
+            </template>
+            <template if:false={movementResult}
+              ><template if:false={movementLoading}
+                ><div class="freshness">
+                  Select two different available valuation dates to explain
+                  their value change.
+                </div></template
+              ></template
+            >
+          </lightning-tab>
+        </lightning-tabset>
+      </template>
+    </div>
+  </lightning-card>
 </template>
