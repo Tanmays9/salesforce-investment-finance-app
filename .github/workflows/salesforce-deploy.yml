@@ -8,6 +8,7 @@ on:
       - force-app/**
       - manifest/portfolio-release.xml
       - sfdx-project.json
+      - .github/workflows/salesforce-deploy.yml
   workflow_dispatch:
     inputs:
       target:
