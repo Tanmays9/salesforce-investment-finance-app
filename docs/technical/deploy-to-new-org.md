@@ -32,6 +32,8 @@ The GitHub environments `salesforce-sandbox` and `salesforce-production` are alr
 
 The workflow compares both the authenticated Organization ID and `IsSandbox` value before deployment. Use dedicated, least-privilege integration users for automation and revoke their Salesforce CLI authorization when rotating credentials. Keep auth URLs only in GitHub environment secrets; never add them to source files or workflow logs.
 
+The pipeline does not pause scheduled jobs or change Salesforce deployment-bypass settings. If active Apex jobs block a release, follow the [deployment safety procedure](./operations-and-testing.md#deployment-operational-safety), then rerun the workflow.
+
 The CLI version and GitHub Actions are pinned in the workflow. A successful pipeline records Salesforce validation and deployment IDs in the GitHub Actions run summary. This automated release covers Salesforce metadata; it does not load investment records, install schedules, configure provider credentials, deploy the optional CAS parser, or replace the new-org acceptance checklist below.
 
 ## 1. Prepare the new org and local environment
