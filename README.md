@@ -61,7 +61,7 @@ The investment ledger and valuation workflows focus on mutual funds. Stocks and 
 
 Use `.env.example` as the template for your local configuration file. On Windows, place it at `%LOCALAPPDATA%\SalesforceInvestmentFinanceApp\.env`, outside synced folders; the loader also accepts `SALESFORCE_PORTFOLIO_ENV_FILE` to select another local path. Set the production and sandbox org IDs and CLI aliases there. Only the blank template is committed; Salesforce CLI authentication remains separate.
 
-### Deploy to a sandbox
+### Local sandbox bootstrap or recovery
 
 ```bash
 sf org login web --alias investment-sandbox --instance-url https://test.salesforce.com
@@ -69,6 +69,8 @@ sf project deploy start --source-dir force-app --target-org investment-sandbox
 ```
 
 After deployment, configure the Named Credentials, review scheduled jobs and permission assignments, and use representative sandbox data to validate calculations and import workflows. The repository contains Apex unit tests alongside the implementation; run the relevant tests in a sandbox before promoting changes.
+
+For ordinary releases, use the [Salesforce GitHub Actions deployment pipeline](docs/technical/deploy-to-new-org.md#automated-releases-through-github-actions) instead of deploying from a local CLI session. Main-branch metadata changes deploy to the configured sandbox; production promotion runs the sandbox deployment first, then requires the configured production environment approval and Salesforce validation.
 
 ## Project status
 

@@ -1,0 +1,206 @@
+name: Salesforce deployment
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - force-app/**
+      - manifest/portfolio-release.xml
+      - sfdx-project.json
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Deploy to the sandbox, or promote the same commit to production
+        type: choice
+        required: true
+        default: sandbox
+        options:
+          - sandbox
+          - production
+
+permissions:
+  contents: read
+
+concurrency:
+  group: salesforce-deployment-main
+  cancel-in-progress: false
+
+jobs:
+  deploy-sandbox:
+    name: Deploy and test sandbox
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    environment: salesforce-sandbox
+    env:
+      EXPECTED_ORG_ID: ${{ vars.SF_EXPECTED_ORG_ID }}
+      EXPECTED_IS_SANDBOX: ${{ vars.SF_EXPECTED_IS_SANDBOX }}
+      SF_CLI_VERSION: "2.159.7"
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7.1.0
+        with:
+          node-version: "24"
+          package-manager-cache: false
+
+      - name: Install Salesforce CLI
+        run: npm install --global "@salesforce/cli@${SF_CLI_VERSION}"
+
+      - name: Authenticate and verify sandbox
+        shell: bash
+        env:
+          SF_AUTH_URL: ${{ secrets.SF_AUTH_URL }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${SF_AUTH_URL:-}" ]]; then
+            echo "::error::Add SF_AUTH_URL to the salesforce-sandbox GitHub environment secrets."
+            exit 1
+          fi
+          if [[ -z "${EXPECTED_ORG_ID:-}" || "${EXPECTED_IS_SANDBOX:-}" != "true" ]]; then
+            echo "::error::Set SF_EXPECTED_ORG_ID and SF_EXPECTED_IS_SANDBOX=true in the salesforce-sandbox environment."
+            exit 1
+          fi
+          printf '%s' "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin --alias investment-sandbox
+          unset SF_AUTH_URL
+          org_json=$(sf data query --query "SELECT Id, IsSandbox FROM Organization" --target-org investment-sandbox --json)
+          actual_org_id=$(jq -r '.result.records[0].Id // empty' <<< "$org_json")
+          actual_is_sandbox=$(jq -r '.result.records[0].IsSandbox // empty' <<< "$org_json")
+          if [[ "$actual_org_id" != "$EXPECTED_ORG_ID" || "$actual_is_sandbox" != "$EXPECTED_IS_SANDBOX" ]]; then
+            echo "::error::Authenticated org identity does not match the configured sandbox."
+            exit 1
+          fi
+          echo "Verified sandbox org $actual_org_id."
+
+      - name: Deploy release and run local tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          result_file="$RUNNER_TEMP/sf-sandbox-deploy.json"
+          sf project deploy start \
+            --manifest manifest/portfolio-release.xml \
+            --target-org investment-sandbox \
+            --test-level RunLocalTests \
+            --wait 60 \
+            --json > "$result_file"
+          deployment_id=$(jq -r '.result.id // empty' "$result_file")
+          if [[ -z "$deployment_id" ]]; then
+            echo "::error::Salesforce CLI did not return a sandbox deployment ID."
+            exit 1
+          fi
+          {
+            echo "## Salesforce sandbox deployment"
+            echo "- Commit: $GITHUB_SHA"
+            echo "- Org ID: $EXPECTED_ORG_ID"
+            echo "- Deployment ID: $deployment_id"
+            echo "- Apex tests: RunLocalTests"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Remove sandbox CLI authentication
+        if: always()
+        continue-on-error: true
+        run: sf org logout --target-org investment-sandbox --no-prompt
+
+  deploy-production:
+    name: Validate and deploy production
+    if: github.event_name == 'workflow_dispatch' && inputs.target == 'production' && github.ref == 'refs/heads/main'
+    needs: deploy-sandbox
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    environment: salesforce-production
+    env:
+      EXPECTED_ORG_ID: ${{ vars.SF_EXPECTED_ORG_ID }}
+      EXPECTED_IS_SANDBOX: ${{ vars.SF_EXPECTED_IS_SANDBOX }}
+      SF_CLI_VERSION: "2.159.7"
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7.1.0
+        with:
+          node-version: "24"
+          package-manager-cache: false
+
+      - name: Install Salesforce CLI
+        run: npm install --global "@salesforce/cli@${SF_CLI_VERSION}"
+
+      - name: Authenticate and verify production
+        shell: bash
+        env:
+          SF_AUTH_URL: ${{ secrets.SF_AUTH_URL }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${SF_AUTH_URL:-}" ]]; then
+            echo "::error::Add SF_AUTH_URL to the salesforce-production GitHub environment secrets."
+            exit 1
+          fi
+          if [[ -z "${EXPECTED_ORG_ID:-}" || "${EXPECTED_IS_SANDBOX:-}" != "false" ]]; then
+            echo "::error::Set SF_EXPECTED_ORG_ID and SF_EXPECTED_IS_SANDBOX=false in the salesforce-production environment."
+            exit 1
+          fi
+          printf '%s' "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin --alias investment-production
+          unset SF_AUTH_URL
+          org_json=$(sf data query --query "SELECT Id, IsSandbox FROM Organization" --target-org investment-production --json)
+          actual_org_id=$(jq -r '.result.records[0].Id // empty' <<< "$org_json")
+          actual_is_sandbox=$(jq -r '.result.records[0].IsSandbox // empty' <<< "$org_json")
+          if [[ "$actual_org_id" != "$EXPECTED_ORG_ID" || "$actual_is_sandbox" != "$EXPECTED_IS_SANDBOX" ]]; then
+            echo "::error::Authenticated org identity does not match the configured production org."
+            exit 1
+          fi
+          echo "Verified production org $actual_org_id."
+
+      - name: Validate release and run local tests
+        id: validate
+        shell: bash
+        run: |
+          set -euo pipefail
+          result_file="$RUNNER_TEMP/sf-production-validation.json"
+          sf project deploy validate \
+            --manifest manifest/portfolio-release.xml \
+            --target-org investment-production \
+            --test-level RunLocalTests \
+            --wait 60 \
+            --json > "$result_file"
+          validation_id=$(jq -r '.result.id // empty' "$result_file")
+          if [[ -z "$validation_id" ]]; then
+            echo "::error::Salesforce CLI did not return a production validation ID."
+            exit 1
+          fi
+          echo "validation_id=$validation_id" >> "$GITHUB_OUTPUT"
+
+      - name: Quick deploy the validated release
+        shell: bash
+        run: |
+          set -euo pipefail
+          result_file="$RUNNER_TEMP/sf-production-deploy.json"
+          sf project deploy quick \
+            --job-id "${{ steps.validate.outputs.validation_id }}" \
+            --target-org investment-production \
+            --wait 60 \
+            --json > "$result_file"
+          deployment_id=$(jq -r '.result.id // empty' "$result_file")
+          if [[ -z "$deployment_id" ]]; then
+            echo "::error::Salesforce CLI did not return a production deployment ID."
+            exit 1
+          fi
+          {
+            echo "## Salesforce production deployment"
+            echo "- Commit: $GITHUB_SHA"
+            echo "- Org ID: $EXPECTED_ORG_ID"
+            echo "- Validation ID: ${{ steps.validate.outputs.validation_id }}"
+            echo "- Deployment ID: $deployment_id"
+            echo "- Apex tests: RunLocalTests during validation"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Remove production CLI authentication
+        if: always()
+        continue-on-error: true
+        run: sf org logout --target-org investment-production --no-prompt

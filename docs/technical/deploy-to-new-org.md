@@ -15,6 +15,25 @@ The release package contains the model and operational overlays, Apex classes, L
 
 The release package does **not** include portfolio data, legacy migration exports, source statement PDFs, org-specific credentials, user assignments, refresh schedules, deployed AWS CAS resources or external provider agreements. A blank org can show the UI before it contains any investment records.
 
+## Automated releases through GitHub Actions
+
+The [`Salesforce deployment` workflow](https://github.com/Tanmays9/salesforce-investment-finance-app/blob/main/.github/workflows/salesforce-deploy.yml) deploys committed release metadata using the dependency-complete `manifest/portfolio-release.xml` and runs `RunLocalTests`.
+
+- A metadata change pushed to `main` deploys to the configured sandbox.
+- A manual run from `main` with target `sandbox` deploys only to the sandbox.
+- A manual run from `main` with target `production` first deploys and tests that same commit in the sandbox, then validates the manifest in production with `RunLocalTests` and quick-deploys that exact validation. Configure the `salesforce-production` environment with a required reviewer so GitHub pauses before production authentication and deployment.
+
+The GitHub environments `salesforce-sandbox` and `salesforce-production` are already configured for `main`. Their expected organization IDs and sandbox flags are set as non-secret environment variables, and production requires approval from the repository owner. Before the first run, add the following environment secrets:
+
+| Environment | Secret | Value |
+|---|---|---|
+| `salesforce-sandbox` | `SF_AUTH_URL` | SFDX authorization URL for the sandbox integration user |
+| `salesforce-production` | `SF_AUTH_URL` | SFDX authorization URL for the production integration user |
+
+The workflow compares both the authenticated Organization ID and `IsSandbox` value before deployment. Use dedicated, least-privilege integration users for automation and revoke their Salesforce CLI authorization when rotating credentials. Keep auth URLs only in GitHub environment secrets; never add them to source files or workflow logs.
+
+The CLI version and GitHub Actions are pinned in the workflow. A successful pipeline records Salesforce validation and deployment IDs in the GitHub Actions run summary. This automated release covers Salesforce metadata; it does not load investment records, install schedules, configure provider credentials, deploy the optional CAS parser, or replace the new-org acceptance checklist below.
+
 ## 1. Prepare the new org and local environment
 
 1. Confirm the target org edition, API access, metadata deployment permissions, Apex test readiness, custom-object/field limits, storage, integration constraints, and any existing metadata conflicts. Record its Organization ID and whether it is production.
