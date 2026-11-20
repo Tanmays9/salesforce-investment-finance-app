@@ -24,9 +24,6 @@
     <field>Inv_MarketPriceObservations__c$InstrumentDisplayName__c</field>
   </columns>
   <columns>
-    <field>Inv_MarketPriceObservations__c$ObservedOn__c</field>
-  </columns>
-  <columns>
     <aggregateTypes>Average</aggregateTypes>
     <field>Inv_MarketPriceObservations__c$ValueNumber__c</field>
   </columns>
