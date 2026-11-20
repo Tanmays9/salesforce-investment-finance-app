@@ -57,7 +57,7 @@
   </filter>
   <format>Summary</format>
   <groupingsDown>
-    <dateGranularity>CalendarMonth</dateGranularity>
+    <dateGranularity>Month</dateGranularity>
     <field>Inv_MarketPriceObservations__c$ObservedOn__c</field>
     <sortOrder>Asc</sortOrder>
   </groupingsDown>
