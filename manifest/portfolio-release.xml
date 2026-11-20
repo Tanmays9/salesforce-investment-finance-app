@@ -194,6 +194,7 @@
     <name>Layout</name>
   </types>
   <types>
+    <members>invFundResearch</members>
     <members>invParseStatement</members>
     <members>invWatchlistCard</members>
     <name>LightningComponentBundle</name>
