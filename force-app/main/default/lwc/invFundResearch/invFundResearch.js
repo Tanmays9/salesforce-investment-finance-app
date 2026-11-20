@@ -105,12 +105,12 @@ export default class InvFundResearch extends LightningElement {
   get formattedTer() {
     return this.data?.ter == null
       ? "Unavailable"
-      : `${(Number(this.data.ter) * 100).toFixed(2)}%`;
+      : `${Number(this.data.ter).toFixed(2)}%`;
   }
   get formattedBer() {
     return this.data?.ber == null
       ? "Unavailable"
-      : `${(Number(this.data.ber) * 100).toFixed(2)}%`;
+      : `${Number(this.data.ber).toFixed(2)}%`;
   }
   get hasPeers() {
     return (this.data?.peers || []).length > 0;
