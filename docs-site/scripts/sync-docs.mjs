@@ -53,7 +53,8 @@ for (const sourcePath of sourcePaths) {
   const { content, frontmatter } = preparePage(source, sourcePath);
   const target = path.join(contentRoot, ...targetPath.split('/'));
   await mkdir(path.dirname(target), { recursive: true });
-  await writeFile(target, `${frontmatter}\n${rewriteArchitectureLink(content)}`, 'utf8');
+  const siteContent = rewriteTechnicalPageLinks(rewriteArchitectureLink(content), sourcePath);
+  await writeFile(target, `${frontmatter}\n${siteContent}`, 'utf8');
   writtenTargets.push(targetPath);
 }
 
@@ -71,6 +72,9 @@ function mapSourcePath(sourcePath) {
   if (sourcePath.toLowerCase() === 'readme.md') return 'index.md';
   if (sourcePath.toLowerCase() === 'tools/portfolio/readme.md') return 'portfolio-operations.md';
   if (sourcePath.toLowerCase() === 'tools/investment-migration/readme.md') return 'investment-migration.md';
+  if (sourcePath.toLowerCase().startsWith('docs/technical/')) {
+    return sourcePath.slice('docs/'.length);
+  }
   const extension = path.posix.extname(sourcePath).toLowerCase();
   const directory = path.posix.dirname(sourcePath);
   const baseName = path.posix.basename(sourcePath);
@@ -113,4 +117,14 @@ function preparePage(source, sourcePath) {
 
 function rewriteArchitectureLink(content) {
   return content.replace(/\]\(docs\/architecture\.svg\)/g, '](./architecture.svg)');
+}
+
+function rewriteTechnicalPageLinks(content, sourcePath) {
+  if (sourcePath.toLowerCase() === 'readme.md') {
+    content = content.replace(/\]\(docs\/technical\/index\.md\)/g, '](./technical/)');
+  }
+  if (sourcePath.toLowerCase().startsWith('docs/technical/')) {
+    content = content.replace(/\]\(\.\/([^/)]+)\.md(#[^)]+)?\)/g, (_, slug, anchor = '') => `](./${slug}/${anchor})`);
+  }
+  return content;
 }

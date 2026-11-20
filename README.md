@@ -29,6 +29,8 @@ The diagram shows how market data, Salesforce Apex services, investment records,
 
 The documentation site uses Astro Starlight and builds its pages from the repository's tracked Markdown files. Run `npm run docs:install` once, then `npm run docs:dev` to preview it locally or `npm run docs:build` to create the static site. The GitHub Pages workflow is in `.github/workflows/docs.yml`; set the repository's Pages source to GitHub Actions to publish it.
 
+Developers can start with the [technical implementation map](docs/technical/index.md), which links to feature guides for the data model, valuation, fund research, CAS import, planning and redemption, Lightning access, operations, and deployment to a new production org.
+
 ## Integrations and configuration
 
 The source includes Named Credential metadata for MFapi, AMFI, BSE indices, and NSE indices. Configure and verify these connections in the target Salesforce org before enabling refresh jobs. Integration credentials and org-specific settings belong in Salesforce Setup or the deployment environment, not in Git.

@@ -34,6 +34,7 @@ docs-site/src/content/docs/index.md
 docs-site/src/content/docs/404.md
 docs-site/src/content/docs/investment-migration.md
 docs-site/src/content/docs/portfolio-operations.md
+docs-site/src/content/docs/technical/
 
 # ApexPMD cache
 .pmdCache

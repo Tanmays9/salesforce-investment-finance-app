@@ -11,6 +11,20 @@ export default defineConfig({
       description:
         'Project documentation for the Salesforce Investment Portfolio Manager.',
       favicon: '/favicon.svg',
+      sidebar: [
+        {
+          label: 'Project guides',
+          items: [
+            { slug: 'index', label: 'Overview' },
+            { slug: 'portfolio-operations', label: 'Portfolio operations' },
+            { slug: 'investment-migration', label: 'Investment migration' },
+          ],
+        },
+        {
+          label: 'Technical implementation',
+          items: [{ autogenerate: { directory: 'technical' } }],
+        },
+      ],
       social: [
         {
           icon: 'github',
