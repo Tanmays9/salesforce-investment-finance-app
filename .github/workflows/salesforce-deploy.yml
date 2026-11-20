@@ -66,7 +66,7 @@ jobs:
             echo "::error::Set SF_EXPECTED_ORG_ID and SF_EXPECTED_IS_SANDBOX=true in the salesforce-sandbox environment."
             exit 1
           fi
-          printf '%s' "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin --alias investment-sandbox
+          printf '%s' "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin - --alias investment-sandbox
           unset SF_AUTH_URL
           org_json=$(sf data query --query "SELECT Id, IsSandbox FROM Organization" --target-org investment-sandbox --json)
           actual_org_id=$(jq -r '.result.records[0].Id // empty' <<< "$org_json")
@@ -146,7 +146,7 @@ jobs:
             echo "::error::Set SF_EXPECTED_ORG_ID and SF_EXPECTED_IS_SANDBOX=false in the salesforce-production environment."
             exit 1
           fi
-          printf '%s' "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin --alias investment-production
+          printf '%s' "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin - --alias investment-production
           unset SF_AUTH_URL
           org_json=$(sf data query --query "SELECT Id, IsSandbox FROM Organization" --target-org investment-production --json)
           actual_org_id=$(jq -r '.result.records[0].Id // empty' <<< "$org_json")
