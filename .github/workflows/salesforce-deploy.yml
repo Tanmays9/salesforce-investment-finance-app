@@ -70,7 +70,7 @@ jobs:
           unset SF_AUTH_URL
           org_json=$(sf data query --query "SELECT Id, IsSandbox FROM Organization" --target-org investment-sandbox --json)
           actual_org_id=$(jq -r '.result.records[0].Id // empty' <<< "$org_json")
-          actual_is_sandbox=$(jq -r '.result.records[0].IsSandbox // empty' <<< "$org_json")
+          actual_is_sandbox=$(jq -r 'if .result.records[0].IsSandbox == true then "true" elif .result.records[0].IsSandbox == false then "false" else empty end' <<< "$org_json")
           if [[ "$actual_org_id" != "$EXPECTED_ORG_ID" || "$actual_is_sandbox" != "$EXPECTED_IS_SANDBOX" ]]; then
             echo "::error::Authenticated org identity does not match the configured sandbox."
             exit 1
@@ -170,7 +170,7 @@ jobs:
           unset SF_AUTH_URL
           org_json=$(sf data query --query "SELECT Id, IsSandbox FROM Organization" --target-org investment-production --json)
           actual_org_id=$(jq -r '.result.records[0].Id // empty' <<< "$org_json")
-          actual_is_sandbox=$(jq -r '.result.records[0].IsSandbox // empty' <<< "$org_json")
+          actual_is_sandbox=$(jq -r 'if .result.records[0].IsSandbox == true then "true" elif .result.records[0].IsSandbox == false then "false" else empty end' <<< "$org_json")
           if [[ "$actual_org_id" != "$EXPECTED_ORG_ID" || "$actual_is_sandbox" != "$EXPECTED_IS_SANDBOX" ]]; then
             echo "::error::Authenticated org identity does not match the configured production org."
             exit 1
