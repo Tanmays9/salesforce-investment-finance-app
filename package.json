@@ -4,6 +4,10 @@
   "version": "1.0.0",
   "description": "Salesforce App",
   "scripts": {
+    "docs:install": "cd docs-site && npm ci --ignore-scripts",
+    "docs:dev": "npm run dev --prefix docs-site",
+    "docs:build": "npm run build --prefix docs-site",
+    "docs:preview": "npm run preview --prefix docs-site",
     "lint": "eslint **/{aura,lwc}/**/*.js",
     "test": "npm run test:unit",
     "test:unit": "sfdx-lwc-jest",

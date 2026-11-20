@@ -1,0 +1,44 @@
+name: Build and deploy documentation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**/*.md'
+      - '**/*.mdx'
+      - '**/*.markdown'
+      - 'docs/**'
+      - 'docs-site/**'
+      - '.github/workflows/docs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build the Astro site and upload the Pages artifact
+        uses: withastro/action@v6
+        with:
+          path: docs-site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
